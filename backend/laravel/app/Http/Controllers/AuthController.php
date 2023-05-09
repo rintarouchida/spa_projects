@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -36,5 +38,35 @@ class AuthController extends Controller
         Auth::logout();
         // レスポンスを返す
         return response()->json(['message' => 'Logged out'], 200);
+    }
+
+    public function get()
+    {
+        $user = Auth::User();
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+        ];
+    }
+
+    public function register(Request $request): void
+    {
+        $data = $request->only(["name", "email", "password"]);
+        User::create([
+            "name" => $data["name"],
+            "email" => $data["email"],
+            "password" => Hash::make($data["password"]),
+        ]);
+    }
+
+    public function edit(Request $request): void
+    {
+        $data = $request->only(["name", "email"]);
+        $user = Auth::User();
+        $user->update([
+            "name" => $data["name"],
+            "email" => $data["email"],
+        ]);
     }
 }
