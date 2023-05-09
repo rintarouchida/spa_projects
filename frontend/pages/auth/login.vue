@@ -1,8 +1,10 @@
 <template>
   <div>
+    <h1>ログイン画面</h1>
     <input type="text" v-model="email" placeholder="メールアドレス">
     <input type="password" v-model="password" placeholder="パスワード">
     <button @click="login">ログイン</button>
+    <v-btn to="/auth/register">登録画面へ</v-btn>
   </div>
 </template>
 

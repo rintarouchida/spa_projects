@@ -61,7 +61,7 @@ export default {
   },
 
   router: {
-    mode: "hash",
+    mode: "history",
     base: process.env.BASE_URL,
     middleware: ['auth']
   },
