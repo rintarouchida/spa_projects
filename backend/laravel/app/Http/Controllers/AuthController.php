@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -50,13 +51,17 @@ class AuthController extends Controller
         ];
     }
 
-    public function register(Request $request): void
+    public function register(RegisterRequest $request): void
     {
-        $data = $request->only(["name", "email", "password"]);
+        $data = $request->all();
         User::create([
             "name" => $data["name"],
             "email" => $data["email"],
             "password" => Hash::make($data["password"]),
+            "pref_id" => $data["pref_id"],
+            "introduction" => $data["introduction"],
+            "twitter_url" => $data["twitter_url"],
+            "birthday" => $data["birthday"],
         ]);
     }
 
