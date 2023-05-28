@@ -35,9 +35,9 @@
                                 password: this.password
                             }
                         })
-                        .then(() => {
+                        .then((res) => {
                             // ログインに成功したら、/にページ遷移
-                            window.alert("ログインしました");
+                            window.alert(res.data.message);
                             this.$router.push("/");
                         });
                     console.log(response);
