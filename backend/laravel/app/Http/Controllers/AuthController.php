@@ -24,7 +24,7 @@ class AuthController extends Controller
     {
         if (Auth::attempt($request->only(["email", "password"]))) {
             // レスポンスを返す
-            return response()->json(['message' => 'success'], 200);
+            return response()->json(['message' => 'ログインしました'], 200);
         } else {
             // エラーレスポンスを返す
             return response()->json(['message' => 'パスワードかメールアドレスが間違っています。もう一度ログインし直してください。'], 401);
