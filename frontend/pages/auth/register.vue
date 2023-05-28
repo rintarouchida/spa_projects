@@ -19,7 +19,7 @@
       <input class="input_form" type="date" placeholder="誕生日" v-model="birthday"><br>
       <p v-show="validation.birthday.length" v-for="(birthday, index) in validation.birthday" :key="index" class="validation_error">・{{birthday}}</p>
 
-      <h3 class="register_items">都道府県<span class="required">必須</span></h3>
+      <h3 class="register_items">住んでる都道府県<span class="required">必須</span></h3>
       <select class="input_form" v-model="pref_id">
       <option class="input_form" selected v-bind:value="null">都道府県を選択</option>
       <option class="input_form" v-for="(pref, index) in prefs" :key="index" v-bind:value="pref.id">
@@ -85,8 +85,9 @@ export default {
           introduction: this.introduction,
           twitter_url: this.twitter_url,
         }
-      ).then(() => {
-        window.alert("登録完了しました");
+      ).then((res) => {
+        console.log(res);
+        window.alert(res.data.message);
         this.$router.push("/");
       }).catch(err => {
         console.log('エラー発生');

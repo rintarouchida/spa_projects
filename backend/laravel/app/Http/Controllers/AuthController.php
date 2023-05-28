@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Services\AuthService;
 use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    protected $service;
+
+    public function __construct(AuthService $service)
+    {
+        $this->service = $service;
+    }
     /**
      * ログイン
      *
      * @param  mixed $request
-     * @return void
      */
     public function login(Request $request)
     {
@@ -51,18 +55,11 @@ class AuthController extends Controller
         ];
     }
 
-    public function register(RegisterRequest $request): void
+    public function register(RegisterRequest $request)
     {
         $data = $request->all();
-        User::create([
-            "name" => $data["name"],
-            "email" => $data["email"],
-            "password" => Hash::make($data["password"]),
-            "pref_id" => $data["pref_id"],
-            "introduction" => $data["introduction"],
-            "twitter_url" => $data["twitter_url"],
-            "birthday" => $data["birthday"],
-        ]);
+        $this->service->register($data);
+        return response()->json(['message' => '登録が完了しました。'], 200);
     }
 
     public function edit(Request $request): void
