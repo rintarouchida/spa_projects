@@ -23,7 +23,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'success'], 200);
         } else {
             // エラーレスポンスを返す
-            return response()->json(['message' => 'failed'], 401);
+            return response()->json(['message' => 'パスワードかメールアドレスが間違っています。もう一度ログインし直してください。'], 401);
         }
     }
 
