@@ -16,6 +16,7 @@
 
 <script>
     export default {
+        layout: 'guest',
         auth: false,
         data() {
             return {
