@@ -3,7 +3,7 @@
   <Header />
     <v-main>
       <v-container>
-        ログイン中
+        ログイン前
         <Nuxt />
       </v-container>
     </v-main>
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'LoginedLayout',
+  name: 'GuestLayout',
   data() {
     return {
     }
