@@ -1,12 +1,20 @@
 <template>
   <div>
-    <h1>ログイン中</h1>
-    <v-btn type="primary" @click="logout">ログアウトする</v-btn>
-    <v-btn type="primary" @click="getData">データを取得する</v-btn><br>
-    ユーザーID: {{user.id}}<br>
-    ユーザー名: {{user.name}}<br>
-    メールアドレス: {{user.email}}<br>
-    <v-btn type="primary" to="/auth/edit">編集画面へ</v-btn><br>
+    <h1 style="margin-bottom:20px;">おすすめのもくもく会一覧</h1>
+    <div v-for="(test, index) in tests" :key="index" class="party_box">
+      <div class="picture_box">写真</div>
+      <div class="content_box">
+        <h1 class="theme">{{test.name}}</h1>
+        <p>
+          関連タグ: <span v-for="(tag, index) in test.tags" :key="index" class="tag">
+            {{tag.name}}
+          </span>
+        </p>
+        <p>開催場所: {{test.place}}</p>
+        <p>定員: 残り{{test.due}}</p>
+      </div>
+      <span class="clear"></span>
+    </div>
   </div>
 </template>
 
@@ -14,26 +22,69 @@
 export default {
   data() {
     return {
-       user: this.getData(),
+      tests: {
+        test1:{
+          name: 'test1',
+          place: '渋谷',
+          due: '3人',
+          tags: {
+            tag1:{name: 'Ruby'},
+            tag2:{name: 'Laravel'},
+          },
+        },
+        test2:{
+          name: 'test2',
+          place: '渋谷',
+          due: '3人',
+          tags: {
+            tag1:{name: 'Ruby'},
+            tag2:{name: 'Laravel'},
+          },
+        },
+        test3:{
+          name: 'test3',
+          place: '渋谷',
+          due: '3人',
+          tags: {
+            tag1:{name: 'Ruby'},
+            tag2:{name: 'Laravel'},
+          },
+        },
+      },
     }
-  },
-  methods: {
-    async logout() {
-      await this.$auth.logout().
-        then(() => {
-          this.$router.push("/auth/login");
-        }).
-        catch((e)=> console.log(e))
-    },
-    async getData() {
-      this.user = await this.$axios.get('/api/user_info').then(res => {
-        return res.data;
-      });
-    },
   },
 }
 </script>
 
-<style>
-
+<style scope>
+  .party_box{
+    border: 2px solid black;
+    margin-bottom:50px;
+    padding: 15px;
+    height:200px;
+  }
+  .picture_box{
+    background-color: #D9D9D9;
+    width:25%;
+    height:100%;
+    float:left;
+  }
+  .content_box{
+    width:75%;
+    height:100%;
+    float:right;
+    padding-left:40px;
+  }
+  .theme {
+    color:#066AFF;
+  }
+  .tag {
+    padding:3px;
+    border: 1px solid #0ABCF4;
+    width: fit-content;
+    margin-right:20px;
+  }
+  .clear{
+    clear:both;
+  }
 </style>

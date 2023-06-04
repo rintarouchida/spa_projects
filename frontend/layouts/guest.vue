@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-  <Header />
+  <HeaderGuest />
     <v-main>
       <v-container>
         ログイン前
