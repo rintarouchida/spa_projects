@@ -26,6 +26,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/edit', 'AuthController@edit');
     Route::namespace('Master')->group(function () {
         Route::get('/get_prefs', 'PrefController@index');
+        Route::get('/get_parties', 'PartyController@index');
     });
 });
 

@@ -1,17 +1,17 @@
 <template>
   <div>
     <h1 style="margin-bottom:20px;">おすすめのもくもく会一覧</h1>
-    <div v-for="(test, index) in tests" :key="index" class="party_box">
+    <div v-for="(party, index) in parties" :key="index" class="party_box">
       <div class="picture_box">写真</div>
       <div class="content_box">
-        <h1 class="theme">{{test.name}}</h1>
+        <h1 class="theme">{{party.theme}}</h1>
         <p>
-          関連タグ: <span v-for="(tag, index) in test.tags" :key="index" class="tag">
+          関連タグ: <span v-for="(tag, index) in party.tags" :key="index" class="tag">
             {{tag.name}}
           </span>
         </p>
-        <p>開催場所: {{test.place}}</p>
-        <p>定員: 残り{{test.due}}</p>
+        <p>開催場所: {{party.place}}</p>
+        <p>定員: 残り{{party.due_max}}人</p>
       </div>
       <span class="clear"></span>
     </div>
@@ -22,37 +22,14 @@
 export default {
   data() {
     return {
-      tests: {
-        test1:{
-          name: 'test1',
-          place: '渋谷',
-          due: '3人',
-          tags: {
-            tag1:{name: 'Ruby'},
-            tag2:{name: 'Laravel'},
-          },
-        },
-        test2:{
-          name: 'test2',
-          place: '渋谷',
-          due: '3人',
-          tags: {
-            tag1:{name: 'Ruby'},
-            tag2:{name: 'Laravel'},
-          },
-        },
-        test3:{
-          name: 'test3',
-          place: '渋谷',
-          due: '3人',
-          tags: {
-            tag1:{name: 'Ruby'},
-            tag2:{name: 'Laravel'},
-          },
-        },
-      },
+      parties: [],
     }
   },
+  async created() {
+    this.parties = await this.$axios.get('/api/get_parties').then(res => {
+      return res.data;
+    });
+  }
 }
 </script>
 
