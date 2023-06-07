@@ -22,7 +22,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/login', 'AuthController@login');
     Route::post('/logout', 'AuthController@logout');
     Route::get('/user_info', 'AuthController@get');
-    Route::post('/register', 'AuthController@register');
+    Route::post('/register', 'AuthController@register')->name('register');
     Route::post('/edit', 'AuthController@edit');
     Route::namespace('Master')->group(function () {
         Route::get('/get_prefs', 'PrefController@index');
