@@ -2,10 +2,13 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use App\Models\Tag;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExampleTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * A basic test example.
      *
@@ -13,6 +16,10 @@ class ExampleTest extends TestCase
      */
     public function test_example()
     {
-        $this->assertTrue(true);
+        Tag::factory()->create();
+        Tag::factory()->create();
+        Tag::factory()->create();
+        $actual = Tag::all()->pluck('id');
+        $this->assertCount(3, $actual);
     }
 }
