@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\AuthService;
 use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Http\Request;
