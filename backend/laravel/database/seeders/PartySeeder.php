@@ -22,6 +22,7 @@ class PartySeeder extends Seeder
             'due_date' => '2023-05-08 00:00:00',
             'introduction' => 'こんにちは',
             'pref_id' => 8,
+            'user_id' => 1,
         ]);
         Party::create([
             'id' => 2,
@@ -31,6 +32,7 @@ class PartySeeder extends Seeder
             'due_date' => '2023-05-08 00:00:00',
             'introduction' => 'こんにちは',
             'pref_id' => 3,
+            'user_id' => 2,
         ]);
         Party::create([
             'id' => 3,
@@ -40,6 +42,7 @@ class PartySeeder extends Seeder
             'due_date' => '2023-05-08 00:00:00',
             'introduction' => 'こんにちは',
             'pref_id' => 5,
+            'user_id' => 3,
         ]);
     }
 }
