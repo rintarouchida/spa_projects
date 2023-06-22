@@ -6,7 +6,7 @@ use App\Models\Pref;
 use App\Services\AuthService;
 use Tests\TestCase;
 
-class RegisterServiceTest extends TestCase
+class AuthServiceTest extends TestCase
 {
     protected string $name = 'テスト太郎';
     protected string $email = 'test@email.com';
