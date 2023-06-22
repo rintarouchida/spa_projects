@@ -24,9 +24,13 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::get('/user_info', 'AuthController@get');
     Route::post('/register', 'AuthController@register')->name('register');
     Route::post('/edit', 'AuthController@edit');
+    Route::prefix('party')->name('party.')->group(function () {
+        Route::post('/register', 'PartyController@register')->name('register');
+    });
     Route::namespace('Master')->group(function () {
-        Route::get('/get_prefs', 'PrefController@index');
-        Route::get('/get_parties', 'PartyController@index');
+        Route::get('/get_prefs', 'PrefController@index')->name('prefs');
+        Route::get('/get_parties', 'PartyController@index')->name('parties');
+        Route::get('/get_tags', 'TagController@index')->name('tags');
     });
 });
 
