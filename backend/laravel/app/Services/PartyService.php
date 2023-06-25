@@ -24,4 +24,27 @@ class PartyService
 
         $party->tags()->attach($data['tag_ids']);
     }
+
+    /**
+     * @param int $party_id
+     *
+     * @return array
+     */
+    public function getdata(int $party_id): array
+    {
+        $party = Party::find($party_id);
+        $data = [];
+        $data['id'] = $party->id;
+        $data['theme'] = $party->theme;
+        $data['place'] = $party->place;
+        $data['due_max'] = $party->due_max;
+        $data['user_name'] = $party->user->name;
+        $data['introduction'] = $party->introduction;
+        $data['due_date'] = $party->due_date;
+        foreach($party->tags as $index => $tag) {
+            $data['tags'][$index] = $tag->name;
+        }
+
+        return $data;
+    }
 }

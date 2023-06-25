@@ -26,6 +26,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/edit', 'AuthController@edit');
     Route::prefix('party')->name('party.')->group(function () {
         Route::post('/register', 'PartyController@register')->name('register');
+        Route::get('/get/{id}', 'PartyController@getData')->name('get');
     });
     Route::namespace('Master')->group(function () {
         Route::get('/get_prefs', 'PrefController@index')->name('prefs');

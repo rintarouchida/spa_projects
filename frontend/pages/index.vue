@@ -4,7 +4,7 @@
     <div v-for="(party, index) in parties" :key="index" class="party_box">
       <div class="picture_box">写真</div>
       <div class="content_box">
-        <h1 class="theme">{{party.theme}}</h1>
+        <h1 class="theme"><router-link :to="`party/${party.id}`" style="text-decoration: none;">{{party.theme}}</router-link></h1>
         <p>
           関連タグ: <span v-for="(tag, index) in party.tags" :key="index" class="tag">
             {{tag.name}}
@@ -22,7 +22,7 @@
 export default {
   data() {
     return {
-      parties: [],
+      parties: '',
     }
   },
   async created() {
