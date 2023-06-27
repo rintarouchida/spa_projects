@@ -7,7 +7,7 @@
       <h3 class="login_items">パスワード</h3>
       <input class="input_form" type="password" v-model="password" placeholder="パスワード"><br>
       <p class="failed_message">{{error_message}}</p>
-      <v-btn color="primary" @click="login">ログイン</v-btn>
+      <v-btn color="red" style="color:white" @click="login">ログイン</v-btn>
       <router-link to="#" class="links" style="text-decoration: none; color:blue;">パスワードを忘れたら</router-link>
       <router-link to="/auth/register" class="links">ユーザー登録はこちらから</router-link>
     </div>
