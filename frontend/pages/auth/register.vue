@@ -20,7 +20,7 @@
       <p v-show="validation.birthday.length" v-for="(birthday, index) in validation.birthday" :key="index" class="validation_error">・{{birthday}}</p>
 
       <h3 class="register_items">住んでる都道府県<span class="required">必須</span></h3>
-      <select class="input_form" v-model="pref_id">
+      <select class="input_form" v-model="pref_id" @change="getPrefName(pref_id)">
       <option class="input_form" selected v-bind:value="null">都道府県を選択</option>
       <option class="input_form" v-for="(pref, index) in prefs" :key="index" v-bind:value="pref.id">
         {{ pref.name }}
@@ -35,13 +35,18 @@
       <h3 class="register_items">twitterのURL<span class="validation_error"></span></h3>
       <textarea class="input_form" type="text" placeholder="twitterのURL" v-model="twitter_url"></textarea>
       <p v-show="validation.twitter_url.length" v-for="(twitter, index) in validation.twitter_url" :key="index" class="validation_error">・{{twitter}}</p>
-      <v-btn color="primary"  @click="register">登録する</v-btn>
+      <RegisterModal :name="name" :email="email" :birthday="birthday" :twitter_url="twitter_url" :introduction="introduction" :pref_name="pref_name" @close-modal="register"/>
     </div>
   </div>
+
 </template>
 
 <script>
+import RegisterModal from '~/components/Modal/RegisterModal.vue';
 export default {
+  components: {
+     RegisterModal
+  },
   layout: 'guest',
   auth: false,
   data(){
@@ -49,12 +54,13 @@ export default {
       name: '',
       email: '',
       password: '',
-      birthday: null,
+      birthday: '',
       address: '',
-      introduction: null,
-      twitter_url: null,
+      introduction: '',
+      twitter_url: '',
       prefs: '',
       pref_id: '',
+      pref_name: '',
       err: null,
       validation: {
         errors: [],
@@ -117,6 +123,15 @@ export default {
           }
         }
       })
+    },
+     getPrefName(prefId){
+      if (prefId !== null){
+        console.log(prefId);
+        this.pref_name = this.prefs[prefId - 1].name;
+      } else {
+        this.pref_name='';
+      }
+      return null;
     }
   }
 }

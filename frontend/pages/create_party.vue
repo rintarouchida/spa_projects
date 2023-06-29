@@ -13,7 +13,7 @@
       <p v-show="validation.introduction.length" v-for="(introduction, index) in validation.introduction" :key="index" class="validation_error">・{{introduction}}</p>
 
       <h3 class="register_items">開催する都道府県<span class="required">必須</span></h3>
-      <select class="input_form" v-model="pref_id">
+      <select class="input_form" v-model="pref_id" @change="getPrefName(pref_id)">
       <option class="input_form" selected v-bind:value="null">都道府県を選択</option>
       <option class="input_form" v-for="(pref, index) in prefs" :key="index" v-bind:value="pref.id">
         {{ pref.name }}
@@ -27,7 +27,7 @@
 
       <h3 class="register_items">定員<span class="required">必須</span></h3>
       <select class="input_form" v-model="due_max">
-      <option class="input_form" selected v-bind:value="null">定員を選択</option>
+      <option class="input_form" selected v-bind:value="''">定員を選択</option>
       <option class="input_form" v-for="(number, index) in numbers" :key="index" v-bind:value="number">
         {{ number }}
       </option>
@@ -48,18 +48,24 @@
         >
         <label :for="tag.id">{{tag.name}}</label>
       </div>
-      <v-btn color="primary" @click="register">登録する</v-btn>
+
+      <CreatePartyModal :theme="theme" :introduction="introduction" :pref_name="pref_name" :place="place"  :due_max="due_max" :due_date="due_date" @close-modal="register"/>
     </div>
   </div>
 </template>
 
 <script>
+import CreatePartyModal from '~/components/Modal/CreatePartyModal.vue';
 export default {
+  components: {
+    CreatePartyModal
+  },
   data(){
     return {
     theme: '',
     prefs: '',
     pref_id: '',
+    pref_name: '',
     introduction: '',
     tags: '',
     tag_ids: [],
@@ -126,7 +132,16 @@ export default {
           } else { this.validation.due_date = []; }
         }
       })
-    }
+    },
+    getPrefName(prefId){
+      if (prefId !== null){
+        console.log(prefId);
+        this.pref_name = this.prefs[prefId - 1].name;
+      } else {
+        this.pref_name='';
+      }
+      return null;
+    },
   },
 }
 </script>
