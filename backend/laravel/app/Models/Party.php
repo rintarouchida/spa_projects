@@ -18,8 +18,8 @@ class Party extends Model
         return $this->belongsToMany(Tag::class, 'party_tag');
     }
 
-    public function user(): BelongsTo
+    public function leader(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'leader_id');
     }
 }

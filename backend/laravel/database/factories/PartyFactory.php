@@ -24,7 +24,7 @@ class PartyFactory extends Factory
             'due_date' => now(),
             'introduction' => $this->faker->name(),
             'pref_id' => Pref::factory()->create()->id,
-            'user_id' => User::factory()->create()->id,
+            'leader_id' => User::factory()->create()->id,
         ];
     }
 }

@@ -38,7 +38,7 @@ class PartyService
         $data['theme'] = $party->theme;
         $data['place'] = $party->place;
         $data['due_max'] = $party->due_max;
-        $data['user_name'] = $party->user->name;
+        $data['user_name'] = $party->leader->name;
         $data['introduction'] = $party->introduction;
         $data['due_date'] = $party->due_date;
         foreach($party->tags as $index => $tag) {
