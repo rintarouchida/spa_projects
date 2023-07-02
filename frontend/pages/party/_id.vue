@@ -13,23 +13,44 @@
     </div>
     <div class="clear"></div>
     <p>{{ party.introduction }}</p>
-    <div style="text-align: center;"><v-btn color="red" style="color:white">参加する</v-btn></div>
+    <JoinPartyModal v-show="joinable" style="text-align: center;" @close-modal="join"/>
   </div>
 </template>
 
 <script>
+import JoinPartyModal from '~/components/Modal/JoinPartyModal.vue';
 export default {
+  components: {
+    JoinPartyModal
+  },
    data(){
     return {
       party: '',
       id: 10,
+      joinable: false,
     }
   },
   async mounted() {
     this.party = await this.$axios.get(`api/party/get/${this.$route.params.id}`).then(res => {
       return res.data;
     });
+    this.joinable = await this.$axios.get(`api/party/check_if_joined/${this.$route.params.id}`).then(res => {
+      return !res.data;
+    });
   },
+  methods:{
+    async join(){
+      await this.$axios.post('/api/party/join',
+        {
+          party_id: this.$route.params.id,
+        }
+      ).then((res) => {
+        console.log(res);
+        window.alert(res.data.message);
+        this.$router.push("/");
+      });
+    }
+  }
 }
 </script>
 

@@ -26,12 +26,35 @@ class PartyController extends Controller
 
     /**
      * @param int $party_id
-     * 
+     *
      * @return array
      */
     public function getData(int $party_id): array
     {
         $data = $this->service->getData($party_id);
         return $data;
+    }
+
+    /**
+     * 参加済みか判定
+     * @param int $party_id
+     *
+     * @return bool
+     */
+    public function checkIfJoined(int $party_id): bool
+    {
+        return $this->service->checkIfJoined($party_id);
+    }
+
+    /**
+     * もくもく会参加
+     *
+     * @param Request $request
+     */
+    public function join(Request $request)
+    {
+        $party_id = $request->party_id;
+        $this->service->join($party_id);
+        return response()->json(['message' => '参加が完了しました。'], 200);
     }
 }
