@@ -14,8 +14,8 @@ class AddUserIdColumnToPartiesTable extends Migration
     public function up()
     {
         Schema::table('parties', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedInteger('leader_id');
+            $table->foreign('leader_id')->references('id')->on('users');
         });
     }
 
@@ -27,7 +27,7 @@ class AddUserIdColumnToPartiesTable extends Migration
     public function down()
     {
         Schema::table('parties', function (Blueprint $table) {
-            $table->dropForeign('parties_user_id_foreign');
+            $table->dropForeign('parties_leader_id_foreign');
         });
     }
 }
