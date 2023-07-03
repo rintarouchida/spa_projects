@@ -6,6 +6,7 @@ use App\Models\Party;
 use App\Models\Pref;
 use App\Models\User;
 use App\Models\Tag;
+use DB;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -70,7 +71,7 @@ class PartyControllerTest extends TestCase
         ));
         Party::factory([
             'id' => 1,
-            'user_id' => 1,
+            'leader_id' => 1,
             'place' => '東京都港区',
             'theme' => 'テストパーティー1',
             'pref_id' => 1,
@@ -92,5 +93,72 @@ class PartyControllerTest extends TestCase
                 'tags' => ['tag_1', 'tag_2', 'tag_3']
             ],
         );
+    }
+
+    /**
+    * checkIfJoined
+    *
+    * @return void
+    */
+    public function test_checkIfJoined()
+    {
+        $user     = User::factory(['id' => 1])->create();
+        $this->actingAs($user);
+
+        Pref::factory(['id' => 1])->create();
+        User::factory(['id' => 2])->create();
+
+        $party = Party::factory([
+            'id' => 1,
+            'leader_id' => 2,
+            'place' => '東京都港区',
+            'theme' => 'テストパーティー1',
+            'pref_id' => 1,
+            'due_max' => 10,
+            'due_date' => '2023-05-08 00:00:00',
+            'introduction' => '詳細1',
+            ])->create();
+
+        $response = $this->get(route('party.check_if_joined', 1));
+        $response->assertStatus(200);
+        $response->assertExactJson(
+            ['result' => false],
+        );
+        $user->parties()->attach(1);
+        $response = $this->get(route('party.check_if_joined', 1));
+        $response->assertStatus(200);
+        $response->assertExactJson(
+            ['result' => true],
+        );
+    }
+
+    /**
+    * join
+    *
+    * @return void
+    */
+    public function test_join()
+    {
+        $user     = User::factory(['id' => 1])->create();
+        $this->actingAs($user);
+
+        Pref::factory(['id' => 1])->create();
+        User::factory(['id' => 2])->create();
+
+        $party = Party::factory([
+            'id' => 1,
+            'leader_id' => 2,
+            'place' => '東京都港区',
+            'theme' => 'テストパーティー1',
+            'pref_id' => 1,
+            'due_max' => 10,
+            'due_date' => '2023-05-08 00:00:00',
+            'introduction' => '詳細1',
+            ])->create();
+
+        $this->assertFalse(DB::table('party_user')->where('party_id', $party->id)->where('user_id', $user->id)->exists());
+        $response = $this->post(route('party.join'), ['party_id' => $party->id]);
+        $response->assertStatus(200);
+        $this->assertTrue(DB::table('party_user')->where('party_id', $party->id)->where('user_id', $user->id)->exists());
     }
 }
