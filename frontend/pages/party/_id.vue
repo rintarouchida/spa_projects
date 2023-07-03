@@ -35,7 +35,7 @@ export default {
       return res.data;
     });
     this.joinable = await this.$axios.get(`api/party/check_if_joined/${this.$route.params.id}`).then(res => {
-      return !res.data;
+      return !res.data.result;
     });
   },
   methods:{

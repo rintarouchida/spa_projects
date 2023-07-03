@@ -41,9 +41,10 @@ class PartyController extends Controller
      *
      * @return bool
      */
-    public function checkIfJoined(int $party_id): bool
+    public function checkIfJoined(int $party_id): array
     {
-        return $this->service->checkIfJoined($party_id);
+        $data['result'] = $this->service->checkIfJoined($party_id);
+        return $data;
     }
 
     /**
