@@ -20,7 +20,7 @@ class PartyService
             'due_date' => $data['due_date'],
             'introduction' => $data['introduction'],
             'pref_id' => $data['pref_id'],
-            'user_id' => $user_id,
+            'leader_id' => $user_id,
         ]);
 
         $party->tags()->attach($data['tag_ids']);

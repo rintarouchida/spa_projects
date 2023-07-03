@@ -26,7 +26,7 @@ class PartyServiceTest extends TestCase
             'due_date' => '2023-05-12',
             'introduction' => 'introduction_1',
             'pref_id' => 1,
-            'user_id' => 1,
+            'leader_id' => 1,
         ]);
 
         $user = User::factory(['id' => 1])->create();
@@ -39,7 +39,7 @@ class PartyServiceTest extends TestCase
             'due_date' => '2023-05-12',
             'introduction' => 'introduction_1',
             'pref_id' => 1,
-            'user_id' => 1,
+            'leader_id' => 1,
             'tag_ids' => null,
         ];
 
@@ -53,7 +53,7 @@ class PartyServiceTest extends TestCase
             'due_date' => '2023-05-12',
             'introduction' => 'introduction_1',
             'pref_id' => 1,
-            'user_id' => 1,
+            'leader_id' => 1,
         ]);
 
     }
@@ -74,7 +74,7 @@ class PartyServiceTest extends TestCase
         ));
         Party::factory([
             'id' => 1,
-            'user_id' => 1,
+            'leader_id' => 1,
             'place' => '東京都港区',
             'theme' => 'テストパーティー1',
             'pref_id' => 1,
