@@ -6,9 +6,11 @@ use App\Models\Party;
 use App\Models\Pref;
 use App\Models\User;
 use App\Models\Tag;
+use App\Models\MessageGroup;
 use App\Services\PartyService;
 use DB;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use ReflectionMethod;
 use Tests\TestCase;
 
 class PartyServiceTest extends TestCase
@@ -161,5 +163,29 @@ class PartyServiceTest extends TestCase
 
         $this->user->parties()->attach($party->id);
         $this->assertTrue($service->checkIfJoined($party->id));
+    }
+
+    /**
+     * createMessageGroup
+     *
+     * @return void
+     */
+    public function test_create_message_group()
+    {
+        $party = Party::factory(['id' => 1])->create();
+        
+        $this->assertDatabaseMissing('message_groups', [
+            'user_id' => $this->user->id,
+            'party_id' => $party->id,
+         ]);
+
+        $method = new ReflectionMethod(PartyService::class, 'createMessageGroup');
+        $method->setAccessible(true);
+        $method->invoke(new PartyService, $this->user->id, $party->id);
+
+        $this->assertDatabaseHas('message_groups', [
+            'user_id' => $this->user->id,
+            'party_id' => $party->id,
+         ]);
     }
 }
