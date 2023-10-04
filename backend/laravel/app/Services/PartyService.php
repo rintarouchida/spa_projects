@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\MessageGroup;
 use App\Models\Party;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,6 +59,7 @@ class PartyService
     {
         $user = Auth::User();
         $user->parties()->attach($party_id);
+        $this->createMessageGroup($user->id, $party_id);
     }
 
     /**
@@ -72,5 +74,20 @@ class PartyService
             $query->where('id', $party_id);
         });
         return $query->exists();
+    }
+
+    /**
+     * @param int $user_id
+     * @param int $party_id
+     *
+     * @return void
+     */
+    protected function createMessageGroup(int $user_id, int $party_id): void
+    {
+        MessageGroup::create([
+            'user_id' => $user_id,
+            'party_id' => $party_id,
+            'is_read' => false,
+        ]);
     }
 }
