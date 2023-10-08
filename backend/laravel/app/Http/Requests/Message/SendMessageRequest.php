@@ -27,4 +27,17 @@ class SendMessageRequest extends FormRequest
             'content' => 'required|string|max:255',
         ];
     }
+
+    /**
+     * バリデーションメッセージ
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'content.required' => 'メッセージを入力してください。',
+            'content.string' => 'メッセージは文字列で入力してください。',
+            'content.max' => 'メッセージは255文字以内で入力してください。',
+        ];
+    }
 }
