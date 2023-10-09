@@ -173,19 +173,23 @@ class PartyServiceTest extends TestCase
     public function test_create_message_group()
     {
         $party = Party::factory(['id' => 1])->create();
-        
+
         $this->assertDatabaseMissing('message_groups', [
-            'user_id' => $this->user->id,
             'party_id' => $party->id,
-         ]);
+        ]);
+        $this->assertDatabaseMissing('user_message_group', [
+            'user_id' => $this->user->id,
+        ]);
 
         $method = new ReflectionMethod(PartyService::class, 'createMessageGroup');
         $method->setAccessible(true);
         $method->invoke(new PartyService, $this->user->id, $party->id);
 
         $this->assertDatabaseHas('message_groups', [
-            'user_id' => $this->user->id,
             'party_id' => $party->id,
-         ]);
+        ]);
+        $this->assertDatabaseHas('user_message_group', [
+            'user_id' => $this->user->id,
+        ]);
     }
 }

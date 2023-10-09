@@ -59,7 +59,7 @@ class PartyService
     {
         $user = Auth::User();
         $user->parties()->attach($party_id);
-        $this->createMessageGroup($user->id, $party_id);
+        $this->createMessageGroup($party_id, $user->id);
     }
 
     /**
@@ -77,17 +77,14 @@ class PartyService
     }
 
     /**
-     * @param int $user_id
      * @param int $party_id
      *
      * @return void
      */
-    protected function createMessageGroup(int $user_id, int $party_id): void
+    protected function createMessageGroup(int $party_id, int $user_id): void
     {
         $message_group = MessageGroup::create([
-            'user_id' => $user_id,
             'party_id' => $party_id,
-            'is_read' => false,
         ]);
         $message_group->users()->attach($user_id);
     }

@@ -2,18 +2,38 @@
 
 namespace Tests\Unit\app\Services;
 
-use PHPUnit\Framework\TestCase;
+use App\Models\MessageGroup;
+use App\Models\User;
+use App\Services\MessageService;
+use Tests\TestCase;
 
 class MessageServiceTest extends TestCase
 {
     /**
-     * A basic unit test example.
+     * sendMessage
      *
      * @return void
      */
-    public function test_example()
+    public function test_send_message()
     {
-        $this->assertTrue(true);
+        $user = User::factory(['id' => 1])->create();
+        $data = [
+            'message_group_id' => MessageGroup::factory(['id' => 1])->create()->id,
+            'content' => 'メッセージ',
+        ];
+
+        $this->assertDatabaseMissing('messages', [
+            'user_id' => 1,
+            'message_group_id' => 1,
+            'content' => 'メッセージ',
+        ]);
+
+        $service = new MessageService();
+        $service->sendMessage($user->id, $data);
+        $this->assertDatabaseHas('messages', [
+            'user_id' => 1,
+            'message_group_id' => 1,
+            'content' => 'メッセージ',
+        ]);
     }
-    //todo:sendMessage関数のテスト作成
 }
