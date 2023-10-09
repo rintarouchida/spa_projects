@@ -15,13 +15,10 @@ class CreateMessageGroups extends Migration
     {
         Schema::create('message_groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('is_read');
             $table->unsignedInteger('party_id');
-            $table->unsignedInteger('user_id');
             $table->timestamps();
 
             $table->foreign('party_id')->references('id')->on('parties');
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
