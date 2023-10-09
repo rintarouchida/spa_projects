@@ -84,10 +84,11 @@ class PartyService
      */
     protected function createMessageGroup(int $user_id, int $party_id): void
     {
-        MessageGroup::create([
+        $message_group = MessageGroup::create([
             'user_id' => $user_id,
             'party_id' => $party_id,
             'is_read' => false,
         ]);
+        $message_group->users()->attach($user_id);
     }
 }

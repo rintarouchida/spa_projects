@@ -12,7 +12,6 @@ class MessageService
             'user_id' => $user_id,
             'message_group_id' => $params['message_group_id'],
             'content' => $params['content'],
-            'is_read' => false,
         ]);
     }
 }
