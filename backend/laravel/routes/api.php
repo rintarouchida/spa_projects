@@ -30,7 +30,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::post('/join', 'PartyController@join')->name('join');
         Route::get('/check_if_joined/{party_id}', 'PartyController@checkIfJoined')->name('check_if_joined');
     });
-    Route::prefix('message')->name('party.')->group(function () {
+    Route::prefix('message')->name('message.')->group(function () {
         Route::post('/send_message', 'MessageController@sendMessage')->name('send_message');
     });
     Route::namespace('Master')->group(function () {
