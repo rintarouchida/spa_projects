@@ -22,4 +22,13 @@ class MessageController extends Controller
         $param = $request->only(['message_group_id', 'content']);
         $this->service->sendMessage($user_id, $param);
     }
+
+    /**
+     * @return array
+     */
+    public function index(): array
+    {
+        //todo:メッセージ一覧(ユーザー(オーナー)が参加している会のメッセージを全部返す)
+        $user_id = Auth::id();
+    }
 }

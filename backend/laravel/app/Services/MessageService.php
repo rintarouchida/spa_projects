@@ -14,4 +14,11 @@ class MessageService
             'content' => $params['content'],
         ]);
     }
+
+    //todo:メッセージ一覧(ユーザー(オーナー)が参加している会のメッセージを全部返す)
+    //メッセージはグループ毎でまとめる
+    public function getAllMessageLists()
+    {
+
+    }
 }
