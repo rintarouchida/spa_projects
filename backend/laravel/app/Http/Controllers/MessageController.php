@@ -28,7 +28,9 @@ class MessageController extends Controller
      */
     public function index(): array
     {
-        //todo:メッセージ一覧(ユーザー(オーナー)が参加している会のメッセージを全部返す)
+        //todo:メッセージ一覧の関数を作成したのでテストを作成する
         $user_id = Auth::id();
+        $message_lists = $this->service->getMessageLists($user_id);
+        return $message_lists;
     }
 }

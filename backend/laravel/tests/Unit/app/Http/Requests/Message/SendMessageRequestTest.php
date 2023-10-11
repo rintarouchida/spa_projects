@@ -24,7 +24,6 @@ class SendMessageRequestTest extends TestCase
         $this->assertEquals($outMessage, $messages);
     }
 
-    //todo:バリデーションが正しいか検証
     public function validationProvider()
     {
         return [
