@@ -28,25 +28,21 @@ class MessageService
      */
     public function getMessageLists(int $user_id): array
     {
-        $message_groups = MessageGroup::whereHas('users', function ($query) {
+        $message_groups = MessageGroup::whereHas('users', function ($query) use ($user_id) {
             $query->where('id', $user_id);
         })->get();
+
+        $data = [];
 
         foreach ($message_groups as $key => $message_group) {
             $data[$key]['id']          = $message_group->id;
             $data[$key]['party_theme'] = $message_group->party->theme;
-            $data[$key]['messages']    = $this->getMessages();
-            $data[$key]['due_max']     = $party->due_max;
+            foreach($message_group->messages as $index => $message) {
+                $data[$key]['messages'][$index]['id']      = $message->id;
+                $data[$key]['messages'][$index]['content'] = $message->content;
+                $data[$key]['messages'][$index]['user_id'] = $message->user_id;
+            }
         }
         return $data;
-    }
-
-    protected function getMessages(MessageGroup $message_group): array
-    {
-        foreach ($message_group->messages as $key => $message) {
-            $data[$key]['id']      = $message->id;
-            $data[$key]['content'] = $message->content;
-            $data[$key]['user_id'] = $message->user_id;
-        }
     }
 }
