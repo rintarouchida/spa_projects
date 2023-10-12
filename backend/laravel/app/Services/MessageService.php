@@ -21,7 +21,6 @@ class MessageService
         ]);
     }
 
-    //todo:メッセージ一覧の関数を作成したのでテストを作成する
     /**
      * @param int $user_id
      * @return array
