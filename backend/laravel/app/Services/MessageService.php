@@ -33,14 +33,12 @@ class MessageService
 
         $data = [];
 
+        //todo: 取得データ変更によるテスト修正
         foreach ($message_groups as $key => $message_group) {
             $data[$key]['id']          = $message_group->id;
             $data[$key]['party_theme'] = $message_group->party->theme;
-            foreach($message_group->messages as $index => $message) {
-                $data[$key]['messages'][$index]['id']      = $message->id;
-                $data[$key]['messages'][$index]['content'] = $message->content;
-                $data[$key]['messages'][$index]['user_id'] = $message->user_id;
-            }
+            $data[$key]['latest_message'] = $message_group->messages->first()->content;
+            $data[$key]['latest_message_time'] = $message_group->messages->first()->created_at->format('Y-m-d H:i');
         }
         return $data;
     }
