@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\Message;
 use App\Models\MessageGroup;
 use App\Models\Party;
 use Illuminate\Support\Facades\Auth;
@@ -87,5 +88,13 @@ class PartyService
             'party_id' => $party_id,
         ]);
         $message_group->users()->attach($user_id);
+        //todo: message作成部分のテスト作成
+        $party = Party::find($party_id);
+        $user = User::find($user_id);
+        Message::create([
+            'user_id' => $party->leader->id,
+            'message_group_id' => $message_group->id,
+            'content' => $user->name.'さんが参加しました、よろしくお願いします!!',
+        ]);
     }
 }
