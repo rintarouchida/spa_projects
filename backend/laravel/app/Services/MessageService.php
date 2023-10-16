@@ -42,4 +42,25 @@ class MessageService
         }
         return $data;
     }
+
+    //todo: getMessagesByGroupIdのテスト作成
+    /**
+     * @param int $message_group_id
+     * @param int $user_id
+     *
+     * @return array
+     */
+    public function getMessagesByGroupId(int $message_group_id, int $user_id): array
+    {
+        $messages = Message::where('message_group_id', $message_group_id)->with(['user'])->get();
+        $data = [];
+        foreach ($messages as $key => $message) {
+            $data[$key]['id'] = $message->id;
+            $data[$key]['content'] = $message->content;
+            $data[$key]['created_at'] = $message->created_at->format('Y-m-d H:i:s');
+            $data[$key]['is_users_message'] = ($message->user->id === $user_id);
+            $data[$key]['user_name'] = $message->user->name;
+        }
+        return $data;
+    }
 }
