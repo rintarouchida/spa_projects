@@ -43,7 +43,6 @@ class MessageService
         return $data;
     }
 
-    //todo: getMessagesByGroupIdのテスト作成
     /**
      * @param int $message_group_id
      * @param int $user_id
