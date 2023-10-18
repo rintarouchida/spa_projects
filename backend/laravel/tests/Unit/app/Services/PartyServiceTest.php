@@ -172,13 +172,21 @@ class PartyServiceTest extends TestCase
      */
     public function test_create_message_group()
     {
-        $party = Party::factory(['id' => 1])->create();
+        $leader = User::factory()->create();
+        $party = Party::factory([
+            'id'        => 1,
+            'leader_id' => $leader->id,
+        ])->create();
 
         $this->assertDatabaseMissing('message_groups', [
             'party_id' => $party->id,
         ]);
         $this->assertDatabaseMissing('user_message_group', [
             'user_id' => $this->user->id,
+        ]);
+        $this->assertDatabaseMissing('messages', [
+            'user_id' => $leader->id,
+            'content' => 'ユーザー1さんが参加しました、よろしくお願いします!!',
         ]);
 
         $method = new ReflectionMethod(PartyService::class, 'createMessageGroup');
@@ -190,6 +198,10 @@ class PartyServiceTest extends TestCase
         ]);
         $this->assertDatabaseHas('user_message_group', [
             'user_id' => $this->user->id,
+        ]);
+        $this->assertDatabaseHas('messages', [
+            'user_id' => $leader->id,
+            'content' => 'ユーザー1さんが参加しました、よろしくお願いします!!',
         ]);
     }
 }

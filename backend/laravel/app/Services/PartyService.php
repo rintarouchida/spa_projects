@@ -88,7 +88,6 @@ class PartyService
             'party_id' => $party_id,
         ]);
         $message_group->users()->attach($user_id);
-        //todo: message作成部分のテスト作成
         $party = Party::find($party_id);
         $user = User::find($user_id);
         Message::create([
