@@ -32,4 +32,15 @@ class MessageController extends Controller
         $message_lists = $this->service->getMessageLists($user_id);
         return $message_lists;
     }
+
+    /**
+     * @param int $message_group_id
+     * @return array
+     */
+    public function getMessage(int $message_group_id): array
+    {
+        $user_id = Auth::id();
+        $messages = $this->service->getMessagesByGroupId($message_group_id, $user_id);
+        return $messages;
+    }
 }
