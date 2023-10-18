@@ -62,46 +62,26 @@ class MessageControllerTest extends TestCase
         ])->create()->users()->attach($user->id);
 
         Message::factory(4)->create(new Sequence(
-            ['id' => 1, 'message_group_id' => 1, 'content' => 'メッセージ1', 'user_id' => $user->id],
-            ['id' => 2, 'message_group_id' => 1, 'content' => 'メッセージ2', 'user_id' => User::factory(['id' => 2])->create()->id],
-            ['id' => 3, 'message_group_id' => 2, 'content' => 'メッセージ3', 'user_id' => User::factory(['id' => 3])->create()->id],
-            ['id' => 4, 'message_group_id' => 2, 'content' => 'メッセージ4', 'user_id' => User::factory(['id' => 4])->create()->id],
+            ['id' => 1, 'message_group_id' => 1, 'content' => 'メッセージ1', 'created_at' => '2023-10-14 10:00:00'],
+            ['id' => 2, 'message_group_id' => 1, 'content' => 'メッセージ2', 'created_at' => '2023-10-13 10:00:00'],
+            ['id' => 3, 'message_group_id' => 2, 'content' => 'メッセージ3', 'created_at' => '2023-10-11 10:00:00'],
+            ['id' => 4, 'message_group_id' => 2, 'content' => 'メッセージ4', 'created_at' => '2023-10-12 10:00:00'],
         ));
 
         $response = $this->get(route('message.index'));
         $response->assertStatus(200);
         $response->assertJson([
             [
-                'id' => 1,
-                'party_theme' => 'party_1',
-                'messages' => [
-                    [
-                        'id' => 1,
-                        'content' => 'メッセージ1',
-                        'user_id' => 1
-                    ],
-                    [
-                        'id' => 2,
-                        'content' => 'メッセージ2',
-                        'user_id' => 2
-                    ],
-                ],
+                'id'                  => 1,
+                'party_theme'         => 'party_1',
+                'latest_message'      => 'メッセージ1',
+                'latest_message_time' => '2023-10-14 10:00',
             ],
             [
-                'id' => 2,
-                'party_theme' => 'party_2',
-                'messages' => [
-                    [
-                        'id' => 3,
-                        'content' => 'メッセージ3',
-                        'user_id' => 3
-                    ],
-                    [
-                        'id' => 4,
-                        'content' => 'メッセージ4',
-                        'user_id' => 4
-                    ],
-                ],
+                'id'                  => 2,
+                'party_theme'         => 'party_2',
+                'latest_message'      => 'メッセージ4',
+                'latest_message_time' => '2023-10-12 10:00',
             ],
         ]);
     }
