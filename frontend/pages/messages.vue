@@ -33,7 +33,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style>
 .message_form{
     margin-top:20px;
     margin-left:15%;
