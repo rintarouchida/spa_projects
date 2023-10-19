@@ -34,6 +34,16 @@ class MessageController extends Controller
     }
 
     /**
+     * @return array
+     */
+    public function indexForLeader(): array
+    {
+        $user_id = Auth::id();
+        $message_lists = $this->service->getMessageListsForLeader($user_id);
+        return $message_lists;
+    }
+
+    /**
      * @param int $message_group_id
      * @return array
      */
