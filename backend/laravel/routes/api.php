@@ -32,6 +32,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
     });
     Route::prefix('message')->name('message.')->group(function () {
         Route::get('/index', 'MessageController@index')->name('index');
+        Route::get('/index_for_leader', 'MessageController@indexForLeader')->name('index_for_leader');
         Route::get('/get/{message_group_id}', 'MessageController@getMessage')->name('get');
         Route::post('/send_message', 'MessageController@sendMessage')->name('send_message');
     });

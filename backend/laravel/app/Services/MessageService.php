@@ -70,7 +70,7 @@ class MessageService
     public function getMessageListsForLeader(int $user_id): array
     {
         $message_groups = MessageGroup::whereHas('party', function ($query) use ($user_id) {
-            $query->where('leader', $user_id);
+            $query->where('leader_id', $user_id);
         })->get();
 
         $data = [];
@@ -81,6 +81,7 @@ class MessageService
             $data[$key]['latest_message'] = $message_group->messages->sortBy('created_at')->last()->content;
             $data[$key]['latest_message_time'] = $message_group->messages->sortBy('created_at')->last()->created_at->format('Y-m-d H:i');
         }
+
         return $data;
     }
 }
