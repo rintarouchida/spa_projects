@@ -3,6 +3,7 @@
     <router-link to="/" style="text-decoration: none; color:black;">もくもくMAP</router-link>
     <router-link to="/create_party" style="text-decoration: none; color:black;">もくもく会を作成する</router-link>
     <router-link to="/messages" style="text-decoration: none; color:black;">メッセージ</router-link>
+    <router-link to="/messages_for_leader" style="text-decoration: none; color:black;">メッセージ(主催者用)</router-link>
     <v-btn type="primary" @click="logout" style="float:right;">ログアウトする</v-btn>
   </div>
 </template>
