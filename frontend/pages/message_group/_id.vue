@@ -6,7 +6,7 @@
   <div style="text-align:center; ">
     <div class="message_form">
       <div class="party_theme">
-        <h2>{{id}}のメッセージ</h2>
+        <h2>タイトル: {{party_theme}}</h2>
       </div>
 
         <div v-for="(message, index) in messages" :key="index" class="message_list">
@@ -15,7 +15,7 @@
               <p class="message">{{message.content}}<br><span style="font-size:10px; float:right;">{{message.created_at}}</span></p>
             </div>
           </span>
-          <span v-if="!message.is_users_message">
+          <span v-if="!message.is_users_message && (message.created_at !== null)">
             <div class="others_message_box">
               <p class="message">{{message.user_name}}:{{message.content}}<br><span style="font-size:10px;">{{message.created_at}}</span></p>
             </div>
@@ -36,9 +36,13 @@ export default {
       party: '',
       id: this.$route.params.id,
       messages: [],
+      party_theme: '',
     }
   },
   async created() {
+    this.party_theme = await this.$axios.get(`api/message/get_party_theme/${this.$route.params.id}`).then(res => {
+      return res.data;
+    });
     this.messages = await this.$axios.get(`api/message/get/${this.$route.params.id}`).then(res => {
       return res.data;
     });

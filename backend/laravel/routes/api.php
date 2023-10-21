@@ -34,6 +34,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::get('/index', 'MessageController@index')->name('index');
         Route::get('/index_for_leader', 'MessageController@indexForLeader')->name('index_for_leader');
         Route::get('/get/{message_group_id}', 'MessageController@getMessage')->name('get');
+        Route::get('/get_party_theme/{message_group_id}', 'MessageController@getPartyThemeByMessageGroup')->name('get_party_theme');
         Route::post('/send_message', 'MessageController@sendMessage')->name('send_message');
     });
     Route::namespace('Master')->group(function () {
