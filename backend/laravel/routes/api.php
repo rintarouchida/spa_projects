@@ -37,6 +37,9 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::get('/get_party_theme/{message_group_id}', 'MessageController@getPartyThemeByMessageGroup')->name('get_party_theme');
         Route::post('/send_message', 'MessageController@sendMessage')->name('send_message');
     });
+    Route::prefix('search')->name('search.')->group(function () {
+        Route::get('', 'SearchController@index');
+    });
     Route::namespace('Master')->group(function () {
         Route::get('/get_prefs', 'PrefController@index')->name('prefs');
         Route::get('/get_parties', 'PartyController@index')->name('parties');

@@ -96,4 +96,14 @@ class PartyService
             'content' => $user->name.'さんが参加しました、よろしくお願いします!!',
         ]);
     }
+
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function searchParties(array $params): array
+    {
+        //todo:もくもく会検索機能作成
+    }
 }
