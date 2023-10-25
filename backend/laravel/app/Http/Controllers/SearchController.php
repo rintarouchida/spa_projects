@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Party\SearchPartyRequest;
+use App\Services\Search\PartyService;
 
 class SearchController extends Controller
 {
+    protected $service;
+
+    public function __construct(PartyService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * @param SearchPartyRequest $request
      *
@@ -13,6 +21,8 @@ class SearchController extends Controller
      */
     public function index(SearchPartyRequest $request): array
     {
-        //todo:もくもく会検索機能作成
+        $params = $request->all();
+        $data = $this->service->searchParties($data);
+        return $data;
     }
 }
