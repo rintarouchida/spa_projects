@@ -24,7 +24,27 @@ class SearchPartyRequest extends FormRequest
     public function rules()
     {
         return [
-            //todo:もくもく会検索機能のバリデーション作成
+            'keyword'  => 'nullable|string|max:30',
+            'pref_id'  => 'nullable|int|exists:prefs,id',
+            'tag_id.*' => 'nullable|int|exists:tags,id',
+        ];
+    }
+
+    /**
+     * バリデーションメッセージ
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'keyword.string'  => 'キーワードは文字列で入力してください',
+            'keyword.max'     => 'キーワードは30文字以内で入力してください',
+
+            'pref_id.int'     => '都道府県IDは整数で入力してください。',
+            'pref_id.exists'  => '指定された都道府県は存在しません。',
+
+            'tag_id.*.int'    => 'タグIDは整数で入力してください。',
+            'tag_id.*.exists' => '指定されたタグIDは存在しません。',
         ];
     }
 }
