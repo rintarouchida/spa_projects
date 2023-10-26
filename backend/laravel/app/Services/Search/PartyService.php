@@ -2,7 +2,9 @@
 
 namespace App\Services\Search;
 
+use App\Models\Party;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 class PartyService
 {
@@ -28,12 +30,21 @@ class PartyService
         }
     }
 
-    protected function fetchRecordByKeyword($query, $keyword)
+    /**
+     * @param Builder $query
+     * @param string $keyword
+     *
+     * @return Builder
+     */
+    protected function fetchRecordByKeyword(Builder $query, string $keyword): Builder
     {
         //todo:文字列検索の条件洗い出し
         // →文字列がthemeに入る
+        $query->where('theme', 'like', '%'.$keyword.'%');
         // →文字列がplaceに入る
+        $query->orWhere('place', 'like', '%'.$keyword.'%');
         // →文字列がintroductionに入る
+        $query->orWhere('introduction', 'like', '%'.$keyword.'%');
         // →3つのうちどれかに当てはまるレコードを全て取り出す
         return $query;
     }
