@@ -16,6 +16,11 @@ class MessageController extends Controller
         $this->service = $service;
     }
 
+    /**
+     * @param SendMessageRequest $request
+     * 
+     * @return void
+     */
     public function sendMessage(SendMessageRequest $request): void
     {
         $user_id = Auth::id();
