@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
+    /**
+     * @param array $data
+     * 
+     * @return void
+     */
     public function register(array $data): void
     {
         User::create([

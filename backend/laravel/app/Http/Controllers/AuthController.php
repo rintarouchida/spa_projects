@@ -46,7 +46,10 @@ class AuthController extends Controller
         return response()->json(['message' => 'Logged out'], 200);
     }
 
-    public function get()
+    /**
+     * @return array
+     */
+    public function get(): array
     {
         $user = Auth::User();
         return [
@@ -56,13 +59,23 @@ class AuthController extends Controller
         ];
     }
 
-    public function register(RegisterRequest $request)
+    /**
+     * @param RegisterRequest $request
+     *
+     * @return array
+     */
+    public function register(RegisterRequest $request): array
     {
         $data = $request->all();
         $this->service->register($data);
         return response()->json(['message' => '登録が完了しました。'], 200);
     }
 
+    /**
+     * @param Request $request
+     * 
+     * @return void
+     */
     public function edit(Request $request): void
     {
         $data = $request->only(["name", "email"]);

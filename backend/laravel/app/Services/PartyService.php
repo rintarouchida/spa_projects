@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Auth;
 class PartyService
 {
     /**
-     * @return array
+     * @param array $data
+     * @param integer $user_id
+     * 
+     * @return void
      */
     public function register(array $data, int $user_id): void
     {

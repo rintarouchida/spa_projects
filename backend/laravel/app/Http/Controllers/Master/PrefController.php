@@ -9,7 +9,10 @@ use App\Models\User;
 
 class PrefController extends Controller
 {
-    public function index()
+    /**
+     * @return array
+     */
+    public function index(): array
     {
         $prefs = Pref::all();
         $data = [];
