@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Tag;
+use App\Models\Pref;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,5 +28,10 @@ class Party extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'party_user');
+    }
+
+    public function pref(): BelongsTo
+    {
+        return $this->belongsTo(Pref::class, 'pref_id');
     }
 }

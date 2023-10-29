@@ -46,7 +46,7 @@ class PartyService
      * @return Builder
      */
     protected function fetchRecordByKeyword(Builder $query, string $keyword): Builder
-
+    {
         //文字列検索の条件洗い出し
         // →文字列がthemeに入る
         $query->where('theme', 'like', '%'.$keyword.'%');
@@ -58,14 +58,34 @@ class PartyService
         return $query;
     }
 
+    /**
+     * @param Builder $query
+     * @param array $tag_ids
+     *
+     * @return Builder
+     */
     protected function fetchRecordByTagId(Builder $query, array $tag_ids): Builder
     {
         //タグID条件の洗い出し
         //    →tag_idsのどれか一つをもつレコードを全て取り出す
         //    →(例)tag_ids=[1, 2, 3]とすると、[3, 4, 5]に紐ずくレコードは3が合致するので抽出される
-        $query->('tags', function ($q) use ($tag_ids) {
-            $q->whereIn('id', $tag_ids);
+        $query->whereHas('tags', function ($q) use ($tag_ids) {
+            $q->whereIn('tags.id', $tag_ids);
         });
-        return $query
+        return $query;
+    }
+
+    /**
+     * @param Builder $query
+     * @param integer $pref_id
+     *
+     * @return Builder
+     */
+    protected function fetchRecordByPrefId(Builder $query, int $pref_id): Builder
+    {
+        $query->whereHas('pref', function ($q) use ($pref_id) {
+            $q->where('id', $pref_id);
+        });
+        return $query;
     }
 }
