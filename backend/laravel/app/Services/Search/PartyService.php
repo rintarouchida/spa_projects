@@ -18,16 +18,19 @@ class PartyService
         $sevendays=Carbon::today()->subDay(7);
         $query = Party::with('tags')->whereDate('created_at', '>=', $sevendays);
 
-        if(!is_null($params['pref_id'])) {
+        if(isset($params['pref_id'])) {
             $query = $this->fetchRecordByPrefId($query, $params['pref_id']);
         }
-        if(!is_null($params['tag_id'])) {
-            $query = $this->fetchRecordByPrefId($query, $params['tag_id']);
+        if(isset($params['tag_id'])) {
+            $query = $this->fetchRecordByTagId($query, $params['tag_id']);
         }
-        if(!is_null($params['keyword'])) {
-            $query = $this->fetchRecordByTagId($query, $params['keyword']);
+        if(isset($params['keyword'])) {
+            $query = $this->fetchRecordByKeyword($query, $params['keyword']);
         }
-        foreach ($query as $key => $party) {
+
+        $data = [];
+
+        foreach ($query->get() as $key => $party) {
             $data[$key]['id'] = $party->id;
             $data[$key]['theme'] = $party->theme;
             $data[$key]['place'] = $party->place;
@@ -36,6 +39,7 @@ class PartyService
                 $data[$key]['tags'][$index]['name'] = $tag->name;
             }
         }
+
         return $data;
     }
 
@@ -77,7 +81,7 @@ class PartyService
 
     /**
      * @param Builder $query
-     * @param integer $pref_id
+     * @param int $pref_id
      *
      * @return Builder
      */
