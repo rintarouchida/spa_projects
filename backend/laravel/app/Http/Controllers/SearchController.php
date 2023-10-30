@@ -22,7 +22,7 @@ class SearchController extends Controller
     public function index(SearchPartyRequest $request): array
     {
         $params = $request->all();
-        $data = $this->service->searchParties($data);
+        $data = $this->service->searchParties($params);
         return $data;
     }
 }
