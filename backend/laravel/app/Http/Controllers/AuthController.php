@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Services\AuthService;
 use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -16,12 +17,13 @@ class AuthController extends Controller
     {
         $this->service = $service;
     }
+
     /**
-     * ログイン
-     *
-     * @param  mixed $request
+     * @param Request $request
+     * 
+     * @return JsonResponse
      */
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         if (Auth::attempt($request->only(["email", "password"]))) {
             // レスポンスを返す
@@ -33,12 +35,11 @@ class AuthController extends Controller
     }
 
     /**
-     * ログアウト
+     * @param Request $request
      *
-     * @param  mixed $request
-     * @return void
+     * @return JsonResponse
      */
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
         // ログアウトする
         Auth::logout();
@@ -62,9 +63,9 @@ class AuthController extends Controller
     /**
      * @param RegisterRequest $request
      *
-     * @return array
+     * @return JsonResponse
      */
-    public function register(RegisterRequest $request): array
+    public function register(RegisterRequest $request): JsonResponse
     {
         $data = $request->all();
         $this->service->register($data);
@@ -73,7 +74,7 @@ class AuthController extends Controller
 
     /**
      * @param Request $request
-     * 
+     *
      * @return void
      */
     public function edit(Request $request): void
