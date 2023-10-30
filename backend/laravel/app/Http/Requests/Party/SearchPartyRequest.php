@@ -25,8 +25,8 @@ class SearchPartyRequest extends FormRequest
     {
         return [
             'keyword'  => 'nullable|string|max:30',
-            'pref_id'  => 'nullable|int|exists:prefs,id',
-            'tag_id.*' => 'nullable|int|exists:tags,id',
+            'pref_id'  => 'nullable|integer|exists:prefs,id',
+            'tag_id.*' => 'nullable|integer|exists:tags,id',
         ];
     }
 
@@ -40,11 +40,11 @@ class SearchPartyRequest extends FormRequest
             'keyword.string'  => 'キーワードは文字列で入力してください',
             'keyword.max'     => 'キーワードは30文字以内で入力してください',
 
-            'pref_id.int'     => '都道府県IDは整数で入力してください。',
+            'pref_id.integer'     => '都道府県IDは整数で入力してください。',
             'pref_id.exists'  => '指定された都道府県は存在しません。',
 
-            'tag_id.*.int'    => 'タグIDは整数で入力してください。',
-            'tag_id.*.exists' => '指定されたタグIDは存在しません。',
+            'tag_id.*.integer'    => 'タグIDは整数で入力してください。',
+            'tag_id.*.exists' => '指定されたタグは存在しません。',
         ];
     }
 }
