@@ -17,6 +17,8 @@ class PartyService
         $sevendays=Carbon::today()->subDay(7);
         $parties = Party::with('tags')->whereDate('created_at', '>=', $sevendays)->get();
 
+        $data = [];
+
         foreach ($parties as $key => $party) {
             $data[$key]['id'] = $party->id;
             $data[$key]['theme'] = $party->theme;
