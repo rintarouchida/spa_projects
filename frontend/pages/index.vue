@@ -1,6 +1,31 @@
 <template>
   <div>
     <h1 style="margin-bottom:20px;">おすすめのもくもく会一覧</h1>
+    <!-- todo:検索フォームCSS修正 -->
+    <div class="search_box">
+      <p>都道府県</p>
+      <select v-model="pref_id">
+        <option>選択してください。</option>
+        <option class="input_form" v-for="(pref, index) in prefs" :key="index" v-bind:value="pref.id">
+        {{ pref.name }}
+        </option>
+      </select>
+      <p>タグ</p>
+      <div v-for="(tag, index) in tags" :key="index">
+        <input
+          :id="tag.id"
+          type="checkbox"
+          :value="tag.id"
+          v-model="tag_ids"
+        >
+        <label :for="tag.id">{{tag.name}}</label>
+      </div>
+
+      <p>キーワード</p>
+      <input type="text" v-model="keyword">
+      <v-btn color="red" style="color:white" @click="searchParty">検索する</v-btn>
+    </div>
+
     <div v-for="(party, index) in parties" :key="index" class="party_box">
       <div class="picture_box">写真</div>
       <div class="content_box">
@@ -23,17 +48,49 @@ export default {
   data() {
     return {
       parties: '',
+      prefs: '',
+      tags: '',
+      pref_id: null,
+      tag_ids: [],
+      keyword: null,
     }
   },
   async created() {
     this.parties = await this.$axios.get('/api/get_parties').then(res => {
       return res.data;
     });
+    this.prefs = await this.$axios.get('/api/get_prefs').then(res => {
+      return res.data;
+    });
+    this.tags = await this.$axios.get('/api/get_tags').then(res => {
+      return res.data;
+    });
+  },
+  methods:{
+    async searchParty(){
+      this.parties = await this.$axios.get('/api/search',{
+          params: {
+            keyword: this.keyword,
+            pref_id: this.pref_id,
+            tag_id: this.tag_ids,
+          }
+      }).then((res) => {
+        return res.data;
+      }).catch(err => {
+        console.log(err);
+      });
+    },
   }
 }
 </script>
 
 <style scope>
+  .search_box{
+    border: 2px solid black;
+    margin-bottom:50px;
+    height:auto;
+  }
+
   .party_box{
     border: 2px solid black;
     margin-bottom:50px;
