@@ -103,7 +103,7 @@ class PartyServiceTest extends TestCase
 
         $data = [
             'pref_id'  => 1,
-            'tag_id'   => [2, 3],
+            'tag_ids'   => [2, 3],
             'keyword' => 'place_1'
         ];
 

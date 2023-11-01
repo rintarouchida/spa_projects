@@ -72,7 +72,7 @@ export default {
           params: {
             keyword: this.keyword,
             pref_id: this.pref_id,
-            tag_id: this.tag_ids,
+            tag_ids: this.tag_ids,
           }
       }).then((res) => {
         return res.data;

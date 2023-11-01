@@ -21,8 +21,8 @@ class PartyService
         if(isset($params['pref_id'])) {
             $query = $this->fetchRecordByPrefId($query, $params['pref_id']);
         }
-        if(isset($params['tag_id'])) {
-            $query = $this->fetchRecordByTagId($query, $params['tag_id']);
+        if(isset($params['tag_ids'])) {
+            $query = $this->fetchRecordByTagId($query, $params['tag_ids']);
         }
         if(isset($params['keyword'])) {
             $query = $this->fetchRecordByKeyword($query, $params['keyword']);
