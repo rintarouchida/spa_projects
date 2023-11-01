@@ -42,7 +42,7 @@ class SearchPartyRequestTest extends TestCase
                 [
                     'pref_id' => 1,
                     'keyword' => str_repeat('a', 30),
-                    'tag_id'  => [1, 2],
+                    'tag_ids'  => [1, 2],
                 ],
                 false,
                 [],
@@ -58,13 +58,13 @@ class SearchPartyRequestTest extends TestCase
                 [
                     'pref_id' => 'a',
                     'keyword' => 123,
-                    'tag_id'  => [1, 'b'],
+                    'tag_ids'  => [1, 'b'],
                 ],
                 true,
                 [
                     'pref_id' => ['都道府県IDは整数で入力してください。'],
                     'keyword' => ['キーワードは文字列で入力してください'],
-                    'tag_id.1'  => ['タグIDは整数で入力してください。'],
+                    'tag_ids.1'  => ['タグIDは整数で入力してください。'],
                 ],
             ],
             '異常(文字数オーバー)' => [
@@ -79,12 +79,12 @@ class SearchPartyRequestTest extends TestCase
             '異常(存在しない値)' => [
                 [
                     'pref_id' => 2,
-                    'tag_id'  => [1, 2, 3],
+                    'tag_ids'  => [1, 2, 3],
                 ],
                 true,
                 [
                     'pref_id' => ['指定された都道府県は存在しません。'],
-                    'tag_id.2'=> ['指定されたタグは存在しません。']
+                    'tag_ids.2'=> ['指定されたタグは存在しません。']
                 ]
             ]
 
