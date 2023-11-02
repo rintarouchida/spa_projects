@@ -6,6 +6,7 @@ use App\Http\Requests\Party\RegisterRequest;
 use App\Services\PartyService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 
 class PartyController extends Controller
 {
@@ -16,7 +17,12 @@ class PartyController extends Controller
         $this->service = $service;
     }
 
-    public function register(RegisterRequest $request)
+    /**
+     * @param RegisterRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function register(RegisterRequest $request): JsonResponse
     {
         $data = $request->all();
         $user_id = Auth::id();
@@ -48,11 +54,11 @@ class PartyController extends Controller
     }
 
     /**
-     * もくもく会参加
-     *
      * @param Request $request
+     * 
+     * @return JsonResponse
      */
-    public function join(Request $request)
+    public function join(Request $request): JsonResponse
     {
         $party_id = $request->party_id;
         $this->service->join($party_id);
