@@ -26,9 +26,11 @@ export default {
     }
   },
   async created() {
+    setTimeout(() => this.$nuxt.$loading.start(), 500);
     this.message_lists = await this.$axios.get('/api/message/index_for_leader').then(res => {
       return res.data;
     });
+    this.$nuxt.$loading.finish();
   }
 }
 </script>

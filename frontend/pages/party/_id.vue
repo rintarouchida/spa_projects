@@ -31,12 +31,14 @@ export default {
     }
   },
   async mounted() {
+    setTimeout(() => this.$nuxt.$loading.start(), 500);
     this.party = await this.$axios.get(`api/party/get/${this.$route.params.id}`).then(res => {
       return res.data;
     });
     this.joinable = await this.$axios.get(`api/party/check_if_joined/${this.$route.params.id}`).then(res => {
       return !res.data.result;
     });
+    this.$nuxt.$loading.finish();
   },
   methods:{
     async join(){
