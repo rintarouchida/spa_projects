@@ -56,18 +56,23 @@ export default {
     }
   },
   async created() {
+    setTimeout(() => this.$nuxt.$loading.start(), 500);
+
     this.parties = await this.$axios.get('/api/get_parties').then(res => {
       return res.data;
     });
+
     this.prefs = await this.$axios.get('/api/get_prefs').then(res => {
       return res.data;
     });
     this.tags = await this.$axios.get('/api/get_tags').then(res => {
       return res.data;
     });
+    this.$nuxt.$loading.finish();
   },
   methods:{
     async searchParty(){
+      this.$nuxt.$loading.start();
       this.parties = await this.$axios.get('/api/search',{
           params: {
             keyword: this.keyword,
@@ -75,9 +80,11 @@ export default {
             tag_ids: this.tag_ids,
           }
       }).then((res) => {
+        this.$nuxt.$loading.finish();
         return res.data;
       }).catch(err => {
         console.log(err);
+        this.$nuxt.$loading.finish();
       });
     },
   }

@@ -48,6 +48,7 @@ export default {
     }
   },
   async created() {
+    setTimeout(() => this.$nuxt.$loading.start(), 500);
     this.party_theme = await this.$axios.get(`api/message/get_party_theme/${this.$route.params.id}`).then(res => {
       return res.data;
     });
@@ -58,6 +59,7 @@ export default {
       this.getMessages();
       console.log('メッセージを更新')
     },10000);
+    this.$nuxt.$loading.finish();
   },
   methods:{
     async getMessages(){
