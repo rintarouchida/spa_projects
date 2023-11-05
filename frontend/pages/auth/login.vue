@@ -8,7 +8,7 @@
       <input class="input_form" type="password" v-model="password" placeholder="パスワード"><br>
       <p class="failed_message">{{error_message}}</p>
       <v-btn color="red" style="color:white" @click="login">ログイン</v-btn>
-      <router-link to="#" class="links" style="text-decoration: none; color:blue;">パスワードを忘れたら</router-link>
+      <router-link to="/auth/reset_password" class="links" style="text-decoration: none; color:blue;">パスワードを忘れたら</router-link>
       <router-link to="/auth/register" class="links">ユーザー登録はこちらから</router-link>
     </div>
   </div>
