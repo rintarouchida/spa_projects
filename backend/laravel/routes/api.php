@@ -24,6 +24,9 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::get('/user_info', 'AuthController@get');
     Route::post('/register', 'AuthController@register')->name('register');
     Route::post('/edit', 'AuthController@edit');
+    Route::prefix('reset_password')->name('reset_password.')->group(function () {
+        Route::post('/send_email', 'ResetPasswordController@SendEmail')->name('send_email');
+    });
     Route::prefix('party')->name('party.')->group(function () {
         Route::post('/register', 'PartyController@register')->name('register');
         Route::get('/get/{id}', 'PartyController@getData')->name('get');
