@@ -2,21 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ResetPasswordService;
+use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ResetPasswordController extends Controller
 {
-    protected $service;
-
-    public function __construct(ResetPasswordService $service)
+    public function SendEmail(Request $request)
     {
-        $this->service = $service;
-    }
-
-    public function SendEmail()
-    {
-        //todo: 該当ユーザーにメール送信
+        Mail::send(new ResetPassword($request->email));
+        return response()->json(['message' => 'メールを送信しました。'], 200);
     }
 
     public function ResetPassword()
