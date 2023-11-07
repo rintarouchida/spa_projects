@@ -16,9 +16,11 @@ class ResetPassword extends Mailable
      *
      * @return void
      */
-    public function __construct(string $email)
+    public function __construct(string $email, string $token, string $name)
     {
         $this->email = $email;
+        $this->token = $token;
+        $this->name = $name;
     }
 
     /**
@@ -28,8 +30,12 @@ class ResetPassword extends Mailable
      */
     public function build()
     {
-        //todo: トークンをメールに含める
+        //todo: テスト作成
         return $this->view('email.reset_password')
+        ->with([
+            'url' => 'http://localhost:3000/auth/edit_password/'.$this->token.'?email='.$this->email,
+            'name'  => $this->name,
+        ])
         ->to($this->email)
         ->from('mokumoku_map@gmail.com', 'もくもくMAP')
         ->subject('パスワード再設定をお願いします。');
