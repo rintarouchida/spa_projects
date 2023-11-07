@@ -29,7 +29,7 @@ export default {
   methods: {
     async sendEmail() {
       await this.$axios
-        .post('/api/reset_password/send_email', {
+        .post('/api/send_email', {
           email: this.email,
         })
         .then((res) => {
