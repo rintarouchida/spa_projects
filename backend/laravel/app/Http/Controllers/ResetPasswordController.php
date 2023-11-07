@@ -6,11 +6,17 @@ use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
+use Password;
+use App\Models\User;
+
 class ResetPasswordController extends Controller
 {
-    public function SendEmail(Request $request)
+    //todo: テスト作成
+    public function sendEmail(Request $request)
     {
-        Mail::send(new ResetPassword($request->email));
+        Password::sendResetLink(['email' => $request->email], function (User $user, string $token) use ($request) {
+            Mail::send(new ResetPassword($request->email, $token, $user->name));
+        });
         return response()->json(['message' => 'メールを送信しました。'], 200);
     }
 
