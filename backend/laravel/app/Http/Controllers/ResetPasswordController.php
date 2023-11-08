@@ -20,7 +20,7 @@ class ResetPasswordController extends Controller
         return response()->json(['message' => 'メールを送信しました。'], 200);
     }
 
-    public function ResetPassword()
+    public function resetPassword()
     {
         //todo: トークンが正しいか確認, 正しければパスワード更新
     }
