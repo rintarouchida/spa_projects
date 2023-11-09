@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\Password\SendEmailRequest;
+use App\Http\Requests\Auth\Password\ResetPasswordRequest;
 use App\Mail\ResetPassword;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,7 +17,7 @@ class ResetPasswordController extends Controller
     //todo: バリデーション作成
     //todo: 細かい処理をServiceクラスにうつす
     //todo: Exeptionエラーの設置
-    public function sendEmail(Request $request)
+    public function sendEmail(SendEmailRequest $request)
     {
         Password::sendResetLink(['email' => $request->email], function (User $user, string $token) use ($request) {
             Mail::send(new ResetPassword($request->email, $token, $user->name));
@@ -23,7 +25,7 @@ class ResetPasswordController extends Controller
         return response()->json(['message' => 'メールを送信しました。'], 200);
     }
 
-    public function resetPassword(Request $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
         $result = Password::reset([
             'email' => $request->email,
