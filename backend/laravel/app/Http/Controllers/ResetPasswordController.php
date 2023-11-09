@@ -9,23 +9,42 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Http\JsonResponse;
 use Password;
 
 class ResetPasswordController extends Controller
 {
     //todo: テスト作成
-    //todo: バリデーション作成
-    //todo: 細かい処理をServiceクラスにうつす
-    //todo: Exeptionエラーの設置
-    public function sendEmail(SendEmailRequest $request)
+    /**
+     * @param SendEmailRequest $request
+     * 
+     * @return JsonResponse
+     */
+    public function sendEmail(SendEmailRequest $request): JsonResponse
     {
-        Password::sendResetLink(['email' => $request->email], function (User $user, string $token) use ($request) {
+        $result = Password::sendResetLink(['email' => $request->email],
+        function (User $user, string $token) use ($request) {
             Mail::send(new ResetPassword($request->email, $token, $user->name));
         });
+
+        if ($result === PasswordBroker::INVALID_USER) {
+            return response()->json(['message' => '無効なユーザーです。'], 400);
+        }
+
+        else if ($result === PasswordBroker::RESET_THROTTLED) {
+            return response()->json(['message' => 'トークンの有効期限が過ぎています。'], 400);
+        }
+
         return response()->json(['message' => 'メールを送信しました。'], 200);
     }
 
-    public function resetPassword(ResetPasswordRequest $request)
+    /**
+     * @param ResetPasswordRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function resetPassword(ResetPasswordRequest $request): JsonResponse
     {
         $result = Password::reset([
             'email' => $request->email,
@@ -37,6 +56,15 @@ class ResetPasswordController extends Controller
                 'password' => Hash::make($request->password),
             ]);
         });
-        return response()->json(['message' => $result], 200);
+
+        if ($result === PasswordBroker::INVALID_USER) {
+            return response()->json(['message' => '無効なユーザーです。'], 400);
+        }
+
+        else if ($result === PasswordBroker::INVALID_TOKEN) {
+            return response()->json(['message' => '無効なトークンです。'], 400);
+        }
+
+        return response()->json(['message' => 'パスワードの変更が完了しました。'], 200);
     }
 }
