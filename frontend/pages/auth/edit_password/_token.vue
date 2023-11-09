@@ -17,7 +17,7 @@
         type="password"
         placeholder="パスワード"
       />
-      <v-btn color="red" style="color: white">送信する</v-btn
+      <v-btn color="red" style="color: white" @click="resetPassword">送信する</v-btn
       >
     </div>
   </div>
@@ -34,6 +34,23 @@ export default {
       password: "",
       password_confirm: "",
     }
+  },
+  methods: {
+    async resetPassword() {
+      await this.$axios.get("sanctum/csrf-cookie");
+      await this.$axios
+        .post('/api/reset_password', {
+          email: this.email,
+          token: this.token,
+          password: this.password,
+        })
+        .then((res) => {
+          console.log(res)
+          window.alert(res.data.message)
+        }).catch((res) => {
+          console.log(res);
+        })
+    },
   },
 }
 </script>
