@@ -28,6 +28,7 @@ export default {
   },
   methods: {
     async sendEmail() {
+      await this.$axios.get("sanctum/csrf-cookie");
       await this.$axios
         .post('/api/send_email', {
           email: this.email,
@@ -35,7 +36,9 @@ export default {
         .then((res) => {
           console.log(res)
           window.alert(res.data.message)
-          this.$router.push('/')
+          this.$router.push('/auth/login')
+        }).catch((res) => {
+          console.log(res);
         })
     },
   },
