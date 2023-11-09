@@ -66,6 +66,10 @@ export default {
               this.validation.password_confirm = this.validation.errors.password_confirm;
             }
           }
+          if (err.response.status === 400) {
+            console.log(err.response.data)
+            window.alert(err.response.data.message)
+          }
         })
     },
   },
