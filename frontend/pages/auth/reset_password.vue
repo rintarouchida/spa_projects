@@ -10,6 +10,7 @@
         type="email"
         placeholder="メールアドレス"
       />
+      <p v-show="validation.email.length" v-for="(email, index) in validation.email" :key="index" class="validation_error">・{{email}}</p>
       <v-btn color="red" style="color: white" @click="sendEmail"
         >送信する</v-btn
       >
@@ -24,6 +25,10 @@ export default {
   data() {
     return {
       email: '',
+      validation: {
+        errors: [],
+        email: [],
+      },
     }
   },
   methods: {
@@ -37,8 +42,14 @@ export default {
           console.log(res)
           window.alert(res.data.message)
           this.$router.push('/auth/login')
-        }).catch((res) => {
-          console.log(res);
+        }).catch((err) => {
+          console.log(err);
+          if (err.response.status === 422) {
+            this.validation.errors = err.response.data.errors;
+            if ("email" in this.validation.errors) {
+              this.validation.email = this.validation.errors.email;
+            }
+          }
         })
     },
   },
@@ -64,5 +75,9 @@ export default {
   width: 100%;
   height: 40px;
   margin-bottom: 20px;
+}
+.validation_error{
+  color:red;
+  text-align:left;
 }
 </style>

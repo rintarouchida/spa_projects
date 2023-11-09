@@ -10,13 +10,15 @@
         type="password"
         placeholder="パスワード"
       />
+      <p v-show="validation.password.length" v-for="(password, index) in validation.password" :key="index" class="validation_error">・{{password}}</p>
       <h3 class="password_reset_items">パスワード(確認用)</h3>
       <input
         v-model="password_confirm"
         class="input_form"
         type="password"
-        placeholder="パスワード"
+        placeholder="パスワード(確認用)"
       />
+      <p v-show="validation.password_confirm.length" v-for="(password_confirm, index) in validation.password_confirm" :key="index" class="validation_error">・{{password_confirm}}</p>
       <v-btn color="red" style="color: white" @click="resetPassword">送信する</v-btn
       >
     </div>
@@ -33,6 +35,11 @@ export default {
       email: this.$route.query.email,
       password: "",
       password_confirm: "",
+      validation: {
+        errors: [],
+        password: [],
+        password_confirm: [],
+      },
     }
   },
   methods: {
@@ -43,12 +50,22 @@ export default {
           email: this.email,
           token: this.token,
           password: this.password,
+          password_confirm: this.password_confirm,
         })
         .then((res) => {
           console.log(res)
           window.alert(res.data.message)
-        }).catch((res) => {
-          console.log(res);
+        }).catch((err) => {
+          console.log(err.response.data.errors);
+          if (err.response.status === 422) {
+            this.validation.errors = err.response.data.errors;
+            if ("password" in this.validation.errors) {
+              this.validation.password = this.validation.errors.password;
+            }
+            if ("password_confirm" in this.validation.errors) {
+              this.validation.password_confirm = this.validation.errors.password_confirm;
+            }
+          }
         })
     },
   },
@@ -75,4 +92,8 @@ export default {
   height: 40px;
   margin-bottom: 20px;
 }
+.validation_error{
+    color:red;
+    text-align:left;
+  }
 </style>
