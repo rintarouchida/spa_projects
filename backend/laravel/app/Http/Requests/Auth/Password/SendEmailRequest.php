@@ -41,4 +41,3 @@ class SendEmailRequest extends FormRequest
         ];
     }
 }
-//todo: テスト作成
