@@ -50,6 +50,10 @@ export default {
               this.validation.email = this.validation.errors.email;
             }
           }
+          if (err.response.status === 400) {
+            console.log(err.response.data)
+            window.alert(err.response.data.message)
+          }
         })
     },
   },
