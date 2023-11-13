@@ -42,7 +42,6 @@ class MessageService
         return $data;
     }
 
-    //todo: テスト作成
     /**
      * @param int $message_group_id
      *

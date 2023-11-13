@@ -180,7 +180,7 @@ class MessageServiceTest extends TestCase
     }
 
     /**
-     * getMessagesByGroupId
+     * getPartyThemeByMessageGroup
      *
      * @return void
      */
