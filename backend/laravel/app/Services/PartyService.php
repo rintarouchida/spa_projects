@@ -13,7 +13,7 @@ class PartyService
     /**
      * @param array $data
      * @param integer $user_id
-     * 
+     *
      * @return void
      */
     public function register(array $data, int $user_id): void
@@ -74,8 +74,12 @@ class PartyService
     public function checkIfJoined(int $party_id): bool
     {
         $user = Auth::User();
-        $query = $user->whereHas('parties', function($query) use ($party_id){
-            $query->where('id', $party_id);
+        //todo:ロジックの変更をユニットテストに反映
+        $query = Party::where('id', $party_id)->where(function ($query) use ($user) {
+            $query->whereHas('users', function($q) use ($user){
+                $q->where('id', $user->id);
+            });
+            $query->orWhere('leader_id', $user->id);
         });
         return $query->exists();
     }

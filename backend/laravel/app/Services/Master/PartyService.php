@@ -17,8 +17,9 @@ class PartyService
     public function fetchPickUpParties(int $auth_id): array
     {
         $sevendays=Carbon::today()->subDay(7);
-        //todo:取得ロジックの変更をユニットテストに繁栄
+        //todo:取得ロジックの変更をユニットテストに反映
         $parties = Party::with(['tags', 'users'])->whereDate('created_at', '>=', $sevendays)
+        ->where('leader_id', '!=', $auth_id)
         ->where(function ($query) use ($auth_id) {
             $query->whereHas('users', function ($q) use ($auth_id) {
                 $q->whereNotIn('id', [$auth_id]);
