@@ -26,7 +26,7 @@
       <v-btn color="red" style="color:white" @click="searchParty">検索する</v-btn>
     </div>
 
-    <div v-for="(party, index) in parties" :key="index" class="party_box">
+    <div v-for="(party, index) in parties" :key="index" class="party_box" v-show="party.due_max > 0">
       <div class="picture_box">写真</div>
       <div class="content_box">
         <h1 class="theme"><router-link :to="`party/${party.id}`" style="text-decoration: none;">{{party.theme}}</router-link></h1>
