@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Party;
 use App\Services\Master\PartyService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class PartyController extends Controller
@@ -24,7 +25,8 @@ class PartyController extends Controller
      */
     public function index(): array
     {
-        $data = $this->service->fetchPickUpParties();
+        $auth_id = Auth::id();
+        $data = $this->service->fetchPickUpParties($auth_id);
         return $data;
     }
 }
