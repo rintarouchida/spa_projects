@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Carbon\Carbon;
 
-class PartyService
+class UserService
 {
     //todo:テスト作成
     /**
@@ -21,5 +21,7 @@ class PartyService
         $data['old']  = Carbon::parse($user->birthday)->age;
         $data['pref_name'] = $user->pref->name;
         $data['introduction'] = $user->introduction;
+
+        return $data;
     }
 }
