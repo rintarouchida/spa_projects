@@ -33,6 +33,11 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::post('/join', 'PartyController@join')->name('join');
         Route::get('/check_if_joined/{party_id}', 'PartyController@checkIfJoined')->name('check_if_joined');
     });
+
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('/get/{id}', 'UserController@getData')->name('get');
+    });
+
     Route::prefix('message')->name('message.')->group(function () {
         Route::get('/index', 'MessageController@index')->name('index');
         Route::get('/index_for_leader', 'MessageController@indexForLeader')->name('index_for_leader');
