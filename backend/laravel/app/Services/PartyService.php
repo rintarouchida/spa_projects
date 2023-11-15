@@ -45,7 +45,6 @@ class PartyService
         $data['place'] = $party->place;
         $data['due_max'] = $party->due_max;
         $data['user_name'] = $party->leader->name;
-        //todo:$data['user_id'] = $party->leader->id;を追加したのでテストに反映
         $data['user_id'] = $party->leader->id;
         $data['introduction'] = $party->introduction;
         $data['due_date'] = $party->due_date;
