@@ -7,7 +7,6 @@ use Carbon\Carbon;
 
 class UserService
 {
-    //todo:テスト作成
     /**
      * @param int $user_id
      *

@@ -37,7 +37,6 @@ class PartyController extends Controller
      */
     public function getData(int $party_id): array
     {
-        //todo:Serviceクラスで$data['user_id'] = $party->leader->id;を追加したのでテストに反映
         $data = $this->service->getData($party_id);
         return $data;
     }
