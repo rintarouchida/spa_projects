@@ -102,6 +102,7 @@ class PartyServiceTest extends TestCase
             'place' => '東京都港区',
             'due_max' => 10,
             'user_name' => 'ユーザー1',
+            'user_id'   => 1,
             'introduction' => '詳細1',
             'due_date' => '2023-05-08',
             'tags' => ['tag_1', 'tag_2', 'tag_3']

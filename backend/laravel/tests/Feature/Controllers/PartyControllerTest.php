@@ -90,6 +90,7 @@ class PartyControllerTest extends TestCase
                 'place' => '東京都港区',
                 'theme' => 'テストパーティー1',
                 'user_name' => 'ユーザー1',
+                'user_id'   => 1,
                 'tags' => ['tag_1', 'tag_2', 'tag_3']
             ],
         );
