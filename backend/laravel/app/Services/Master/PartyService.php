@@ -34,7 +34,34 @@ class PartyService
             $data[$key]['theme'] = $party->theme;
             $data[$key]['place'] = $party->place;
             $data[$key]['due_max'] = $party->due_max - count($party->users);
-            foreach($party->tags as $index => $tag) {
+            foreach ($party->tags as $index => $tag) {
+                $data[$key]['tags'][$index]['name'] = $tag->name;
+            }
+        }
+        return $data;
+    }
+
+    //todo:テスト作成
+    /**
+     * @param int $auth_id
+     *
+     * @return array
+     */
+    public function fetchPickUpCreatedParties(int $auth_id): array
+    {
+        $sevendays=Carbon::today()->subDay(7);
+        $parties = Party::with(['tags', 'users'])->whereDate('created_at', '>=', $sevendays)
+        ->where('leader_id', $auth_id)
+        ->get();
+
+        $data = [];
+
+        foreach ($parties as $key => $party) {
+            $data[$key]['id'] = $party->id;
+            $data[$key]['theme'] = $party->theme;
+            $data[$key]['place'] = $party->place;
+            $data[$key]['due_max'] = $party->due_max - count($party->users);
+            foreach ($party->tags as $index => $tag) {
                 $data[$key]['tags'][$index]['name'] = $tag->name;
             }
         }

@@ -29,4 +29,13 @@ class PartyController extends Controller
         $data = $this->service->fetchPickUpParties($auth_id);
         return $data;
     }
+
+    //ログインユーザーが作成したもくもく会一覧を抽出
+    //todo:テスト作成
+    public function indexCreated()
+    {
+        $auth_id = Auth::id();
+        $data = $this->service->fetchPickUpCreatedParties($auth_id);
+        return $data;
+    }
 }
