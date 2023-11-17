@@ -37,8 +37,6 @@ class PartyController extends Controller
         return $data;
     }
 
-    //ログインユーザーが参加したもくもく会一覧を抽出
-    //todo:テスト作成
     public function indexParticipated()
     {
         $auth_id = Auth::id();
