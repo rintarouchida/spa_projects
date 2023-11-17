@@ -67,7 +67,6 @@ class PartyService
         return $data;
     }
 
-    //todo:テスト作成
     /**
      * @param int $auth_id
      *
