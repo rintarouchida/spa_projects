@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class PartyControllerTest extends TestCase
 {
-    //todo:テスト修正
     /**
     * index
     *
@@ -20,19 +19,26 @@ class PartyControllerTest extends TestCase
     */
     public function test_index()
     {
-        Party::factory(3)->create(new Sequence(
-            ['id' => 1, 'theme' => 'party_1'],
-            ['id' => 2, 'theme' => 'party_2'],
-            ['id' => 3, 'theme' => 'party_3'],
+        $user = User::factory(['id' => 1])->create();
+        User::factory(['id' => 2])->create();
+        $this->actingAs($user);
+
+        Party::factory(5)->create(new Sequence(
+            ['id' => 1, 'theme' => 'party_1', 'leader_id' => 1],
+            ['id' => 2, 'theme' => 'party_2', 'leader_id' => 2],
+            ['id' => 3, 'theme' => 'party_3', 'leader_id' => 2],
+            ['id' => 4, 'theme' => 'party_4', 'leader_id' => 2],
+            ['id' => 5, 'theme' => 'party_5', 'leader_id' => 2],
         ));
+
+        $user->parties()->attach([2, 3]);
 
         $response = $this->get(route('parties'));
 
         $response->assertStatus(200);
         $response->assertJson([
-            ['id' => 1, 'theme' => 'party_1'],
-            ['id' => 2, 'theme' => 'party_2'],
-            ['id' => 3, 'theme' => 'party_3'],
+            ['id' => 4, 'theme' => 'party_4'],
+            ['id' => 5, 'theme' => 'party_5'],
         ]);
     }
 
