@@ -14,7 +14,6 @@ class UserController extends Controller
         $this->service = $service;
     }
 
-    //todo:テスト作成
     /**
      * @param int $user_id
      *
