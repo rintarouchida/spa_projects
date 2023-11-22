@@ -31,10 +31,9 @@ class SearchPartyRequest extends FormRequest
     }
 
     /**
-     * バリデーションメッセージ
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'keyword.string'  => 'キーワードは文字列で入力してください',

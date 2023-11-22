@@ -21,7 +21,7 @@ class SendEmailRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'email' => 'required|exists:users,email|email|',
@@ -29,10 +29,9 @@ class SendEmailRequest extends FormRequest
     }
 
     /**
-     * バリデーションメッセージ
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'email.required' => 'メールアドレスを入力してください。',

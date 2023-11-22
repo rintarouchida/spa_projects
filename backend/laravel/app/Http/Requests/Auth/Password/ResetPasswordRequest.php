@@ -21,7 +21,7 @@ class ResetPasswordRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'password'         => 'required|string|max:255|min:8',
@@ -30,10 +30,9 @@ class ResetPasswordRequest extends FormRequest
     }
 
     /**
-     * バリデーションメッセージ
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'password.required'         => 'パスワードを入力してください。',

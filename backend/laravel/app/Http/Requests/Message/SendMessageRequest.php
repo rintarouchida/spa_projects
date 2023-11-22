@@ -21,7 +21,7 @@ class SendMessageRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'content' => 'required|string|max:255',
@@ -29,10 +29,9 @@ class SendMessageRequest extends FormRequest
     }
 
     /**
-     * バリデーションメッセージ
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'content.required' => 'メッセージを入力してください。',

@@ -34,10 +34,9 @@ class RegisterRequest extends FormRequest
     }
 
     /**
-     * バリデーションメッセージ
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'theme.required' => '題名を入力してください。',
