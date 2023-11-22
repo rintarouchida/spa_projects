@@ -21,7 +21,7 @@ class RegisterRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|string|max:255',
@@ -35,10 +35,9 @@ class RegisterRequest extends FormRequest
     }
 
     /**
-     * バリデーションメッセージ
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'name.required' => '名前を入力してください。',
