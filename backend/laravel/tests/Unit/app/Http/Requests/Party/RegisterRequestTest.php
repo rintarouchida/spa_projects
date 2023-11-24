@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\app\Http\Requests\Party;
 
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Party\RegisterRequest;
+use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
 class RegisterRequestTest extends TestCase
