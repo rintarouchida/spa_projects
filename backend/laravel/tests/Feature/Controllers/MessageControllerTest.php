@@ -8,8 +8,8 @@ use App\Models\Party;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Tests\TestCase;
 
 class MessageControllerTest extends TestCase
 {

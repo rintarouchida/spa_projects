@@ -5,8 +5,8 @@ namespace Tests\Feature\Controllers;
 use App\Models\User;
 use App\Models\Pref;
 use App\Services\UserService;
-use Tests\TestCase;
 use Carbon\Carbon;
+use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {

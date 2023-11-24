@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\app\Http\Requests\Auth;
 
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
 class RegisterRequestTest extends TestCase

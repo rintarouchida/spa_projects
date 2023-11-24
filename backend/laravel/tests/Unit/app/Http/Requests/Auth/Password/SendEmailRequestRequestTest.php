@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\app\Http\Requests\Auth\Password;
 
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Auth\Password\SendEmailRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
 class SendEmailRequestRequestTest extends TestCase
