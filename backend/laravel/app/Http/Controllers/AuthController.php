@@ -20,16 +20,14 @@ class AuthController extends Controller
 
     /**
      * @param Request $request
-     * 
+     *
      * @return JsonResponse
      */
     public function login(Request $request): JsonResponse
     {
         if (Auth::attempt($request->only(["email", "password"]))) {
-            // レスポンスを返す
             return response()->json(['message' => 'ログインしました'], 200);
         } else {
-            // エラーレスポンスを返す
             return response()->json(['message' => 'パスワードかメールアドレスが間違っています。もう一度ログインし直してください。'], 401);
         }
     }
@@ -41,9 +39,7 @@ class AuthController extends Controller
      */
     public function logout(Request $request): JsonResponse
     {
-        // ログアウトする
         Auth::logout();
-        // レスポンスを返す
         return response()->json(['message' => 'Logged out'], 200);
     }
 
