@@ -19,8 +19,6 @@ class PartyController extends Controller
     }
 
     /**
-     * おすすめのもくもく会を抽出(現状は7日以内に作られたものをピックアップ)
-     *
      * @return array
      */
     public function index(): array

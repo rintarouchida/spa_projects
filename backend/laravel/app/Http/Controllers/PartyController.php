@@ -42,7 +42,6 @@ class PartyController extends Controller
     }
 
     /**
-     * 参加済みか判定
      * @param int $party_id
      *
      * @return bool
