@@ -8,23 +8,33 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PartyService
 {
+    //todo:テスト修正
     /**
-    * @param array $params
-    *
-    * @return array
-    */
-    public function searchParties(array $params): array
+     *
+     * @param array $params
+     * @param int $auth_id
+     *
+     * @return array
+     */
+    public function searchParties(array $params, int $auth_id): array
     {
         $sevendays=Carbon::today()->subDay(7);
-        $query = Party::with('tags')->whereDate('created_at', '>=', $sevendays);
+        $query = Party::with('tags')->whereDate('created_at', '>=', $sevendays)
+        ->where('leader_id', '!=', $auth_id)
+        ->where(function ($query) use ($auth_id) {
+            $query->whereHas('users', function ($q) use ($auth_id) {
+                $q->whereNotIn('id', [$auth_id]);
+            })
+            ->orWhereDoesntHave('users');
+        });
 
-        if(isset($params['pref_id'])) {
+        if (isset($params['pref_id'])) {
             $query = $this->fetchRecordByPrefId($query, $params['pref_id']);
         }
-        if(isset($params['tag_ids'])) {
+        if (isset($params['tag_ids'])) {
             $query = $this->fetchRecordByTagId($query, $params['tag_ids']);
         }
-        if(isset($params['keyword'])) {
+        if (isset($params['keyword'])) {
             $query = $this->fetchRecordByKeyword($query, $params['keyword']);
         }
 
