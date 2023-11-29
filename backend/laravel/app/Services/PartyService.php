@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use App\Models\Message;
 use App\Models\MessageGroup;
 use App\Models\Party;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class PartyService

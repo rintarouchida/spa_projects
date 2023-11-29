@@ -2,8 +2,8 @@
 
 namespace App\Services\Search;
 
-use App\Models\Party;
 use Carbon\Carbon;
+use App\Models\Party;
 use Illuminate\Database\Eloquent\Builder;
 
 class PartyService
