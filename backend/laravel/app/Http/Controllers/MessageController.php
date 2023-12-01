@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\MessageService;
 use App\Http\Requests\Message\SendMessageRequest;
+use App\Services\MessageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +18,7 @@ class MessageController extends Controller
 
     /**
      * @param SendMessageRequest $request
-     * 
+     *
      * @return void
      */
     public function sendMessage(SendMessageRequest $request): void
