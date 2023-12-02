@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 class PartyService
 {
     //todo:テスト修正
+    //todo:tag_id追加分のテスト修正
     /**
      *
      * @param array $params
@@ -31,8 +32,9 @@ class PartyService
         if (isset($params['pref_id'])) {
             $query = $this->fetchRecordByPrefId($query, $params['pref_id']);
         }
-        if (isset($params['tag_ids'])) {
-            $query = $this->fetchRecordByTagId($query, $params['tag_ids']);
+
+        if (isset($params['tag_id'])) {
+            $query = $this->fetchRecordByTagId($query, $params['tag_id']);
         }
         if (isset($params['keyword'])) {
             $query = $this->fetchRecordByKeyword($query, $params['keyword']);
@@ -62,13 +64,15 @@ class PartyService
     protected function fetchRecordByKeyword(Builder $query, string $keyword): Builder
     {
         //文字列検索の条件洗い出し
-        // →文字列がthemeに入る
-        $query->where('theme', 'like', '%'.$keyword.'%');
-        // →文字列がplaceに入る
-        $query->orWhere('place', 'like', '%'.$keyword.'%');
-        // →文字列がintroductionに入る
-        $query->orWhere('introduction', 'like', '%'.$keyword.'%');
-        // →3つのうちどれかに当てはまるレコードを全て取り出す
+        $query->where(function ($q) use ($keyword) {
+            // →文字列がthemeに入る
+            $q->where('theme', 'like', '%'.$keyword.'%');
+            // →文字列がplaceに入る
+            $q->orWhere('place', 'like', '%'.$keyword.'%');
+            // →文字列がintroductionに入る
+            $q->orWhere('introduction', 'like', '%'.$keyword.'%');
+            // →3つのうちどれかに当てはまるレコードを全て取り出す
+        });
         return $query;
     }
 
@@ -78,13 +82,11 @@ class PartyService
      *
      * @return Builder
      */
-    protected function fetchRecordByTagId(Builder $query, array $tag_ids): Builder
+    protected function fetchRecordByTagId(Builder $query, int $tag_id): Builder
     {
-        //タグID条件の洗い出し
-        //    →tag_idsのどれか一つをもつレコードを全て取り出す
-        //    →(例)tag_ids=[1, 2, 3]とすると、[3, 4, 5]に紐ずくレコードは3が合致するので抽出される
-        $query->whereHas('tags', function ($q) use ($tag_ids) {
-            $q->whereIn('tags.id', $tag_ids);
+
+        $query->whereHas('tags', function ($q) use ($tag_id) {
+            $q->where('tags.id', $tag_id);
         });
         return $query;
     }

@@ -26,7 +26,9 @@ class SearchPartyRequest extends FormRequest
         return [
             'keyword'  => 'nullable|string|max:30',
             'pref_id'  => 'nullable|integer|exists:prefs,id',
-            'tag_ids.*' => 'nullable|integer|exists:tags,id',
+            // 'tag_ids.*' => 'nullable|integer|exists:tags,id',
+            //todo:テスト修正
+            'tag_id' => 'nullable|int|exists:prefs,id',
         ];
     }
 
