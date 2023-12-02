@@ -1,33 +1,25 @@
 <template>
   <div>
-    <!-- todo:検索フォームCSS修正 -->
     <div class="search_box">
         <div class="pref_form">
           <h2>都道府県</h2>
           <select v-model="pref_id">
-            <option selected value="">選択してください。</option>
+            <option value="">選択してください。</option>
             <option class="input_form" v-for="(pref, index) in prefs" :key="index" v-bind:value="pref.id">
             {{ pref.name }}
             </option>
           </select>
         </div>
-        <!-- todo:タグ検索ロジック改修 -->
+
         <div class="tag_form">
           <h2>タグ</h2>
-          <select name="" id="">
-            <option value="">タグ検索</option>
+          <select v-model="tag_id">
+            <option value="">選択してください。</option>
+            <option class="input_form" v-for="(tag, index) in tags" :key="index" v-bind:value="tag.id">
+            {{ tag.name }}
+            </option>
           </select>
         </div>
-
-        <!-- <div v-for="(tag, index) in tags" :key="index">
-          <input
-            :id="tag.id"
-            type="checkbox"
-            :value="tag.id"
-            v-model="tag_ids"
-          >
-          <label :for="tag.id">{{tag.name}}</label>
-        </div> -->
 
       <div class="keyword_form">
         <h2>キーワード</h2>
@@ -64,8 +56,8 @@ export default {
       parties: '',
       prefs: '',
       tags: '',
-      pref_id: null,
-      tag_ids: [],
+      pref_id: '',
+      tag_id: '',
       keyword: null,
     }
   },
@@ -91,7 +83,7 @@ export default {
           params: {
             keyword: this.keyword,
             pref_id: this.pref_id,
-            tag_ids: this.tag_ids,
+            tag_id: this.tag_id,
           }
       }).then((res) => {
         this.$nuxt.$loading.finish();
