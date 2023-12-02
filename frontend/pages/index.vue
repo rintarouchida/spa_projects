@@ -1,30 +1,44 @@
 <template>
   <div>
-    <h1 style="margin-bottom:20px;">おすすめのもくもく会一覧</h1>
     <!-- todo:検索フォームCSS修正 -->
     <div class="search_box">
-      <p>都道府県</p>
-      <select v-model="pref_id">
-        <option>選択してください。</option>
-        <option class="input_form" v-for="(pref, index) in prefs" :key="index" v-bind:value="pref.id">
-        {{ pref.name }}
-        </option>
-      </select>
-      <p>タグ</p>
-      <div v-for="(tag, index) in tags" :key="index">
-        <input
-          :id="tag.id"
-          type="checkbox"
-          :value="tag.id"
-          v-model="tag_ids"
-        >
-        <label :for="tag.id">{{tag.name}}</label>
-      </div>
+        <div class="pref_form">
+          <h2>都道府県</h2>
+          <select v-model="pref_id">
+            <option selected value="">選択してください。</option>
+            <option class="input_form" v-for="(pref, index) in prefs" :key="index" v-bind:value="pref.id">
+            {{ pref.name }}
+            </option>
+          </select>
+        </div>
+        <!-- todo:タグ検索ロジック改修 -->
+        <div class="tag_form">
+          <h2>タグ</h2>
+          <select name="" id="">
+            <option value="">タグ検索</option>
+          </select>
+        </div>
 
-      <p>キーワード</p>
-      <input type="text" v-model="keyword">
-      <v-btn color="red" style="color:white" @click="searchParty">検索する</v-btn>
+        <!-- <div v-for="(tag, index) in tags" :key="index">
+          <input
+            :id="tag.id"
+            type="checkbox"
+            :value="tag.id"
+            v-model="tag_ids"
+          >
+          <label :for="tag.id">{{tag.name}}</label>
+        </div> -->
+
+      <div class="keyword_form">
+        <h2>キーワード</h2>
+        <input type="text" v-model="keyword">
+      </div>
+      <div style="text-align: center; margin-bottom:20px;">
+      <v-btn color="red" style="color:white;" @click="searchParty">検索する</v-btn>
+      </div>
     </div>
+
+    <h1 style="margin-bottom:20px;">もくもく会一覧</h1>
 
     <div v-for="(party, index) in parties" :key="index" class="party_box" v-show="party.due_max > 0">
       <div class="picture_box">写真</div>
@@ -96,6 +110,39 @@ export default {
     border: 2px solid black;
     margin-bottom:50px;
     height:auto;
+  }
+
+  .pref_form{
+    width:50%;
+    padding:20px;
+    float:left;
+  }
+  .pref_form>select{
+    width:80%;
+    height:50px;
+    font-size:20px;
+    border:1px solid black;
+  }
+
+  .tag_form{
+    width:50%;
+    padding:20px;
+    float:right;
+  }
+  .tag_form>select{
+    width:80%;
+    height:50px;
+    font-size:20px;
+    border:1px solid black;
+  }
+
+  .keyword_form{
+    padding:20px;
+  }
+  .keyword_form>input{
+    width:100%;
+    height:40px;
+    border:1px solid black;
   }
 
   .party_box{
