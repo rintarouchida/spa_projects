@@ -63,17 +63,15 @@ export default {
   },
   async created() {
     setTimeout(() => this.$nuxt.$loading.start(), 500);
+    console.log(this.$PREF[0].name)
 
     this.parties = await this.$axios.get('/api/get_parties').then(res => {
       return res.data;
     });
+    // todo:タグ, 都府道府県マスターデータ取得APIの削除検討
+    this.prefs = this.$PREF;
 
-    this.prefs = await this.$axios.get('/api/get_prefs').then(res => {
-      return res.data;
-    });
-    this.tags = await this.$axios.get('/api/get_tags').then(res => {
-      return res.data;
-    });
+    this.tags = this.$TAG;
     this.$nuxt.$loading.finish();
   },
   methods:{
