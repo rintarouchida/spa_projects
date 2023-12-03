@@ -74,10 +74,8 @@ export default {
       },
     }
   },
-  async mounted() {
-    this.prefs = await this.$axios.get('/api/get_prefs').then(res => {
-      return res.data;
-    });
+  created() {
+    this.prefs = this.$PREF;
   },
   methods:{
     async register(){
