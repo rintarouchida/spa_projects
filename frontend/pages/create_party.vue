@@ -84,13 +84,9 @@ export default {
       },
     }
   },
-  async mounted() {
-    this.prefs = await this.$axios.get('/api/get_prefs').then(res => {
-      return res.data;
-    });
-    this.tags = await this.$axios.get('/api/get_tags').then(res => {
-      return res.data;
-    });
+  created() {
+    this.prefs = this.$PREF;
+    this.tags = this.$TAG;
   },
   methods:{
     async register(){
