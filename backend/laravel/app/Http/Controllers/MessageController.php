@@ -59,15 +59,4 @@ class MessageController extends Controller
         $messages = $this->service->getMessagesByGroupId($message_group_id, $user_id);
         return $messages;
     }
-
-    //todo: 削除
-    /**
-     * @param int $message_group_id
-     * @return string
-     */
-    public function getPartyThemeByMessageGroup(int $message_group_id): string
-    {
-        $party_theme = $this->service->getPartyThemeByMessageGroup($message_group_id);
-        return $party_theme;
-    }
 }
