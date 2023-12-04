@@ -178,18 +178,4 @@ class MessageServiceTest extends TestCase
             ],
         ]);
     }
-
-    /**
-     * getPartyThemeByMessageGroup
-     *
-     * @return void
-     */
-    public function test_party_theme_by_message_group()
-    {
-        Party::factory(['id' => 1, 'theme' => 'party_1'])->create();
-        MessageGroup::factory(['id' => 1, 'party_id' => 1])->create();
-        $service = new MessageService();
-        $actual = $service->getPartyThemeByMessageGroup(1);
-        $this->assertSame($actual, 'party_1');
-    }
 }

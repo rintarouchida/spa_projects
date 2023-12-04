@@ -42,19 +42,6 @@ class MessageService
         return $data;
     }
 
-    //todo:テストと一緒に削除
-    /**
-     * @param int $message_group_id
-     *
-     * @return string
-     */
-    public function getPartyThemeByMessageGroup(int $message_group_id): string
-    {
-        $message_group = MessageGroup::find($message_group_id);
-        $party_theme = $message_group->party->theme;
-        return $party_theme;
-    }
-
     //todo:テスト修正
     /**
      * @param int $message_group_id
