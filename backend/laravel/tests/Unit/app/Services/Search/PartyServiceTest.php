@@ -56,8 +56,8 @@ class PartyServiceTest extends TestCase
 
         $method = new ReflectionMethod(PartyService::class, 'fetchRecordByTagId');
         $method->setAccessible(true);
-        $actual = $method->invoke(new PartyService, Party::query(), [1, 2]);
-        $this->assertSame([1, 2], $actual->get()->pluck('id')->toArray());
+        $actual = $method->invoke(new PartyService, Party::query(), 3);
+        $this->assertSame([2, 3], $actual->get()->pluck('id')->toArray());
     }
 
     /**

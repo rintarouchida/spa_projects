@@ -109,33 +109,36 @@ class MessageControllerTest extends TestCase
         $response = $this->get(route('message.get', $message_group->id));
         $response->assertStatus(200);
         $response->assertJson([
-            [
-                'id'               => 1,
-                'content'          => 'メッセージ1',
-                'created_at'       => '2023-10-13 10:00:00',
-                'is_users_message' => true,
-                'user_name'        => 'ユーザー1',
-            ],
-            [
-                'id'               => 2,
-                'content'          => 'メッセージ2',
-                'created_at'       => '2023-10-14 10:00:00',
-                'is_users_message' => false,
-                'user_name'        => 'ユーザー2',
-            ],
-            [
-                'id'               => 3,
-                'content'          => 'メッセージ3',
-                'created_at'       => '2023-10-15 10:00:00',
-                'is_users_message' => false,
-                'user_name'        => 'ユーザー3',
-            ],
-            [
-                'id'               => 4,
-                'content'          => 'メッセージ4',
-                'created_at'       => '2023-10-16 10:00:00',
-                'is_users_message' => false,
-                'user_name'        => 'ユーザー4',
+            'theme' => 'party_1',
+            'messages' => [
+                [
+                    'id'               => 1,
+                    'content'          => 'メッセージ1',
+                    'created_at'       => '2023-10-13 10:00:00',
+                    'is_users_message' => true,
+                    'user_name'        => 'ユーザー1',
+                ],
+                [
+                    'id'               => 2,
+                    'content'          => 'メッセージ2',
+                    'created_at'       => '2023-10-14 10:00:00',
+                    'is_users_message' => false,
+                    'user_name'        => 'ユーザー2',
+                ],
+                [
+                    'id'               => 3,
+                    'content'          => 'メッセージ3',
+                    'created_at'       => '2023-10-15 10:00:00',
+                    'is_users_message' => false,
+                    'user_name'        => 'ユーザー3',
+                ],
+                [
+                    'id'               => 4,
+                    'content'          => 'メッセージ4',
+                    'created_at'       => '2023-10-16 10:00:00',
+                    'is_users_message' => false,
+                    'user_name'        => 'ユーザー4',
+                ],
             ],
         ]);
     }
