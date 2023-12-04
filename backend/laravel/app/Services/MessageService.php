@@ -42,6 +42,7 @@ class MessageService
         return $data;
     }
 
+    //todo:テストと一緒に削除
     /**
      * @param int $message_group_id
      *
@@ -54,6 +55,7 @@ class MessageService
         return $party_theme;
     }
 
+    //todo:テスト修正
     /**
      * @param int $message_group_id
      * @param int $user_id
@@ -64,12 +66,14 @@ class MessageService
     {
         $messages = Message::where('message_group_id', $message_group_id)->with(['user'])->get();
         $data = [];
+        $data['theme'] = MessageGroup::find($message_group_id)->party->theme;
+        $data['messages'] = [];
         foreach ($messages as $key => $message) {
-            $data[$key]['id'] = $message->id;
-            $data[$key]['content'] = $message->content;
-            $data[$key]['created_at'] = $message->created_at->format('Y-m-d H:i:s');
-            $data[$key]['is_users_message'] = ($message->user->id === $user_id);
-            $data[$key]['user_name'] = $message->user->name;
+            $data['messages'][$key]['id'] = $message->id;
+            $data['messages'][$key]['content'] = $message->content;
+            $data['messages'][$key]['created_at'] = $message->created_at->format('Y-m-d H:i:s');
+            $data['messages'][$key]['is_users_message'] = ($message->user->id === $user_id);
+            $data['messages'][$key]['user_name'] = $message->user->name;
         }
         return $data;
     }

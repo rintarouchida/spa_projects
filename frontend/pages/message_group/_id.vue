@@ -38,6 +38,7 @@ export default {
     return {
       party: '',
       id: this.$route.params.id,
+      data: [],
       messages: [],
       party_theme: '',
       content: '',
@@ -49,12 +50,12 @@ export default {
   },
   async created() {
     setTimeout(() => this.$nuxt.$loading.start(), 500);
-    this.party_theme = await this.$axios.get(`api/message/get_party_theme/${this.$route.params.id}`).then(res => {
+    this.data = await this.$axios.get(`api/message/get/${this.$route.params.id}`).then(res => {
       return res.data;
     });
-    this.messages = await this.$axios.get(`api/message/get/${this.$route.params.id}`).then(res => {
-      return res.data;
-    });
+
+    this.party_theme = this.data.theme;
+    this.messages = this.data.messages;
     setInterval(() => {
       this.getMessages();
       console.log('メッセージを更新')
@@ -64,7 +65,7 @@ export default {
   methods:{
     async getMessages(){
       this.messages = await this.$axios.get(`api/message/get/${this.$route.params.id}`).then(res => {
-        return res.data;
+        return res.data.messages;
       });
     },
     async sendMessage(){
