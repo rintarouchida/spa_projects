@@ -48,7 +48,6 @@ class MessageController extends Controller
         return $message_lists;
     }
 
-    //todo:テスト修正
     /**
      * @param int $message_group_id
      * @return array
