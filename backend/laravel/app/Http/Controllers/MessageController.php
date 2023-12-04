@@ -48,6 +48,7 @@ class MessageController extends Controller
         return $message_lists;
     }
 
+    //todo:テスト修正
     /**
      * @param int $message_group_id
      * @return array
@@ -59,7 +60,7 @@ class MessageController extends Controller
         return $messages;
     }
 
-    //todo: テスト作成
+    //todo: 削除
     /**
      * @param int $message_group_id
      * @return string
