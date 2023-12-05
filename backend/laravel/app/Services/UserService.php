@@ -14,7 +14,6 @@ class UserService
      */
     public function getdata(int $user_id): array
     {
-        //todo:テスト修正
         $user = User::find($user_id);
         $data = [];
         $data['id'] = $user->id;
@@ -30,7 +29,6 @@ class UserService
         return $data;
     }
 
-    //todo:ユーザー更新関数作る
     /**
      * @param array $data
      *

@@ -38,7 +38,6 @@ class UserController extends Controller
         return $data;
     }
 
-    //todo:テスト作成
     public function updateAuthData(UpdateRequest $request, int $auth_id)
     {
         $data = $request->only(["name", "email", "birthday", "pref_id", "introduction", "twitter_url"]);
