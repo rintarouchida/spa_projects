@@ -48,9 +48,18 @@ const PREF = [
   {id:47, name:"沖縄県"},
 ]
 const TAG = [
-  {id:1, name:"Ruby"},
-  {id:2, name:"Laravel"},
-  {id:3, name:"AWS"},
+  {id:1, name:"PHP"},
+  {id:2, name:"Ruby"},
+  {id:3, name:"Python"},
+  {id:4, name:"Java"},
+  {id:5, name:"Go"},
+  {id:6, name:"JavaScript"},
+  {id:7, name:"Swift"},
+  {id:8, name:"Kotlin"},
+  {id:9, name:"Linux"},
+  {id:10, name:"MySQL"},
+  {id:11, name:"AWS"},
+  {id:12, name:"Docker"},
 ]
 
 export default (context, inject) => {
