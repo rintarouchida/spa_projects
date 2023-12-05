@@ -36,6 +36,8 @@ Route::namespace('App\Http\Controllers')->group(function () {
 
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/get/{id}', 'UserController@getData')->name('get');
+        Route::get('/get_auth', 'UserController@getAuthData')->name('get_auth');
+        Route::post('/update_auth/{auth_id}', 'UserController@updateAuthData')->name('update_auth');
     });
 
     Route::prefix('message')->name('message.')->group(function () {

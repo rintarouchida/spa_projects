@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\UpdateRequest;
+use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -23,5 +26,24 @@ class UserController extends Controller
     {
         $data = $this->service->getData($user_id);
         return $data;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAuthData(): array
+    {
+        $user_id = Auth::id();
+        $data = $this->service->getData($user_id);
+        return $data;
+    }
+
+    //todo:テスト作成
+    public function updateAuthData(UpdateRequest $request, int $auth_id)
+    {
+        $data = $request->only(["name", "email", "birthday", "pref_id", "introduction", "twitter_url"]);
+        $user = User::find($auth_id);
+        $this->service->update($user, $data);
+        return response()->json(['message' => '編集が完了しました'], 200);
     }
 }
