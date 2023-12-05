@@ -30,6 +30,7 @@ class RegisterRequest extends FormRequest
             'place' => 'required',
             'due_max' => 'required',
             'due_date' => 'required',
+            'tag_ids' => 'nullable|max:3'
         ];
     }
 
@@ -52,6 +53,9 @@ class RegisterRequest extends FormRequest
             'due_max.required' => '定員を選択してください。',
 
             'due_date.required' => '締切を入力してください。',
+
+            //todo:テスト作成
+            'tag_ids.max' => 'タグの選択は3つまでです。',
         ];
     }
 }
