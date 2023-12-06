@@ -1,9 +1,8 @@
 <template>
   <v-app dark>
-  <HeaderGuest />
+    <HeaderGuest />
     <v-main>
       <v-container>
-        ログイン前
         <Nuxt />
       </v-container>
     </v-main>
@@ -14,8 +13,7 @@
 export default {
   name: 'GuestLayout',
   data() {
-    return {
-    }
+    return {}
   },
 }
 </script>

@@ -118,7 +118,7 @@
         ・{{ due_date }}
       </p>
 
-      <h3 class="register_items">紐付けるタグ</h3>
+      <h3 class="register_items">紐付けるタグ(3つまで)</h3>
       <v-container>
         <v-row>
           <v-col

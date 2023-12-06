@@ -1,9 +1,8 @@
 <template>
   <v-app dark>
-  <Header />
+    <Header />
     <v-main>
       <v-container>
-        ログイン中
         <Nuxt />
       </v-container>
     </v-main>
@@ -14,8 +13,7 @@
 export default {
   name: 'LoginedLayout',
   data() {
-    return {
-    }
+    return {}
   },
 }
 </script>

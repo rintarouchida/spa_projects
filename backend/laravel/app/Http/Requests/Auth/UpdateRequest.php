@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Auth;
 //todo:テスト作成
 class UpdateRequest extends FormRequest
 {
-
-    public function __construct()
-    {
-        $id = Auth::id();
-    }
     /**
      * Determine if the user is authorized to make this request.
      *
