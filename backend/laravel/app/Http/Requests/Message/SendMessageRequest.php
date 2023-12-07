@@ -35,8 +35,8 @@ class SendMessageRequest extends FormRequest
     {
         return [
             'content.required' => 'メッセージを入力してください。',
-            'content.string' => 'メッセージは文字列で入力してください。',
-            'content.max' => 'メッセージは255文字以内で入力してください。',
+            'content.string'   => 'メッセージは文字列で入力してください。',
+            'content.max'      => 'メッセージは255文字以内で入力してください。',
         ];
     }
 }
