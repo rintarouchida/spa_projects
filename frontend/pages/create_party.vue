@@ -119,28 +119,26 @@
       </p>
 
       <h3 class="register_items">紐付けるタグ(3つまで)</h3>
-      <v-container>
-        <v-row>
-          <v-col
-            v-for="(tag, index) in tags"
-            :key="index"
-            cols="12"
-            sm="6"
-            md="4"
-            lg="3"
-            xl="3"
-            class="register_items"
-          >
-            <input
-              :id="tag.id"
-              v-model="tag_ids"
-              type="checkbox"
-              :value="tag.id"
-            />
-            <label :for="tag.id">{{ tag.name }}</label>
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-row>
+        <v-col
+          v-for="(tag, index) in tags"
+          :key="index"
+          cols="12"
+          sm="6"
+          md="4"
+          lg="3"
+          xl="3"
+          class="register_items"
+        >
+          <input
+            :id="tag.id"
+            v-model="tag_ids"
+            type="checkbox"
+            :value="tag.id"
+          />
+          <label :for="tag.id">{{ tag.name }}</label>
+        </v-col>
+      </v-row>
       <p
         v-for="(tag_ids, index) in validation.tag_ids"
         v-show="validation.tag_ids.length"
