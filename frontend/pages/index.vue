@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container class="search_box">
+    <div class="search_box">
       <v-row>
         <v-col cols="12" sm="6" md="6" lg="6" xl="6" class="pref_form">
           <h2>都道府県</h2>
@@ -41,11 +41,11 @@
           >検索する</v-btn
         >
       </div>
-    </v-container>
+    </div>
 
     <h1 style="margin-bottom: 20px">もくもく会一覧</h1>
 
-    <v-container
+    <div
       v-for="(party, index) in parties"
       v-show="party.due_max > 0"
       :key="index"
@@ -73,7 +73,7 @@
           <p>定員: 残り{{ party.due_max }}人</p>
         </v-col>
       </v-row>
-    </v-container>
+    </div>
   </div>
 </template>
 
