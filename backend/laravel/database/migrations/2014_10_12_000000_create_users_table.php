@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('birthday')->nullable();
             $table->string('introduction')->nullable();
             $table->string('twitter_url')->nullable();
+            $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

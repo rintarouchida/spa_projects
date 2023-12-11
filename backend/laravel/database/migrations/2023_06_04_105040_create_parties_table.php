@@ -20,6 +20,7 @@ class CreatePartiesTable extends Migration
             $table->integer('due_max');
             $table->date('due_date');
             $table->string('introduction');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
