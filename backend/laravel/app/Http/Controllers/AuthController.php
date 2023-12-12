@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\UpdateRequest;
 use App\Models\User;
 use App\Services\AuthService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -68,6 +70,29 @@ class AuthController extends Controller
         return response()->json(['message' => '登録が完了しました。'], 200);
     }
 
+    //todo:テスト作成
+    /**
+     * @return array
+     */
+    public function getAuthData(): array
+    {
+        $user_id = Auth::id();
+        $service = new UserService();
+        $data = $service->getData($user_id);
+        return $data;
+    }
+
+    //todo:テスト作成
+    public function updateAuthData(UpdateRequest $request, int $auth_id)
+    {
+        $data = $request->only(["name", "email", "birthday", "pref_id", "introduction", "twitter_url"]);
+        $data["image"] = $request->file("image");
+        $user = User::find($auth_id);
+        $this->service->update($user, $data);
+        return response()->json(['message' => '編集が完了しました'], 200);
+    }
+
+    //todo:確認して問題なければ削除
     /**
      * @param Request $request
      *
