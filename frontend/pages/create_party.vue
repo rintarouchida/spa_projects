@@ -118,6 +118,9 @@
         ・{{ due_date }}
       </p>
 
+      <h3 class="register_items">画像</h3>
+      <input class="input_form" type="file" @change="selectedFile" />
+
       <h3 class="register_items">紐付けるタグ(3つまで)</h3>
       <v-row>
         <v-col
@@ -181,6 +184,7 @@ export default {
       ],
       due_max: '',
       due_date: '',
+      uploadFile: null,
       err: null,
       validation: {
         errors: [],
@@ -198,19 +202,36 @@ export default {
     this.tags = this.$TAG
   },
   methods: {
+    selectedFile(e) {
+      // 選択された File の情報を保存しておく
+      const files = e.target.files
+      this.uploadFile = files[0]
+      console.log(this.uploadFile)
+    },
+
     async register() {
+      const formData = new FormData()
+      formData.append('theme', this.theme)
+      formData.append('pref_id', this.pref_id)
+      formData.append('place', this.place)
+      formData.append('due_max', this.due_max)
+      for (let i = 0; i < this.tag_ids.length; i++) {
+        formData.append('tag_ids[' + i + ']', this.tag_ids[i])
+      }
+      formData.append('due_date', this.due_date)
+      formData.append('image', this.uploadFile)
+      formData.append('introduction', this.introduction)
+
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+          'X-HTTP-Method-Override': 'PUT',
+        },
+      }
       await this.$axios
-        .post('/api/party/register', {
-          theme: this.theme,
-          pref_id: this.pref_id,
-          place: this.place,
-          due_max: this.due_max,
-          tag_ids: this.tag_ids,
-          due_date: this.due_date,
-          introduction: this.introduction,
-        })
+        .post('/api/party/register', formData, config)
         .then((res) => {
-          console.log(res)
+          console.log(res.data)
           window.alert(res.data.message)
           this.$router.push('/')
         })
