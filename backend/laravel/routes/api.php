@@ -24,6 +24,8 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::get('/user_info', 'AuthController@get');
     Route::put('/register', 'AuthController@register')->name('register');
     Route::post('/edit', 'AuthController@edit');
+    Route::get('/get_auth', 'AuthController@getAuthData')->name('get_auth');
+    Route::put('/update_auth/{auth_id}', 'AuthController@updateAuthData')->name('update_auth');
     Route::post('/send_email', 'ResetPasswordController@sendEmail')->name('send_email');
     Route::post('/reset_password', 'ResetPasswordController@resetPassword')->name('reset_password');
     Route::put('/post_image', 'ImageController@s3')->name('post_image');
@@ -37,8 +39,6 @@ Route::namespace('App\Http\Controllers')->group(function () {
 
     Route::prefix('user')->name('user.')->group(function () {
         Route::get('/get/{id}', 'UserController@getData')->name('get');
-        Route::get('/get_auth', 'UserController@getAuthData')->name('get_auth');
-        Route::post('/update_auth/{auth_id}', 'UserController@updateAuthData')->name('update_auth');
     });
 
     Route::prefix('message')->name('message.')->group(function () {

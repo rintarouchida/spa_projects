@@ -2,7 +2,13 @@
   <div>
     <h2>ログインユーザーのプロフィール</h2>
     <div style="width: 30%; float: left">
-      <p class="picture"></p>
+      <p class="picture">
+        <img
+          :src="user.image"
+          alt=""
+          style="display: block; width: 100%; height: 100%"
+        />
+      </p>
     </div>
     <div style="width: 70%; float: right">
       <h2 style="margin-top: 15px">{{ user.name }}さん</h2>
@@ -25,7 +31,7 @@ export default {
   async created() {
     setTimeout(() => this.$nuxt.$loading.start(), 500)
 
-    this.user = await this.$axios.get(`api/user/get_auth`).then((res) => {
+    this.user = await this.$axios.get(`api/get_auth`).then((res) => {
       return res.data
     })
 

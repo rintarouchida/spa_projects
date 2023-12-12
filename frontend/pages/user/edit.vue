@@ -114,6 +114,9 @@
       >
         ・{{ twitter }}
       </p>
+
+      <h3 class="register_items">プロフィール画像</h3>
+      <input class="input_form" type="file" @change="selectedFile" />
       <UpdateUserModal
         :name="old_data.name"
         :email="old_data.email"
@@ -146,6 +149,7 @@ export default {
       prefs: '',
       pref_id: '',
       pref_name: '',
+      uploadFile: null,
       err: null,
       validation: {
         errors: [],
@@ -163,24 +167,37 @@ export default {
   async created() {
     setTimeout(() => this.$nuxt.$loading.start(), 500)
     this.prefs = this.$PREF
-    this.old_data = await this.$axios.get(`api/user/get_auth`).then((res) => {
+    this.old_data = await this.$axios.get(`api/get_auth`).then((res) => {
       return res.data
     })
     this.getPrefName(this.old_data.pref_id)
     this.$nuxt.$loading.finish()
   },
   methods: {
+    selectedFile(e) {
+      // 選択された File の情報を保存しておく
+      const files = e.target.files
+      this.uploadFile = files[0]
+      console.log(this.uploadFile)
+    },
     async update() {
+      const formData = new FormData()
+      formData.append('name', this.old_data.name)
+      formData.append('email', this.old_data.email)
+      formData.append('birthday', this.old_data.birthday)
+      formData.append('pref_id', this.old_data.pref_id)
+      formData.append('address', this.old_data.address)
+      formData.append('introduction', this.old_data.introduction)
+      formData.append('twitter_url', this.old_data.twitter_url)
+      formData.append('image', this.uploadFile)
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+          'X-HTTP-Method-Override': 'PUT',
+        },
+      }
       await this.$axios
-        .post(`/api/user/update_auth/${this.old_data.id}`, {
-          name: this.old_data.name,
-          email: this.old_data.email,
-          birthday: this.old_data.birthday,
-          pref_id: this.old_data.pref_id,
-          address: this.old_data.address,
-          introduction: this.old_data.introduction,
-          twitter_url: this.old_data.twitter_url,
-        })
+        .post(`/api/update_auth/${this.old_data.id}`, formData, config)
         .then((res) => {
           console.log(res)
           window.alert(res.data.message)

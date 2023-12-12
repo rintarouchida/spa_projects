@@ -25,10 +25,12 @@ class UserService
         $data['twitter_url'] = $user->twitter_url;
         $data['old']  = Carbon::parse($user->birthday)->age;
         $data['pref_name'] = $user->pref->name;
+        $data['image'] = config('filesystems.disks.s3.url').'/'.$user->image;
 
         return $data;
     }
 
+    //todo: 確認して問題なければテストと一緒に削除
     /**
      * @param array $data
      *
