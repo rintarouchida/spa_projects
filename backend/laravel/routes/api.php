@@ -22,14 +22,14 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/login', 'AuthController@login')->name('login');
     Route::post('/logout', 'AuthController@logout');
     Route::get('/user_info', 'AuthController@get');
-    Route::post('/register', 'AuthController@register')->name('register');
+    Route::put('/register', 'AuthController@register')->name('register');
     Route::post('/edit', 'AuthController@edit');
     Route::post('/send_email', 'ResetPasswordController@sendEmail')->name('send_email');
     Route::post('/reset_password', 'ResetPasswordController@resetPassword')->name('reset_password');
     Route::put('/post_image', 'ImageController@s3')->name('post_image');
 
     Route::prefix('party')->name('party.')->group(function () {
-        Route::post('/register', 'PartyController@register')->name('register');
+        Route::put('/register', 'PartyController@register')->name('register');
         Route::get('/get/{id}', 'PartyController@getData')->name('get');
         Route::post('/join', 'PartyController@join')->name('join');
         Route::get('/check_if_joined/{party_id}', 'PartyController@checkIfJoined')->name('check_if_joined');

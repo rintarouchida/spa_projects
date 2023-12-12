@@ -7,6 +7,7 @@ use App\Models\MessageGroup;
 use App\Models\Party;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PartyService
 {
@@ -28,6 +29,10 @@ class PartyService
             'leader_id' => $user_id,
         ]);
 
+        if (!is_null($data['image'])) {
+            $this->registerImage($party, $data['image']);
+        }
+
         $party->tags()->attach($data['tag_ids']);
     }
 
@@ -48,7 +53,9 @@ class PartyService
         $data['user_id'] = $party->leader->id;
         $data['introduction'] = $party->introduction;
         $data['due_date'] = $party->due_date;
-        foreach($party->tags as $index => $tag) {
+        //todo:テスト追記
+        $data['image'] = $party->image;
+        foreach ($party->tags as $index => $tag) {
             $data['tags'][$index] = $tag->name;
         }
 
@@ -77,7 +84,7 @@ class PartyService
         $user = Auth::User();
         //todo:ロジックの変更をユニットテストに反映
         $query = Party::where('id', $party_id)->where(function ($query) use ($user) {
-            $query->whereHas('users', function($q) use ($user){
+            $query->whereHas('users', function ($q) use ($user) {
                 $q->where('id', $user->id);
             });
             $query->orWhere('leader_id', $user->id);
@@ -102,6 +109,15 @@ class PartyService
             'user_id' => $party->leader->id,
             'message_group_id' => $message_group->id,
             'content' => $user->name.'さんが参加しました、よろしくお願いします!!',
+        ]);
+    }
+
+    //todo:テスト作成
+    protected function registerImage(Party $party, string $image): void
+    {
+        $image_name = Storage::disk('s3')->putFile('/', $image);
+        $party->update([
+            'image' => $image_name
         ]);
     }
 }
