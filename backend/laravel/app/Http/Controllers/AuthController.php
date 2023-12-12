@@ -83,7 +83,13 @@ class AuthController extends Controller
     }
 
     //todo:テスト作成
-    public function updateAuthData(UpdateRequest $request, int $auth_id)
+    /**
+     * @param UpdateRequest $request
+     * @param int $auth_id
+     *
+     * @return JsonResponse
+     */
+    public function updateAuthData(UpdateRequest $request, int $auth_id): JsonResponse
     {
         $data = $request->only(["name", "email", "birthday", "pref_id", "introduction", "twitter_url"]);
         $data["image"] = $request->file("image");
