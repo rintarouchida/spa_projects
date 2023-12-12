@@ -47,6 +47,13 @@ class AuthService
     }
 
     //todo:テスト作成
+
+    /**
+     * @param User $user
+     * @param string $image
+     *
+     * @return void
+     */
     protected function registerImage(User $user, string $image): void
     {
         $image_name = Storage::disk('s3')->putFile('/', $image);
