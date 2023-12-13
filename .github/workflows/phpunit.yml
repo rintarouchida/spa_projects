@@ -5,7 +5,7 @@ on: [push]
 jobs:
   composer_install:
     runs-on: ubuntu-latest
-    steps:
-    - run: docker-compose up -d
-    - run: docker exec -it backend_app_1 bash
-    - run: composer install
+    run: |
+          pwd
+          cd ..
+          pwd
