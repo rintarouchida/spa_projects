@@ -8,5 +8,5 @@ jobs:
     steps:
 
     - run: pwd
-    - run: cd ../
+    - run: cd backend
     - run: pwd
