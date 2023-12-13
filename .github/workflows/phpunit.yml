@@ -8,5 +8,4 @@ jobs:
     steps:
 
     - run: pwd
-    - run: cd backend
-    - run: pwd
+    - run: ls
