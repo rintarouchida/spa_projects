@@ -1,3 +1,2 @@
 #SPA
 Laravel + Nuxt.js
-
