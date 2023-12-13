@@ -1,0 +1,18 @@
+name: phpunit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: composer install
+    - run: cd ../backend
+    - run: docker-compose up -d
+    - run: docker exec -it backend_app_1 bash
+    - run: composer install
