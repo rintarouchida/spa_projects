@@ -6,7 +6,6 @@ jobs:
   composer_install:
     runs-on: ubuntu-latest
     steps:
-    - run: cd ../backend
     - run: docker-compose up -d
     - run: docker exec -it backend_app_1 bash
     - run: composer install
