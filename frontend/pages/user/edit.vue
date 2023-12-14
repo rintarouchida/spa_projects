@@ -188,7 +188,10 @@ export default {
       formData.append('pref_id', this.old_data.pref_id)
       formData.append('address', this.old_data.address)
       formData.append('introduction', this.old_data.introduction)
-      formData.append('twitter_url', this.old_data.twitter_url)
+      formData.append(
+        'twitter_url',
+        this.old_data.twitter_url !== null ? this.old_data.twitter_url : ''
+      )
       formData.append('image', this.uploadFile)
       const config = {
         headers: {
