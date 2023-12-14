@@ -28,7 +28,6 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::put('/update_auth/{auth_id}', 'AuthController@updateAuthData')->name('update_auth');
     Route::post('/send_email', 'ResetPasswordController@sendEmail')->name('send_email');
     Route::post('/reset_password', 'ResetPasswordController@resetPassword')->name('reset_password');
-    Route::put('/post_image', 'ImageController@s3')->name('post_image');
 
     Route::prefix('party')->name('party.')->group(function () {
         Route::put('/register', 'PartyController@register')->name('register');
