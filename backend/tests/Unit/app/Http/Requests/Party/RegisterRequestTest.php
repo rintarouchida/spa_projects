@@ -3,11 +3,23 @@
 namespace Tests\Unit\app\Http\Requests\Party;
 
 use App\Http\Requests\Party\RegisterRequest;
+use App\Models\Pref;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
 class RegisterRequestTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Pref::factory([
+            'id' => 1
+        ])->create();
+        Carbon::setTestNow('2023-12-16 10:00:00');
+    }
+
     /**
      * @dataProvider validationProvider
      * @return void
@@ -29,12 +41,12 @@ class RegisterRequestTest extends TestCase
         return [
             '正常' => [
                 [
-                    'pref_id' => 1,
                     'theme' => str_repeat('a', 30),
                     'introduction' => '詳細1',
+                    'pref_id' => 1,
                     'place' => '場所1',
                     'due_max' => 2,
-                    'due_date' => 2,
+                    'due_date' => '2023-12-17 10:00:00',
                 ],
                 false,
                 [],
@@ -48,7 +60,7 @@ class RegisterRequestTest extends TestCase
                     'introduction' => ['詳細を入力してください。'],
                     'place' => ['開催場所を入力してください。'],
                     'due_max' => ['定員を選択してください。'],
-                    'due_date' => ['締切を入力してください。'],
+                    'due_date' => ['開催日時を入力してください。'],
                 ],
             ],
             '異常 異なる型' => [
@@ -58,7 +70,7 @@ class RegisterRequestTest extends TestCase
                     'introduction' => '詳細1',
                     'place' => '場所1',
                     'due_max' => 2,
-                    'due_date' => 2,
+                    'due_date' => '2023-12-17 10:00:00',
                 ],
                 true,
                 [
@@ -72,7 +84,7 @@ class RegisterRequestTest extends TestCase
                     'introduction' => '詳細1',
                     'place' => '場所1',
                     'due_max' => 2,
-                    'due_date' => 2,
+                    'due_date' => '2023-12-17 10:00:00',
                 ],
                 true,
                 [

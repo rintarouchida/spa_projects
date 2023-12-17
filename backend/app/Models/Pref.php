@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Pref extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 }

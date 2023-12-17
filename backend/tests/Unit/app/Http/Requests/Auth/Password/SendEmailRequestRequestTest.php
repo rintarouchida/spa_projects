@@ -4,6 +4,7 @@ namespace Tests\Unit\app\Http\Requests\Auth\Password;
 
 use App\Http\Requests\Auth\Password\SendEmailRequest;
 use App\Models\User;
+use App\Models\Pref;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 
@@ -13,10 +14,15 @@ class SendEmailRequestRequestTest extends TestCase
     {
         parent::setUp();
 
+        Pref::factory([
+            'id' => 1
+        ])->create();
+        
         User::factory([
             'id' => 1,
             'email' => 'test@gmail.com',
         ])->create();
+
     }
 
     /**
