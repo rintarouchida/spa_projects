@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Party;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -21,16 +21,18 @@ class RegisterRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'name'         => 'required|string|max:255',
-            'email'        => 'required|unique:users|email|max:255',
-            'password'     => 'required|string|max:255|min:8',
-            'birthday'     => 'nullable|date',
-            'pref_id'      => 'required|exists:prefs,id',
-            'introduction' => 'nullable|string|max:1000',
-            'twitter_url'  => 'nullable|url|max:255',
+            'theme' => 'required|string|max:30',
+            'introduction' => 'required|max:1000',
+            'pref_id' => 'required|exists:prefs,id',
+            'place' => 'required|max:255',
+            'due_max' => 'required',
+            'due_date' => 'required|after:today',
+            'tag_ids' => 'nullable|max:3',
+            'tag_ids.*' => 'nullable|exists:tags,id',
+            'image' => 'nullable|mimes:jpeg,jpg,png'
         ];
     }
 
@@ -40,30 +42,30 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => '名前を入力してください。',
-            'name.string'   => '名前は文字列で入力してください。',
-            'name.max'      => '名前は255文字以内で入力してください。',
+            'theme.required' => '題名を入力してください。',
+            'theme.string'   => '題名は文字列で入力してください。',
+            'theme.max'      => '題名は30文字以内で入力してください。',
 
-            'email.required' => 'メールアドレスを入力してください。',
-            'email.unique'   => 'そのメールアドレスはすでに使われています。',
-            'email.email'    => '正しいメールアドレスの形式で入力してください。',
-            'email.max'      => 'メールアドレスは255文字以内入力してください。',
-
-            'password.required' => 'パスワードを入力してください。',
-            'password.string'   => 'パスワードは文字列で入力してください。',
-            'password.max'      => 'パスワードは255文字以下で入力してください。',
-            'password.min'      => 'パスワードは8文字以上で入力してください。',
-
-            'birthday.date'     => '生年月日は日付で入力してください。',
+            'introduction.required' => '詳細を入力してください。',
+            'introduction.max'      => '詳細は1000文字以内で入力してください。',
 
             'pref_id.required' => '都道府県を選択してください。',
             'pref_id.exists'   => '指定された都道府県は存在しません。',
 
-            'introduction.string' => '自己紹介は文字列で入力してください。',
-            'introduction.max'    => '自己紹介は1000文字以内で入力してください。',
+            'place.required' => '開催場所を入力してください。',
+            'place.max'      => '開催場所は255文字以内で入力してください。',
 
-            'twitter_url.url' => '正しいURLの形式で入力してください。',
-            'twitter_url.max' => 'URLは255文字以内で入力してください。',
+            'due_max.required'  => '定員を選択してください。',
+
+            'due_date.required' => '開催日時を入力してください。',
+            'due_date.after'    => '開催日時は明日以降にしてください。',
+
+            //todo:テスト作成
+            'tag_ids.max' => 'タグの選択は3つまでです。',
+
+            'tag_ids.*.exists' => '存在しないタグが含まれています。',
+
+            'image.mimes' => '拡張子がjpeg, jpg, pngの画像をアップロードしてください。',
         ];
     }
 }

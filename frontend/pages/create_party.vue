@@ -120,6 +120,14 @@
 
       <h3 class="register_items">画像</h3>
       <input class="input_form" type="file" @change="selectedFile" />
+      <p
+        v-for="(image, index) in validation.image"
+        v-show="validation.image.length"
+        :key="index"
+        class="validation_error"
+      >
+        ・{{ image }}
+      </p>
 
       <h3 class="register_items">紐付けるタグ(3つまで)</h3>
       <v-row>
@@ -184,7 +192,7 @@ export default {
       ],
       due_max: '',
       due_date: '',
-      uploadFile: null,
+      uploadFile: '',
       err: null,
       validation: {
         errors: [],
@@ -194,6 +202,7 @@ export default {
         place: [],
         due_max: [],
         due_date: [],
+        image: [],
       },
     }
   },
@@ -205,11 +214,11 @@ export default {
     selectedFile(e) {
       // 選択された File の情報を保存しておく
       const files = e.target.files
-      this.uploadFile = files[0]
-      console.log(this.uploadFile)
+      this.uploadFile = files[0] !== undefined ? files[0] : ''
     },
 
     async register() {
+      console.log('画像:' + this.uploadFile)
       const formData = new FormData()
       formData.append('theme', this.theme)
       formData.append('pref_id', this.pref_id)
@@ -237,6 +246,7 @@ export default {
         })
         .catch((err) => {
           console.log('エラー発生')
+          console.log(err.response.data.errors)
           if (err.response.status === 422) {
             this.validation.errors = err.response.data.errors
             if ('theme' in this.validation.errors) {
@@ -273,6 +283,11 @@ export default {
               this.validation.tag_ids = this.validation.errors.tag_ids
             } else {
               this.validation.tag_ids = []
+            }
+            if ('image' in this.validation.errors) {
+              this.validation.image = this.validation.errors.image
+            } else {
+              this.validation.image = []
             }
           }
         })
