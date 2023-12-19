@@ -61,6 +61,8 @@ class MessageService
             $data['messages'][$key]['created_at'] = $message->created_at->format('Y-m-d H:i:s');
             $data['messages'][$key]['is_users_message'] = ($message->user->id === $user_id);
             $data['messages'][$key]['user_name'] = $message->user->name;
+            //todo: テスト追記
+            $data['messages'][$key]['user_image'] = config('filesystems.disks.s3.url').'/'.$message->user->image;
         }
         return $data;
     }
