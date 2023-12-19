@@ -15,6 +15,13 @@
               </div>
             </span>
             <span v-if="!message.is_users_message && (message.created_at !== null)">
+              <div class="icon">
+                <img
+                  :src="message.user_image"
+                  alt=""
+                  style="display: block; width: 100%; height: 100%"
+                />
+              </div>
               <div class="others_message_box">
                 <p class="message">{{message.user_name}}:{{message.content}}<br><span style="font-size:10px;">{{message.created_at}}</span></p>
               </div>
@@ -112,6 +119,11 @@ export default {
 .message_list {
   padding-left: 5%;
   padding-right: 5%;
+}
+.icon{
+  border-radius:50%;
+  height:40px;
+  width:40px;
 }
 .others_message_box {
   padding: 0.5em 1em;
