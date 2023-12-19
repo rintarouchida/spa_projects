@@ -53,7 +53,12 @@
     >
       <v-row>
         <v-col cols="3" sm="3" md="3" lg="3" xl="3" class="picture_box"
-          >写真</v-col
+          >
+          <img
+          :src="party.image"
+          alt=""
+          style="display: block; width: 100%; height: 100%"
+        /></v-col
         >
         <v-col cols="9" sm="9" md="9" lg="9" xl="9" class="content_box">
           <h1 class="theme">

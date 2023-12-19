@@ -43,10 +43,11 @@ class PartyService
         $data = [];
 
         foreach ($query->get() as $key => $party) {
-            $data[$key]['id'] = $party->id;
-            $data[$key]['theme'] = $party->theme;
-            $data[$key]['place'] = $party->place;
+            $data[$key]['id']      = $party->id;
+            $data[$key]['theme']   = $party->theme;
+            $data[$key]['place']   = $party->place;
             $data[$key]['due_max'] = $party->due_max;
+            $data[$key]['image']   = config('filesystems.disks.s3.url').'/'.$party->image;
             foreach($party->tags as $index => $tag) {
                 $data[$key]['tags'][$index]['name'] = $tag->name;
             }

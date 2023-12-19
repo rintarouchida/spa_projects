@@ -14,7 +14,13 @@
       :key="index"
       class="party_box"
     >
-      <div class="picture_box">写真</div>
+      <div class="picture_box">
+        <img
+          :src="party.image"
+          alt=""
+          style="display: block; width: 100%; height: 100%"
+        />
+      </div>
       <div class="content_box">
         <h1 class="theme">
           <router-link

@@ -1,7 +1,13 @@
 <template>
   <div>
     <div style="width:50%; float:left;">
-      <p class="picture"></p>
+      <p class="picture">
+        <img
+          :src="party.image"
+          alt=""
+          style="display: block; width: 100%; height: 100%"
+        />
+      </p>
     </div>
     <div style="width:50%; float:right;">
      <h2 class="theme">{{party.theme}}</h2>
@@ -58,7 +64,6 @@ export default {
 
 <style scope>
   .picture{
-    background-color: yellow;
     width:100%;
     height:400px;
   }

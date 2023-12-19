@@ -54,7 +54,7 @@ class PartyService
         $data['introduction'] = $party->introduction;
         $data['due_date'] = $party->due_date;
         //todo:テスト追記
-        $data['image'] = $party->image;
+        $data['image'] = config('filesystems.disks.s3.url').'/'.$party->image;
         foreach ($party->tags as $index => $tag) {
             $data['tags'][$index] = $tag->name;
         }
