@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="show">
     <h2>ログインユーザーのプロフィール</h2>
     <div style="width: 30%; float: left">
       <p class="picture">
@@ -25,6 +25,7 @@
 export default {
   data() {
     return {
+      show: false,
       user: '',
     }
   },
@@ -34,7 +35,7 @@ export default {
     this.user = await this.$axios.get(`api/get_auth`).then((res) => {
       return res.data
     })
-
+    this.show = true
     this.$nuxt.$loading.finish()
   },
   methods: {

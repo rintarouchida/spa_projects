@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="show">
     <div class="search_box">
       <v-row>
         <v-col cols="12" sm="6" md="6" lg="6" xl="6" class="pref_form">
@@ -52,14 +52,12 @@
       class="party_box"
     >
       <v-row>
-        <v-col cols="3" sm="3" md="3" lg="3" xl="3" class="picture_box"
-          >
+        <v-col cols="3" sm="3" md="3" lg="3" xl="3" class="picture_box">
           <img
-          :src="party.image"
-          alt=""
-          style="display: block; width: 100%; height: 100%"
-        /></v-col
-        >
+            :src="party.image"
+            alt=""
+            style="display: block; width: 100%; height: 100%"
+        /></v-col>
         <v-col cols="9" sm="9" md="9" lg="9" xl="9" class="content_box">
           <h1 class="theme">
             <router-link
@@ -86,6 +84,7 @@
 export default {
   data() {
     return {
+      show: false,
       parties: '',
       prefs: '',
       tags: '',
@@ -105,6 +104,7 @@ export default {
     this.prefs = this.$PREF
 
     this.tags = this.$TAG
+    this.show = true
     this.$nuxt.$loading.finish()
   },
   methods: {
