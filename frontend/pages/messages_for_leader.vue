@@ -1,7 +1,10 @@
 <template>
   <div v-show="show">
     メッセージ一覧(主催者用)
-    <div style="text-align: center">
+    <span v-show="message_lists.length == 0">
+      <h1>メッセージ(主催者用)はまだありません</h1>
+    </span>
+    <div v-show="message_lists.length > 0" style="text-align: center">
       <div class="message_form">
         <h2>メッセージ一覧</h2>
         <div v-for="(message_list, index) in message_lists" :key="index">
