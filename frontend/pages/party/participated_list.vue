@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="show">
     <h1 v-show="parties.length > 0" style="margin-bottom: 20px">
       参加済みのもくもく会一覧
     </h1>
@@ -48,6 +48,7 @@ export default {
   data() {
     return {
       parties: [],
+      show: false,
     }
   },
   async created() {
@@ -58,6 +59,7 @@ export default {
       .then((res) => {
         return res.data
       })
+    this.show = true
     this.$nuxt.$loading.finish()
   },
 }

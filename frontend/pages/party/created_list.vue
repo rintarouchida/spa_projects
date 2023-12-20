@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="show">
     <h1 v-show="parties.length > 0" style="margin-bottom: 20px">
       作成したもくもく会一覧
     </h1>
@@ -20,7 +20,7 @@
           style="display: block; width: 100%; height: 100%"
         />
       </div>
-      
+
       <div class="content_box">
         <h1 class="theme">
           <router-link
@@ -47,6 +47,7 @@
 export default {
   data() {
     return {
+      show: false,
       parties: [],
     }
   },
@@ -58,6 +59,7 @@ export default {
       .then((res) => {
         return res.data
       })
+    this.show = true
     this.$nuxt.$loading.finish()
   },
 }
