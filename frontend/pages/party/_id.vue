@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="show">
     <div style="width:50%; float:left;">
       <p class="picture">
         <img
@@ -31,6 +31,7 @@ export default {
   },
    data(){
     return {
+      show: false,
       party: '',
       id: 10,
       joinable: false,
@@ -44,6 +45,7 @@ export default {
     this.joinable = await this.$axios.get(`api/party/check_if_joined/${this.$route.params.id}`).then(res => {
       return !res.data.result;
     });
+    his.show = true
     this.$nuxt.$loading.finish();
   },
   methods:{
