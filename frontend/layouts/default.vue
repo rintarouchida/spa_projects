@@ -1,9 +1,10 @@
 <template>
   <v-app dark>
-    <Header />
+    <NewHeader />
+    <!-- /todo:問題なければ元のHeader削除 -->
     <v-main>
       <v-container>
-        <Nuxt />
+        <Nuxt style="margin-top:100px;"/>
       </v-container>
     </v-main>
   </v-app>
