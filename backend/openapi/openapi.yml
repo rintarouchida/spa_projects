@@ -600,7 +600,7 @@ paths:
     get:
       tags:
         - メッセージ
-      description: 自分が参加したもくもく会のメッセージ一覧を返すAPI
+      description: 自分が参加したもくもく会のメッセージグループ一覧を返すAPI
       responses:
         '200':
           content:
@@ -628,12 +628,12 @@ paths:
                       description: "最新メッセージが作成された時間"
                       example: "2023-12-30 13:15"
 
-# メッセージ一覧取得API
+# メッセージグループ一覧取得API
   /message/index_for_leader:
     get:
       tags:
         - メッセージ
-      description: 自分が主催したもくもく会のメッセージ一覧を返すAPI
+      description: 自分が主催したもくもく会のメッセージグループ一覧を返すAPI
       responses:
         '200':
           content:
@@ -660,3 +660,59 @@ paths:
                       format: "date-time"
                       description: "最新メッセージが作成された時間"
                       example: "2023-12-30 13:15"
+
+  # メッセージ一覧取得API
+  /message/get/{message_group_id}:
+    get:
+      tags:
+        - メッセージ
+      description: 指定したメッセージグループのメッセージ一覧を返すAPI
+      parameters:
+        - name: message_group_id
+          in: path
+          description: "指定したメッセージグループのID"
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  theme:
+                    type: string
+                    description: "もくもく会の題名"
+                    example: "Python勉強会"
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: "メッセージのID"
+                          example: 1
+                        content:
+                          type: string
+                          description: "メッセージ内容"
+                          example: "こんにちは"
+                        created_at:
+                          type: string
+                          format: "date-time"
+                          description: "メッセージを書いた時間"
+                          example: "2023-12-30 13:15:02"
+                        is_users_message:
+                          type: boolean
+                          description: "ログインユーザーのメッセージかどうか"
+                          example: true
+                        user_name:
+                          type: string
+                          description: "メッセージを書いたユーザー名"
+                          example: "山田太郎"
+                        user_image:
+                          type: string
+                          description: "メッセージを書いたユーザーのアイコン"
+                          example: "https://myapp.s3.amazonaws.com/johndoe.png"
