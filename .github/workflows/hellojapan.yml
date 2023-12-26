@@ -1,9 +1,0 @@
-name: Hello Japan
-
-on: [push]
-
-jobs:
-  say_hello_japan:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Hello Japan!"
