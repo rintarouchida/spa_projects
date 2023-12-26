@@ -479,3 +479,66 @@ paths:
                       'due_date.after': "開催日時は明日以降にしてください。"
                       'tag_ids.max': "タグの選択は3つまでです。"
                       'tag_ids.*.exists': "存在しないタグが含まれています。"
+# もくもく会取得API
+  /party/get/{id}:
+    get:
+      tags:
+        - もくもく会取得API
+      parameters:
+        - name: id
+          in: path
+          description: "もくもく会のID"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          description: "もくもく会の情報を取得する"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: integer
+                    description: "もくもく会のID"
+                    example: 1
+                  theme:
+                    type: string
+                    description: "もくもく会の題名"
+                    example: "プログラミングもくもく会"
+                  place:
+                    type: string
+                    description: "もくもく会の開催場所"
+                    example: "東京"
+                  due_max:
+                    type: integer
+                    description: "もくもく会の定員"
+                    example: 10
+                  user_name:
+                    type: string
+                    description: "主催者の名前"
+                    example: "山田太郎"
+                  user_id:
+                    type: integer
+                    description: "主催者のID"
+                    example: 1234
+                  introduction:
+                    type: string
+                    description: "もくもく会の詳細"
+                    example: "初心者から上級者まで参加可能なもくもく会です。"
+                  due_date:
+                    type: string
+                    format: date
+                    description: "もくもく会の開催日時"
+                    example: "2023-12-30"
+                  image:
+                    type: string
+                    description: "もくもく会の画像"
+                    example: "https://s3.example.com/path/to/image.jpg"
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                    description: "もくもく会のタグ配列"
+                    example: ["Ruby", "Python", "PHP"]
