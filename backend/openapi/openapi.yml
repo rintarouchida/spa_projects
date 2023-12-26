@@ -284,8 +284,8 @@ paths:
   /send_email:
     post:
       tags:
-        - パスワードリセット用メール送信API
-      description: 指定されたメールアドレスにパスワード送信用のメールアドレスを送信する
+        - パスワードリセット
+      description: 指定されたメールアドレスにパスワード送信用のメールアドレスを送信するAPI
       requestBody:
         content:
           application/json:
@@ -334,8 +334,8 @@ paths:
   /reset_password:
     post:
       tags:
-        - パスワード更新API
-      description: パスワードを更新する
+        - パスワードリセット
+      description: パスワードを更新するAPI
       requestBody:
         content:
           application/json:
@@ -391,8 +391,8 @@ paths:
   /party/register:
     put:
       tags:
-        - もくもく会作成API
-      description: もくもく会を作成する
+        - もくもく会
+      description: もくもく会を作成するAPI
       requestBody:
         content:
           application/json:
@@ -483,7 +483,8 @@ paths:
   /party/get/{id}:
     get:
       tags:
-        - もくもく会取得API
+        - もくもく会
+      description: もくもく会を取得するAPI
       parameters:
         - name: id
           in: path
@@ -542,3 +543,120 @@ paths:
                       type: string
                     description: "もくもく会のタグ配列"
                     example: ["Ruby", "Python", "PHP"]
+
+# もくもく会参加API
+  /party/join:
+    post:
+      tags:
+        - もくもく会
+      description: もくもく会に参加するAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                party_id:
+                  type: integer
+                  description: "参加したいもくもく会のID"
+                  example: 1
+      responses:
+        '200':
+          description: "もくもく会に参加"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "参加が完了しました。"
+# もくもく会参加判定API
+  /party/check_if_joined/{party_id}:
+    get:
+      tags:
+        - もくもく会
+      description: 指定のもくもく会に参加したかどうか判定するAPI
+      parameters:
+        - name: party_id
+          in: path
+          description: "参加したかどうか判定したいもくもく会のID"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  result:
+                    type: "boolean"
+                    description: "もくもく会に参加したかどうか"
+                    example: true
+# メッセージ一覧取得API
+  /message/index:
+    get:
+      tags:
+        - メッセージ
+      description: 自分が参加したもくもく会のメッセージ一覧を返すAPI
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "message_groupsのID"
+                      example: 1
+                    party_theme:
+                      type: string
+                      description: "もくもく会の題名"
+                      example: "PHP勉強会"
+                    latest_message:
+                      type: string
+                      description: "message_groupsに紐ずく最新メッセージ"
+                      example: "こんにちは"
+                    latest_message_time:
+                      type: string
+                      format: "date-time"
+                      description: "最新メッセージが作成された時間"
+                      example: "2023-12-30 13:15"
+
+# メッセージ一覧取得API
+  /message/index_for_leader:
+    get:
+      tags:
+        - メッセージ
+      description: 自分が主催したもくもく会のメッセージ一覧を返すAPI
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "message_groupsのID"
+                      example: 1
+                    party_theme:
+                      type: string
+                      description: "もくもく会の題名"
+                      example: "Ruby勉強会"
+                    latest_message:
+                      type: string
+                      description: "message_groupsに紐ずく最新メッセージ"
+                      example: "こんにちは"
+                    latest_message_time:
+                      type: string
+                      format: "date-time"
+                      description: "最新メッセージが作成された時間"
+                      example: "2023-12-30 13:15"
