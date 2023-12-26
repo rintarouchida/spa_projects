@@ -49,6 +49,21 @@ paths:
                 type: object
               example:
                 message: "メールアドレスまたはパスワードが間違っています"
+  # ログアウトAPI
+  logout/:
+    post:
+      tags:
+        - ログアウトAPI
+      description: アプリケーションをログアウトさせる
+      responses:
+        "200":
+          description: ログアウトに成功
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: "ログアウトが完了しました。"
   # 登録API
   register/:
     post:
