@@ -141,6 +141,82 @@ paths:
               example:
                 message: "名前を入力してください"
 
+# ログインユーザ情報編集API
+  /update_auth/{auth_id}:
+    post:
+      tags:
+        - ログインユーザ情報編集API
+      description: ログインユーザ情報を更新する
+      parameters:
+        - name: "auth_id"
+          in: "path"
+          schema:
+            type: "integer"
+          description: "ログインユーザのID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                name:
+                  type: string
+                  description: ユーザー名
+                  maxLength: 255
+                  minLength: 1
+                  example: "山田太郎"
+                email:
+                  type: string
+                  description: メールアドレス
+                  maxLength: 255
+                  minLength: 1
+                  format: email
+                  example: "test@gmai.com"
+                birthday:
+                  type: string
+                  description: 生年月日
+                  format: date
+                  nullable: true
+                  example: "1998-12-26"
+                pref_id:
+                  type: integer
+                  description: 都道府県ID
+                  example: 1
+                introduction:
+                  type: string
+                  description: 自己紹介
+                  maxLength: 1000
+                  nullable: true
+                  example: "こんにちは"
+                twitter_url:
+                  type: string
+                  description: TwitterのURL
+                  format: url
+                  maxLength: 255
+                  nullable: true
+                  example: "https://twitter/example.com"
+              required:
+                  - name
+                  - email
+                  - password
+                  - pref_id
+      responses:
+        '200':
+          description: "Successfully updated the user information."
+          content:
+            application/json:
+              schema:
+                type: "object"
+              example:
+                message: "編集が完了しました。"
+        "422":
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: "名前を入力してください"
 # ログインユーザ情報取得API
   /get_auth:
     get:
