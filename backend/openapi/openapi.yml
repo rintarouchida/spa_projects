@@ -246,7 +246,7 @@ paths:
                         type: string
                         format: email
                         description: ユーザーのメールアドレス
-                        example: "test@gmai.com"
+                        example: "test@gmail.com"
                       pref_id:
                         type: integer
                         format: int64
@@ -329,3 +329,61 @@ paths:
                 type: object
               example:
                 message: "メールアドレスを入力してください。"
+
+# パスワード更新API
+  /reset_password:
+    post:
+      tags:
+        - パスワード更新API
+      description: パスワードを更新する
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                password:
+                  type: "string"
+                  description: "パスワード"
+                  min: 8
+                  max: 255
+                password_confirm:
+                  type: "string"
+                  description: "パスワード(更新用)"
+                  min: 8
+                  max: 255
+                  same: "password"
+                email:
+                  type: string
+                  format: email
+                  description: ユーザーのメールアドレス
+                  example: "test@gmail.com"
+                token:
+                  type: "string"
+                  description: "パスワード更新用トークン。更新用のメールに含まれている"
+              required:
+                  - password
+                  - password_confirm
+      responses:
+        '200':
+          description: "パスワード更新完了"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "パスワードの変更が完了しました。"
+        '400':
+          description: "無効なユーザー、もしくは無効なトークンが検出された場合のエラー"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example:
+                      - "無効なユーザーです。"
+                      - "無効なトークンです。"
