@@ -280,3 +280,52 @@ paths:
                         format: binary
                         description: ユーザーの画像
                         example: test_image.jpg
+# パスワードリセット用メール送信API
+  /send_email:
+    post:
+      tags:
+        - パスワードリセット用メール送信API
+      description: 指定されたメールアドレスにパスワード送信用のメールアドレスを送信する
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                email:
+                  type: "string"
+                  format: "email"
+                  description: "メールアドレス"
+                  example: "test@gmai.com"
+                  required: true
+      responses:
+        '200':
+          description: "メール送信完了"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "メールを送信しました。"
+        '400':
+          description: "無効なユーザー、もしくは無効なトークンが検出された場合のエラー"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example:
+                      - "無効なユーザーです。"
+                      - "無効なトークンです。"
+        "422":
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: "メールアドレスを入力してください。"
