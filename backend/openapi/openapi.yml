@@ -387,3 +387,95 @@ paths:
                     example:
                       - "無効なユーザーです。"
                       - "無効なトークンです。"
+# もくもく会作成API
+  /party/register:
+    put:
+      tags:
+        - もくもく会作成API
+      description: もくもく会を作成する
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                theme:
+                  type: "string"
+                  max: 30
+                  description: "もくもく会の題名"
+                  exists: "prefs,id"
+                  example: "Laravel勉強会"
+                introduction:
+                  type: "string"
+                  max: 1000
+                  description: "もくもく会の詳細"
+                  example: "LaravelのMVCの概念をを実際にアプリケーションの開発を行いながら学んでいきましょう!"
+                pref_id:
+                  type: "integer"
+                  description: "都道府県ID"
+                  exists: "prefs,id"
+                  example: 1
+                place:
+                  type: "string"
+                  max: 255
+                  description: "もくもく会の開催場所"
+                  example: "第一会議室"
+                due_max:
+                  type: "integer"
+                  description: "もくもく会の参加上限人数"
+                  example: 20
+                due_date:
+                  type: "string"
+                  format: "date"
+                  description: "もくもく会の参加期限"
+                  after: "today"
+                  example: "2023-12-26"
+                tag_ids:
+                  type: "array"
+                  items:
+                    type: "integer"
+                    exists: "tags,id"
+                  maxItems: 3
+                  description: "タグIDの配列"
+                  nullable: true
+                  example: [1, 2, 3]
+              required:
+                  - theme
+                  - introduction
+                  - pref_id
+                  - place
+                  - due_max
+                  - due_date
+      responses:
+        '200':
+          description: "もくもく会作成完了"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "もくもく会の作成が完了しました。"
+        '422':
+          description: "バリデーションエラー"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                example:
+                  error:
+                      'theme.required': "題名を入力してください。"
+                      'theme.string': "題名は文字列で入力してください。"
+                      'theme.max': "題名は30文字以内で入力してください。"
+                      'introduction.required': "詳細を入力してください。"
+                      'introduction.max': "詳細は1000文字以内で入力してください。"
+                      'pref_id.required': "都道府県を選択してください。"
+                      'pref_id.exists': "指定された都道府県は存在しません。"
+                      'place.required': "開催場所を入力してください。"
+                      'place.max': "開催場所は255文字以内で入力してください。"
+                      'due_max.required': "定員を選択してください。"
+                      'due_date.required': "開催日時を入力してください。"
+                      'due_date.after': "開催日時は明日以降にしてください。"
+                      'tag_ids.max': "タグの選択は3つまでです。"
+                      'tag_ids.*.exists': "存在しないタグが含まれています。"
