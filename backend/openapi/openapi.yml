@@ -49,6 +49,21 @@ paths:
                 type: object
               example:
                 message: "メールアドレスまたはパスワードが間違っています"
+  # ログアウトAPI
+  logout/:
+    post:
+      tags:
+        - ログアウトAPI
+      description: アプリケーションをログアウトさせる
+      responses:
+        "200":
+          description: ログアウトに成功
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: "ログアウトが完了しました。"
   # 登録API
   register/:
     post:
@@ -125,3 +140,839 @@ paths:
                 type: object
               example:
                 message: "名前を入力してください"
+
+# ログインユーザ情報編集API
+  update_auth/{auth_id}:
+    post:
+      tags:
+        - ログインユーザ情報編集API
+      description: ログインユーザ情報を更新する
+      parameters:
+        - name: "auth_id"
+          in: "path"
+          schema:
+            type: "integer"
+          description: "ログインユーザのID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                name:
+                  type: string
+                  description: ユーザー名
+                  maxLength: 255
+                  minLength: 1
+                  example: "山田太郎"
+                email:
+                  type: string
+                  description: メールアドレス
+                  maxLength: 255
+                  minLength: 1
+                  format: email
+                  example: "test@gmai.com"
+                birthday:
+                  type: string
+                  description: 生年月日
+                  format: date
+                  nullable: true
+                  example: "1998-12-26"
+                pref_id:
+                  type: integer
+                  description: 都道府県ID
+                  example: 1
+                introduction:
+                  type: string
+                  description: 自己紹介
+                  maxLength: 1000
+                  nullable: true
+                  example: "こんにちは"
+                twitter_url:
+                  type: string
+                  description: TwitterのURL
+                  format: url
+                  maxLength: 255
+                  nullable: true
+                  example: "https://twitter/example.com"
+              required:
+                  - name
+                  - email
+                  - password
+                  - pref_id
+      responses:
+        '200':
+          description: "Successfully updated the user information."
+          content:
+            application/json:
+              schema:
+                type: "object"
+              example:
+                message: "編集が完了しました。"
+        "422":
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: "名前を入力してください"
+# ログインユーザ情報取得API
+  get_auth:
+    get:
+      tags:
+        - ログインユーザ情報取得API
+      responses:
+        '200':
+          description: ログインユーザー情報を取得する
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        format: int64
+                        description: ユーザーのID
+                        example: 1
+                      name:
+                        type: string
+                        description: ユーザー名
+                        example: "山田太郎"
+                      email:
+                        type: string
+                        format: email
+                        description: ユーザーのメールアドレス
+                        example: "test@gmail.com"
+                      pref_id:
+                        type: integer
+                        format: int64
+                        description: ユーザーが住む都道府県のID
+                        example: 1
+                      birthday:
+                        type: string
+                        format: date
+                        description: ユーザーの生年月日
+                        example: "1998-12-26"
+                      introduction:
+                        type: string
+                        description: ユーザーの自己紹介
+                        example: "こんにちは"
+                      twitter_url:
+                        type: string
+                        format: url
+                        description: ユーザーのTwitterのURL
+                        example: "https://twitter/example.com"
+                      old:
+                        type: integer
+                        format: int32
+                        description: ユーザーの年齢
+                        example: 25
+                      pref_name:
+                        type: string
+                        description: ユーザーが住む都道府県名
+                        example: 東京都
+                      image:
+                        type: string
+                        format: binary
+                        description: ユーザーの画像
+                        example: test_image.jpg
+# パスワードリセット用メール送信API
+  send_email:
+    post:
+      tags:
+        - パスワードリセット
+      description: 指定されたメールアドレスにパスワード送信用のメールアドレスを送信するAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                email:
+                  type: "string"
+                  format: "email"
+                  description: "メールアドレス"
+                  example: "test@gmai.com"
+                  required: true
+      responses:
+        '200':
+          description: "メール送信完了"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "メールを送信しました。"
+        '400':
+          description: "無効なユーザー、もしくは無効なトークンが検出された場合のエラー"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example:
+                      - "無効なユーザーです。"
+                      - "無効なトークンです。"
+        "422":
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: "メールアドレスを入力してください。"
+
+# パスワード更新API
+  reset_password:
+    post:
+      tags:
+        - パスワードリセット
+      description: パスワードを更新するAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                password:
+                  type: "string"
+                  description: "パスワード"
+                  min: 8
+                  max: 255
+                password_confirm:
+                  type: "string"
+                  description: "パスワード(更新用)"
+                  min: 8
+                  max: 255
+                  same: "password"
+                email:
+                  type: string
+                  format: email
+                  description: ユーザーのメールアドレス
+                  example: "test@gmail.com"
+                token:
+                  type: "string"
+                  description: "パスワード更新用トークン。更新用のメールに含まれている"
+              required:
+                  - password
+                  - password_confirm
+      responses:
+        '200':
+          description: "パスワード更新完了"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "パスワードの変更が完了しました。"
+        '400':
+          description: "無効なユーザー、もしくは無効なトークンが検出された場合のエラー"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example:
+                      - "無効なユーザーです。"
+                      - "無効なトークンです。"
+# もくもく一覧取得API
+  party/index:
+    get:
+      tags:
+      - もくもく会
+      description: もくもく会一覧を取得するAPI
+      responses:
+        "200":
+          description: 成功時のレスポンス
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                      description: もくもく会のID
+                      example: 1
+                    theme:
+                      type: "string"
+                      description: もくもく会のテーマ
+                      example: "データベースの学習"
+                    place:
+                      type: "string"
+                      description: 開催場所
+                      example: "東京"
+                    due_max:
+                      type: "integer"
+                      description: 参加上限人数
+                      example: 3
+                    image:
+                      type: "string"
+                      description: 画像のURL
+                      example: "https://s3.example.com/image.jpg"
+                    tags:
+                      type: "array"
+                      description: タグのリスト
+                      items:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "string"
+                            description: タグ名
+                            example: "データベース"
+# 作成したもくもく一覧取得API
+  party/index_created:
+    get:
+      tags:
+      - もくもく会
+      description: ログインユーザーが作成したもくもく会一覧を取得するAPI
+      responses:
+        "200":
+          description: 成功時のレスポンス
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                      description: もくもく会のID
+                      example: 1
+                    theme:
+                      type: "string"
+                      description: もくもく会のテーマ
+                      example: "データベースの学習"
+                    place:
+                      type: "string"
+                      description: 開催場所
+                      example: "東京"
+                    due_max:
+                      type: "integer"
+                      description: 参加上限人数
+                      example: 3
+                    image:
+                      type: "string"
+                      description: 画像のURL
+                      example: "https://s3.example.com/image.jpg"
+                    tags:
+                      type: "array"
+                      description: タグのリスト
+                      items:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "string"
+                            description: タグ名
+                            example: "データベース"
+# 参加したもくもく一覧取得API
+  party/index_participated:
+    get:
+      tags:
+      - もくもく会
+      description: ログインユーザーが参加したもくもく会一覧を取得するAPI
+      responses:
+        "200":
+          description: 成功時のレスポンス
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                      description: もくもく会のID
+                      example: 1
+                    theme:
+                      type: "string"
+                      description: もくもく会のテーマ
+                      example: "データベースの学習"
+                    place:
+                      type: "string"
+                      description: 開催場所
+                      example: "東京"
+                    due_max:
+                      type: "integer"
+                      description: 参加上限人数
+                      example: 3
+                    image:
+                      type: "string"
+                      description: 画像のURL
+                      example: "https://s3.example.com/image.jpg"
+                    tags:
+                      type: "array"
+                      description: タグのリスト
+                      items:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "string"
+                            description: タグ名
+                            example: "データベース"
+# もくもく会作成API
+  party/register:
+    put:
+      tags:
+        - もくもく会
+      description: もくもく会を作成するAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                theme:
+                  type: "string"
+                  max: 30
+                  description: "もくもく会の題名"
+                  exists: "prefs,id"
+                  example: "Laravel勉強会"
+                introduction:
+                  type: "string"
+                  max: 1000
+                  description: "もくもく会の詳細"
+                  example: "LaravelのMVCの概念をを実際にアプリケーションの開発を行いながら学んでいきましょう!"
+                pref_id:
+                  type: "integer"
+                  description: "都道府県ID"
+                  exists: "prefs,id"
+                  example: 1
+                place:
+                  type: "string"
+                  max: 255
+                  description: "もくもく会の開催場所"
+                  example: "第一会議室"
+                due_max:
+                  type: "integer"
+                  description: "もくもく会の参加上限人数"
+                  example: 20
+                due_date:
+                  type: "string"
+                  format: "date"
+                  description: "もくもく会の参加期限"
+                  after: "today"
+                  example: "2023-12-26"
+                tag_ids:
+                  type: "array"
+                  items:
+                    type: "integer"
+                    exists: "tags,id"
+                  maxItems: 3
+                  description: "タグIDの配列"
+                  nullable: true
+                  example: [1, 2, 3]
+              required:
+                  - theme
+                  - introduction
+                  - pref_id
+                  - place
+                  - due_max
+                  - due_date
+      responses:
+        '200':
+          description: "もくもく会作成完了"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "もくもく会の作成が完了しました。"
+        '422':
+          description: "バリデーションエラー"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                example:
+                  error:
+                      'theme.required': "題名を入力してください。"
+                      'theme.string': "題名は文字列で入力してください。"
+                      'theme.max': "題名は30文字以内で入力してください。"
+                      'introduction.required': "詳細を入力してください。"
+                      'introduction.max': "詳細は1000文字以内で入力してください。"
+                      'pref_id.required': "都道府県を選択してください。"
+                      'pref_id.exists': "指定された都道府県は存在しません。"
+                      'place.required': "開催場所を入力してください。"
+                      'place.max': "開催場所は255文字以内で入力してください。"
+                      'due_max.required': "定員を選択してください。"
+                      'due_date.required': "開催日時を入力してください。"
+                      'due_date.after': "開催日時は明日以降にしてください。"
+                      'tag_ids.max': "タグの選択は3つまでです。"
+                      'tag_ids.*.exists': "存在しないタグが含まれています。"
+# もくもく会取得API
+  party/get/{id}:
+    get:
+      tags:
+        - もくもく会
+      description: もくもく会を取得するAPI
+      parameters:
+        - name: id
+          in: path
+          description: "もくもく会のID"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          description: "もくもく会の情報を取得する"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: integer
+                    description: "もくもく会のID"
+                    example: 1
+                  theme:
+                    type: string
+                    description: "もくもく会の題名"
+                    example: "プログラミングもくもく会"
+                  place:
+                    type: string
+                    description: "もくもく会の開催場所"
+                    example: "東京"
+                  due_max:
+                    type: integer
+                    description: "もくもく会の定員"
+                    example: 10
+                  user_name:
+                    type: string
+                    description: "主催者の名前"
+                    example: "山田太郎"
+                  user_id:
+                    type: integer
+                    description: "主催者のID"
+                    example: 1234
+                  introduction:
+                    type: string
+                    description: "もくもく会の詳細"
+                    example: "初心者から上級者まで参加可能なもくもく会です。"
+                  due_date:
+                    type: string
+                    format: date
+                    description: "もくもく会の開催日時"
+                    example: "2023-12-30"
+                  image:
+                    type: string
+                    description: "もくもく会の画像"
+                    example: "https://s3.example.com/path/to/image.jpg"
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                    description: "もくもく会のタグ配列"
+                    example: ["Ruby", "Python", "PHP"]
+
+# もくもく会参加API
+  party/join:
+    post:
+      tags:
+        - もくもく会
+      description: もくもく会に参加するAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                party_id:
+                  type: integer
+                  description: "参加したいもくもく会のID"
+                  example: 1
+      responses:
+        '200':
+          description: "もくもく会に参加"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "参加が完了しました。"
+# もくもく会参加判定API
+  party/check_if_joined/{party_id}:
+    get:
+      tags:
+        - もくもく会
+      description: 指定のもくもく会に参加したかどうか判定するAPI
+      parameters:
+        - name: party_id
+          in: path
+          description: "参加したかどうか判定したいもくもく会のID"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  result:
+                    type: "boolean"
+                    description: "もくもく会に参加したかどうか"
+                    example: true
+#もくもく会検索API
+  party/search:
+    get:
+      tags:
+      - もくもく会
+      description: もくもく会を検索するAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                keyword:
+                  type: "string"
+                  description: 検索するキーワード
+                  example: "データベース"
+                pref_id:
+                  type: "integer"
+                  description: 都道府県ID
+                  example: 1
+                tag_id:
+                  type: "integer"
+                  description: タグID
+                  example: 2
+      responses:
+        "200":
+          description: 成功時のレスポンス
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                      description: もくもく会のID
+                      example: 1
+                    theme:
+                      type: "string"
+                      description: もくもく会のテーマ
+                      example: "データベースの学習"
+                    place:
+                      type: "string"
+                      description: 開催場所
+                      example: "東京"
+                    due_max:
+                      type: "string"
+                      description: 締め切り日
+                      example: "2024-01-01"
+                    image:
+                      type: "string"
+                      description: 画像のURL
+                      example: "https://s3.example.com/image.jpg"
+                    tags:
+                      type: "array"
+                      description: タグのリスト
+                      items:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "string"
+                            description: タグ名
+                            example: "データベース"
+        "422":
+          description: バリデーションエラー時のレスポンス
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  keyword:
+                    type: "string"
+                    description: キーワードに関するエラーメッセージ
+                    example: "キーワードは文字列で入力してください。キーワードは30文字以内で入力してください。"
+                  pref_id:
+                    type: "string"
+                    description: 都道府県IDに関するエラーメッセージ
+                    example: "都道府県IDは整数で入力してください。指定された都道府県は存在しません。"
+                  tag_id:
+                    type: "string"
+                    description: タグIDに関するエラーメッセージ
+                    example: "指定されたタグは存在しません。"
+# メッセージ一覧取得API
+  message/index:
+    get:
+      tags:
+        - メッセージ
+      description: 自分が参加したもくもく会のメッセージグループ一覧を返すAPI
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "message_groupsのID"
+                      example: 1
+                    party_theme:
+                      type: string
+                      description: "もくもく会の題名"
+                      example: "PHP勉強会"
+                    latest_message:
+                      type: string
+                      description: "message_groupsに紐ずく最新メッセージ"
+                      example: "こんにちは"
+                    latest_message_time:
+                      type: string
+                      format: "date-time"
+                      description: "最新メッセージが作成された時間"
+                      example: "2023-12-30 13:15"
+
+# メッセージグループ一覧取得API
+  message/index_for_leader:
+    get:
+      tags:
+        - メッセージ
+      description: 自分が主催したもくもく会のメッセージグループ一覧を返すAPI
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "message_groupsのID"
+                      example: 1
+                    party_theme:
+                      type: string
+                      description: "もくもく会の題名"
+                      example: "Ruby勉強会"
+                    latest_message:
+                      type: string
+                      description: "message_groupsに紐ずく最新メッセージ"
+                      example: "こんにちは"
+                    latest_message_time:
+                      type: string
+                      format: "date-time"
+                      description: "最新メッセージが作成された時間"
+                      example: "2023-12-30 13:15"
+
+  # メッセージ一覧取得API
+  message/get/{message_group_id}:
+    get:
+      tags:
+        - メッセージ
+      description: 指定したメッセージグループのメッセージ一覧を返すAPI
+      parameters:
+        - name: message_group_id
+          in: path
+          description: "指定したメッセージグループのID"
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  theme:
+                    type: string
+                    description: "もくもく会の題名"
+                    example: "Python勉強会"
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: "メッセージのID"
+                          example: 1
+                        content:
+                          type: string
+                          description: "メッセージ内容"
+                          example: "こんにちは"
+                        created_at:
+                          type: string
+                          format: "date-time"
+                          description: "メッセージを書いた時間"
+                          example: "2023-12-30 13:15:02"
+                        is_users_message:
+                          type: boolean
+                          description: "ログインユーザーのメッセージかどうか"
+                          example: true
+                        user_name:
+                          type: string
+                          description: "メッセージを書いたユーザー名"
+                          example: "山田太郎"
+                        user_image:
+                          type: string
+                          description: "メッセージを書いたユーザーのアイコン"
+                          example: "https://myapp.s3.amazonaws.com/johndoe.png"
+# メッセージ送信API
+  message/send_message:
+    post:
+      tags:
+        - メッセージ
+      description: メッセージを送信するAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: メッセージ内容
+                  format: text
+                  example: "こんにちは"
+                  required: true
+      responses:
+        '200':
+          description: メッセージ送信完了
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "メッセージを送信しました。"
+        '422':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "メッセージを入力してください。"

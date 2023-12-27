@@ -27,7 +27,7 @@ class PartyController extends Controller
         $data = $request->all();
         $user_id = Auth::id();
         $this->service->register($data, $user_id);
-        return response()->json(['message' => '登録が完了しました。'], 200);
+        return response()->json(['message' => 'もくもく会の作成が完了しました。'], 200);
     }
 
     /**
