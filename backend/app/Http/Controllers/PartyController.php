@@ -18,6 +18,36 @@ class PartyController extends Controller
     }
 
     /**
+     * @return array
+     */
+    public function index(): array
+    {
+        $auth_id = Auth::id();
+        $data = $this->service->fetchPickUpParties($auth_id);
+        return $data;
+    }
+
+    /**
+     * @return array
+     */
+    public function indexCreated(): array
+    {
+        $auth_id = Auth::id();
+        $data = $this->service->fetchPickUpCreatedParties($auth_id);
+        return $data;
+    }
+
+    /**
+     * @return array
+     */
+    public function indexParticipated(): array
+    {
+        $auth_id = Auth::id();
+        $data = $this->service->fetchPickUpParticipatedParties($auth_id);
+        return $data;
+    }
+
+    /**
      * @param RegisterRequest $request
      *
      * @return JsonResponse

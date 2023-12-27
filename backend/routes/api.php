@@ -30,10 +30,13 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/reset_password', 'ResetPasswordController@resetPassword')->name('reset_password');
 
     Route::prefix('party')->name('party.')->group(function () {
-        Route::put('/register', 'PartyController@register')->name('register');
+        Route::get('/index', 'PartyController@index')->name('index');
+        Route::get('/index_created', 'PartyController@indexCreated')->name('index_created');
+        Route::get('/index_participated', 'PartyController@indexParticipated')->name('index_participated');
         Route::get('/get/{id}', 'PartyController@getData')->name('get');
-        Route::post('/join', 'PartyController@join')->name('join');
         Route::get('/check_if_joined/{party_id}', 'PartyController@checkIfJoined')->name('check_if_joined');
+        Route::put('/register', 'PartyController@register')->name('register');
+        Route::post('/join', 'PartyController@join')->name('join');
     });
 
     Route::prefix('user')->name('user.')->group(function () {
