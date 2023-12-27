@@ -25,6 +25,7 @@ class PartyFactory extends Factory
             'introduction' => $this->faker->name(),
             'pref_id' => Pref::factory()->create()->id,
             'leader_id' => User::factory()->create()->id,
+            'image' => $this->faker->name(),
         ];
     }
 }

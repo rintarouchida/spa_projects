@@ -37,7 +37,6 @@ class PartyService
             $data[$key]['place']   = $party->place;
             $data[$key]['due_max'] = $party->due_max - count($party->users);
             $data[$key]['image']   = config('filesystems.disks.s3.url').'/'.$party->image;
-            $data[$key]['image']   = 'test.jpg';
             foreach ($party->tags as $index => $tag) {
                 $data[$key]['tags'][$index]['name'] = $tag->name;
             }
@@ -142,7 +141,6 @@ class PartyService
         $data['user_id'] = $party->leader->id;
         $data['introduction'] = $party->introduction;
         $data['due_date'] = $party->due_date;
-        //todo:テスト追記
         $data['image'] = config('filesystems.disks.s3.url').'/'.$party->image;
         foreach ($party->tags as $index => $tag) {
             $data['tags'][$index] = $tag->name;
@@ -171,7 +169,6 @@ class PartyService
     public function checkIfJoined(int $party_id): bool
     {
         $user = Auth::User();
-        //todo:ロジックの変更をユニットテストに反映
         $query = Party::where('id', $party_id)->where(function ($query) use ($user) {
             $query->whereHas('users', function ($q) use ($user) {
                 $q->where('id', $user->id);
