@@ -50,10 +50,8 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::get('', 'SearchController@index');
     });
     Route::namespace('Master')->group(function () {
-        Route::get('/get_prefs', 'PrefController@index')->name('prefs');
         Route::get('/get_parties', 'PartyController@index')->name('parties');
         Route::get('/get_created_parties', 'PartyController@indexCreated')->name('created_parties');
         Route::get('/get_participated_parties', 'PartyController@indexParticipated')->name('participated_parties');
-        Route::get('/get_tags', 'TagController@index')->name('tags');
     });
 });
