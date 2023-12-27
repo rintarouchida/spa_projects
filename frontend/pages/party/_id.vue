@@ -45,7 +45,7 @@ export default {
     this.joinable = await this.$axios.get(`api/party/check_if_joined/${this.$route.params.id}`).then(res => {
       return !res.data.result;
     });
-    his.show = true
+    this.show = true
     this.$nuxt.$loading.finish();
   },
   methods:{

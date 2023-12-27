@@ -55,7 +55,7 @@ export default {
     setTimeout(() => this.$nuxt.$loading.start(), 500)
 
     this.parties = await this.$axios
-      .get('/api/get_created_parties')
+      .get('/api/party/index_created')
       .then((res) => {
         return res.data
       })
