@@ -716,3 +716,42 @@ paths:
                           type: string
                           description: "メッセージを書いたユーザーのアイコン"
                           example: "https://myapp.s3.amazonaws.com/johndoe.png"
+# メッセージ送信API
+  /message/send_message:
+    post:
+      tags:
+        - メッセージ
+      description: メッセージを送信するAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: メッセージ内容
+                  format: text
+                  example: "こんにちは"
+                  required: true
+      responses:
+        '200':
+          description: メッセージ送信完了
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "メッセージを送信しました。"
+        '422':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "メッセージを入力してください。"
