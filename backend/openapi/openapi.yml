@@ -976,3 +976,65 @@ paths:
                   message:
                     type: string
                     example: "メッセージを入力してください。"
+# 他のユーザー情報取得API
+  /user/get/{id}:
+    get:
+      tags:
+      - 他のユーザー
+      description: ログインユーザー以外のユーザー情報を取得するAPI
+      parameters:
+      - in: path
+        name: id
+        description: ユーザーID
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: 成功時のレスポンス
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: "integer"
+                    description: ユーザーID
+                    example: 1
+                  name:
+                    type: "string"
+                    description: ユーザー名
+                    example: "山田太郎"
+                  email:
+                    type: "string"
+                    description: メールアドレス
+                    example: "taro@example.com"
+                  pref_id:
+                    type: "integer"
+                    description: 都道府県ID
+                    example: 1
+                  birthday:
+                    type: "string"
+                    description: 生年月日
+                    format: date
+                    example: "1990-01-01"
+                  introduction:
+                    type: "string"
+                    description: 自己紹介
+                    example: "よろしくお願いします。"
+                  twitter_url:
+                    type: "string"
+                    description: TwitterのURL
+                    example: "https://twitter.com/taro"
+                  old:
+                    type: "integer"
+                    description: 年齢
+                    example: 30
+                  pref_name:
+                    type: "string"
+                    description: 都道府県名
+                    example: "東京都"
+                  image:
+                    type: "string"
+                    description: 画像のURL
+                    example: "https://s3.example.com/image.jpg"
