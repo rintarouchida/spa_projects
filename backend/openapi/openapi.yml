@@ -142,7 +142,7 @@ paths:
                 message: "名前を入力してください"
 
 # ログインユーザ情報編集API
-  /update_auth/{auth_id}:
+  update_auth/{auth_id}:
     post:
       tags:
         - ログインユーザ情報編集API
@@ -218,7 +218,7 @@ paths:
               example:
                 message: "名前を入力してください"
 # ログインユーザ情報取得API
-  /get_auth:
+  get_auth:
     get:
       tags:
         - ログインユーザ情報取得API
@@ -281,7 +281,7 @@ paths:
                         description: ユーザーの画像
                         example: test_image.jpg
 # パスワードリセット用メール送信API
-  /send_email:
+  send_email:
     post:
       tags:
         - パスワードリセット
@@ -331,7 +331,7 @@ paths:
                 message: "メールアドレスを入力してください。"
 
 # パスワード更新API
-  /reset_password:
+  reset_password:
     post:
       tags:
         - パスワードリセット
@@ -388,7 +388,7 @@ paths:
                       - "無効なユーザーです。"
                       - "無効なトークンです。"
 # もくもく会作成API
-  /party/register:
+  party/register:
     put:
       tags:
         - もくもく会
@@ -480,7 +480,7 @@ paths:
                       'tag_ids.max': "タグの選択は3つまでです。"
                       'tag_ids.*.exists': "存在しないタグが含まれています。"
 # もくもく会取得API
-  /party/get/{id}:
+  party/get/{id}:
     get:
       tags:
         - もくもく会
@@ -545,7 +545,7 @@ paths:
                     example: ["Ruby", "Python", "PHP"]
 
 # もくもく会参加API
-  /party/join:
+  party/join:
     post:
       tags:
         - もくもく会
@@ -572,7 +572,7 @@ paths:
                     type: string
                     example: "参加が完了しました。"
 # もくもく会参加判定API
-  /party/check_if_joined/{party_id}:
+  party/check_if_joined/{party_id}:
     get:
       tags:
         - もくもく会
@@ -595,8 +595,91 @@ paths:
                     type: "boolean"
                     description: "もくもく会に参加したかどうか"
                     example: true
+#もくもく会検索API
+  party/search:
+    get:
+      tags:
+      - もくもく会
+      description: もくもく会を検索するAPI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                keyword:
+                  type: "string"
+                  description: 検索するキーワード
+                  example: "データベース"
+                pref_id:
+                  type: "integer"
+                  description: 都道府県ID
+                  example: 1
+                tag_id:
+                  type: "integer"
+                  description: タグID
+                  example: 2
+      responses:
+        "200":
+          description: 成功時のレスポンス
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                      description: もくもく会のID
+                      example: 1
+                    theme:
+                      type: "string"
+                      description: もくもく会のテーマ
+                      example: "データベースの学習"
+                    place:
+                      type: "string"
+                      description: 開催場所
+                      example: "東京"
+                    due_max:
+                      type: "string"
+                      description: 締め切り日
+                      example: "2024-01-01"
+                    image:
+                      type: "string"
+                      description: 画像のURL
+                      example: "https://s3.example.com/image.jpg"
+                    tags:
+                      type: "array"
+                      description: タグのリスト
+                      items:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "string"
+                            description: タグ名
+                            example: "データベース"
+        "422":
+          description: バリデーションエラー時のレスポンス
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  keyword:
+                    type: "string"
+                    description: キーワードに関するエラーメッセージ
+                    example: "キーワードは文字列で入力してください。キーワードは30文字以内で入力してください。"
+                  pref_id:
+                    type: "string"
+                    description: 都道府県IDに関するエラーメッセージ
+                    example: "都道府県IDは整数で入力してください。指定された都道府県は存在しません。"
+                  tag_id:
+                    type: "string"
+                    description: タグIDに関するエラーメッセージ
+                    example: "指定されたタグは存在しません。"
 # メッセージ一覧取得API
-  /message/index:
+  message/index:
     get:
       tags:
         - メッセージ
@@ -629,7 +712,7 @@ paths:
                       example: "2023-12-30 13:15"
 
 # メッセージグループ一覧取得API
-  /message/index_for_leader:
+  message/index_for_leader:
     get:
       tags:
         - メッセージ
@@ -662,7 +745,7 @@ paths:
                       example: "2023-12-30 13:15"
 
   # メッセージ一覧取得API
-  /message/get/{message_group_id}:
+  message/get/{message_group_id}:
     get:
       tags:
         - メッセージ
@@ -717,7 +800,7 @@ paths:
                           description: "メッセージを書いたユーザーのアイコン"
                           example: "https://myapp.s3.amazonaws.com/johndoe.png"
 # メッセージ送信API
-  /message/send_message:
+  message/send_message:
     post:
       tags:
         - メッセージ
