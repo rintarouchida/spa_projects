@@ -433,7 +433,52 @@ paths:
                             type: "string"
                             description: タグ名
                             example: "データベース"
-
+# 作成したもくもく一覧取得API
+  party/index_created:
+    get:
+      tags:
+      - もくもく会
+      description: ログインユーザーが作成したもくもく会一覧を取得するAPI
+      responses:
+        "200":
+          description: 成功時のレスポンス
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                      description: もくもく会のID
+                      example: 1
+                    theme:
+                      type: "string"
+                      description: もくもく会のテーマ
+                      example: "データベースの学習"
+                    place:
+                      type: "string"
+                      description: 開催場所
+                      example: "東京"
+                    due_max:
+                      type: "integer"
+                      description: 参加上限人数
+                      example: 3
+                    image:
+                      type: "string"
+                      description: 画像のURL
+                      example: "https://s3.example.com/image.jpg"
+                    tags:
+                      type: "array"
+                      description: タグのリスト
+                      items:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "string"
+                            description: タグ名
+                            example: "データベース"
 # もくもく会作成API
   party/register:
     put:
