@@ -46,19 +46,6 @@ class AuthController extends Controller
     }
 
     /**
-     * @return array
-     */
-    public function get(): array
-    {
-        $user = Auth::User();
-        return [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-        ];
-    }
-
-    /**
      * @param RegisterRequest $request
      *
      * @return JsonResponse
@@ -96,21 +83,5 @@ class AuthController extends Controller
         $user = User::find($auth_id);
         $this->service->update($user, $data);
         return response()->json(['message' => '編集が完了しました'], 200);
-    }
-
-    //todo:確認して問題なければ削除
-    /**
-     * @param Request $request
-     *
-     * @return void
-     */
-    public function edit(Request $request): void
-    {
-        $data = $request->only(["name", "email"]);
-        $user = Auth::User();
-        $user->update([
-            "name" => $data["name"],
-            "email" => $data["email"],
-        ]);
     }
 }

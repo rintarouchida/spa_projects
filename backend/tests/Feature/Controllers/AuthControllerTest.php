@@ -121,4 +121,86 @@ class AuthControllerTest extends TestCase
         $response->assertStatus(401);
         $this->assertFalse(Auth::check());
     }
+
+    /**
+     * getAuthData
+     *
+     * @return void
+     */
+    public function test_getAuthData()
+    {
+        Pref::factory(['id' => 2, 'name' => 'pref_2'])->create();
+        User::factory([
+            'id'           => 2,
+            'name'         => 'ユーザー2',
+            'email'        => 'test2@gmail.com',
+            'birthday'     => '2000-01-01 00:00:00',
+            'introduction' => 'introduction2',
+            'pref_id'      => 2,
+            'twitter_url'  => 'https://twitter.com',
+            'image'        => 'test.jpg'
+        ])->create();
+        $this->actingAs(User::find(2));
+        $response = $this->get(route('get_auth'));
+        $response->assertStatus(200);
+        $response->assertExactJson(
+            [
+                'id'           => 2,
+                'name'         => 'ユーザー2',
+                'email'        => 'test2@gmail.com',
+                'pref_id'      => 2,
+                'birthday'     => '2000-01-01',
+                'introduction' => 'introduction2',
+                'twitter_url'  => 'https://twitter.com',
+                'old'          => 23,
+                'pref_name'    => 'pref_2',
+                'image'        => '/test.jpg'
+            ],
+        );
+    }
+
+    /**
+     * updateAuthData
+     *
+     * @return void
+     */
+    public function test_updateAuthData()
+    {
+        Pref::factory(['id' => 1])->create();
+        Pref::factory(['id' => 2])->create();
+        User::create(
+            [
+                'id' => 1,
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => Hash::make($this->password),
+                'birthday' => $this->birthday,
+                'pref_id' => 1,
+                'introduction' => $this->introduction,
+                'twitter_url' => $this->twitter_url,
+            ]
+        );
+
+        $this->actingAs(User::find(1));
+        $data = [
+            'name'         => 'ユーザー3',
+            'email'        => 'test3@gmail.com',
+            'birthday'     => '2001-02-02',
+            'introduction' => 'introduction3',
+            'pref_id'      => 2,
+            'twitter_url'  => 'https://twitter_twitter.com',
+        ];
+
+        $response = $this->put(route('update_auth', 1), $data);
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('users', [
+            'id'           => 1,
+            'name'         => 'ユーザー3',
+            'email'        => 'test3@gmail.com',
+            'birthday'     => '2001-02-02 00:00:00',
+            'introduction' => 'introduction3',
+            'pref_id'      => 2,
+            'twitter_url'  => 'https://twitter_twitter.com',
+        ]);
+    }
 }

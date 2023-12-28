@@ -22,7 +22,6 @@ return [
         'logout',
         'user_info',
         'register',
-        'edit',
     ],
 
     'allowed_methods' => ['*'],

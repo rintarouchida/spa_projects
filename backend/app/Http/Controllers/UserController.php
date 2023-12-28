@@ -28,28 +28,4 @@ class UserController extends Controller
         $data = $this->service->getData($user_id);
         return $data;
     }
-
-    /**
-     * @return array
-     */
-    public function getAuthData(): array
-    {
-        $user_id = Auth::id();
-        $data = $this->service->getData($user_id);
-        return $data;
-    }
-
-    /**
-     * @param UpdateRequest $request
-     * @param int $auth_id
-     *
-     * @return JsonResponse
-     */
-    public function updateAuthData(UpdateRequest $request, int $auth_id): JsonResponse
-    {
-        $data = $request->only(["name", "email", "birthday", "pref_id", "introduction", "twitter_url"]);
-        $user = User::find($auth_id);
-        $this->service->update($user, $data);
-        return response()->json(['message' => '編集が完了しました'], 200);
-    }
 }
