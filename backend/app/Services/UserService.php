@@ -29,15 +29,4 @@ class UserService
 
         return $data;
     }
-
-    //todo: 確認して問題なければテストと一緒に削除
-    /**
-     * @param array $data
-     *
-     * @return void
-     */
-    public function update(User $user, array $data): void
-    {
-        $user->fill($data)->save();
-    }
 }
