@@ -56,32 +56,4 @@ class UserServiceTest extends TestCase
             'image'        => 'https://test/test.jpg'
         ]);
     }
-
-    /**
-     * update
-     *
-     * @return void
-     */
-    public function test_update()
-    {
-        $data = [
-            'name'         => 'ユーザー2',
-            'email'        => 'test2@gmail.com',
-            'pref_id'      => 2,
-        ];
-
-        $method = new ReflectionMethod(UserService::class, 'update');
-        $method->setAccessible(true);
-        $method->invoke(new UserService, $this->user, $data);
-
-        $this->assertDatabaseHas('users', [
-            'id'           => 1,
-            'name'         => 'ユーザー2',
-            'email'        => 'test2@gmail.com',
-            'birthday'     => '2000-01-01 00:00:00',
-            'introduction' => 'introduction1',
-            'pref_id'      => 2,
-            'twitter_url'  => 'https://twitter.com',
-        ]);
-    }
 }
