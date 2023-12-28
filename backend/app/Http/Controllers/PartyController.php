@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Party\RegisterRequest;
 use App\Services\PartyService;
+use App\Http\Requests\Party\SearchPartyRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
@@ -92,5 +93,19 @@ class PartyController extends Controller
         $party_id = $request->party_id;
         $this->service->join($party_id);
         return response()->json(['message' => '参加が完了しました。'], 200);
+    }
+
+    //todo:tag_id追加分のテスト修正
+    /**
+     * @param SearchPartyRequest $request
+     *
+     * @return array
+     */
+    public function search(SearchPartyRequest $request): array
+    {
+        $params = $request->all();
+        $auth_id = Auth::id();
+        $data = $this->service->searchParties($params, $auth_id);
+        return $data;
     }
 }

@@ -111,7 +111,7 @@ export default {
     async searchParty() {
       this.$nuxt.$loading.start()
       this.parties = await this.$axios
-        .get('/api/search', {
+        .get('/api/party/search', {
           params: {
             keyword: this.keyword,
             pref_id: this.pref_id,
