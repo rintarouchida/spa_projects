@@ -208,8 +208,6 @@ class PartyService
         ]);
     }
 
-    //todo:テスト修正
-    //todo:tag_id追加分のテスト修正
     /**
      *
      * @param array $params
