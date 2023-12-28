@@ -4,6 +4,7 @@ namespace Tests\Feature\Controllers;
 
 use App\Models\Pref;
 use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,6 +19,8 @@ class AuthControllerTest extends TestCase
     protected string $birthday = '2023-05-08 00:00:00';
     protected string $introduction = 'こんにちは';
     protected string $twitter_url = 'https://twitter.com';
+    protected string $image = 'test.jpg';
+    protected string $mock_image = 's3_test.jpg';
 
     /**
      * register
@@ -40,12 +43,24 @@ class AuthControllerTest extends TestCase
             'pref_id' => 1,
             'introduction' => $this->introduction,
             'twitter_url' => $this->twitter_url,
+            'image' => $this->image,
         ];
 
-        $response = $this->post(route('register'), $data);
+        $mockAuthService = $this->getMockBuilder(AuthService::class)
+            ->setMethods(['createS3Image'])
+            ->getMock();
+        $mockAuthService->expects($this->any())
+            ->method('createS3Image')
+            ->will($this->returnValue($this->mock_image));
+
+        //AuthServiceに対してmockデータを返すインスタンス結合
+        app()->instance(AuthService::class, $mockAuthService);
+
+        $response = $this->put(route('register'), $data);
         $response->assertStatus(200);
         $this->assertDatabaseHas('users', [
             'name' => $this->name,
+            'image' => $this->mock_image
         ]);
     }
 
