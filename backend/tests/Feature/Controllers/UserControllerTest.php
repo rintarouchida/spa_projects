@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Pref;
 use App\Services\UserService;
 use Carbon\Carbon;
+use Config;
 use Tests\TestCase;
 
 class UserControllerTest extends TestCase
@@ -13,6 +14,7 @@ class UserControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Config::set('filesystems.disks.s3.url', 'https://test');
         Carbon::setTestNow('2023-11-15 00:00:00');
         Pref::factory(['id' => 1, 'name' => 'pref_1'])->create();
         Pref::factory(['id' => 2, 'name' => 'pref_2'])->create();
@@ -24,6 +26,7 @@ class UserControllerTest extends TestCase
             'introduction' => 'introduction1',
             'pref_id'      => 1,
             'twitter_url'  => 'https://twitter.com',
+            'image'        => 'test.jpg',
         ])->create();
 
         User::factory([
@@ -58,6 +61,7 @@ class UserControllerTest extends TestCase
                 'twitter_url'  => 'https://twitter.com',
                 'old'          => 23,
                 'pref_name'    => 'pref_1',
+                'image'        => 'https://test/test.jpg',
             ],
         );
     }

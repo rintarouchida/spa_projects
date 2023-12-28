@@ -56,8 +56,8 @@ class RegisterRequest extends FormRequest
 
             'birthday.date'     => '生年月日は日付で入力してください。',
 
-            'pref_id' => '都道府県を選択してください。',
-            
+            'pref_id.required' => '都道府県を選択してください。',
+
 
             'introduction.string' => '自己紹介は文字列で入力してください。',
             'introduction.max'    => '自己紹介は1000文字以内で入力してください。',
