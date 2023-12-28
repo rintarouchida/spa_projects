@@ -26,7 +26,9 @@ class AuthService
         ]);
 
         if (!is_null($data['image'])) {
-            $this->registerImage($user, $data['image']);
+            $user->update([
+                'image' => $this->createS3Image($user, $data['image'])
+            ]);
         }
     }
 
@@ -39,26 +41,23 @@ class AuthService
     public function update(User $user, array $data): void
     {
         if (!is_null($data['image'])) {
-            $this->registerImage($user, $data['image']);
+            $user->update([
+                'image' => $this->createS3Image($user, $data['image'])
+            ]);
         }
 
-        unset($data['image']);
         $user->fill($data)->save();
     }
-
-    //todo:テスト作成
 
     /**
      * @param User $user
      * @param string $image
      *
-     * @return void
+     * @return string
      */
-    protected function registerImage(User $user, string $image): void
+    protected function createS3Image(User $user, string $image): string
     {
         $image_name = Storage::disk('s3')->putFile('/', $image);
-        $user->update([
-            'image' => $image_name
-        ]);
+        return $image_name;
     }
 }
