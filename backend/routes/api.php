@@ -23,7 +23,6 @@ Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/logout', 'AuthController@logout');
     Route::get('/user_info', 'AuthController@get');
     Route::put('/register', 'AuthController@register')->name('register');
-    Route::post('/edit', 'AuthController@edit');
     Route::get('/get_auth', 'AuthController@getAuthData')->name('get_auth');
     Route::put('/update_auth/{auth_id}', 'AuthController@updateAuthData')->name('update_auth');
     Route::post('/send_email', 'ResetPasswordController@sendEmail')->name('send_email');
