@@ -7,6 +7,7 @@ use App\Models\Pref;
 use App\Services\UserService;
 use Tests\TestCase;
 use Carbon\Carbon;
+use Config;
 use ReflectionMethod;
 
 class UserServiceTest extends TestCase
@@ -27,6 +28,7 @@ class UserServiceTest extends TestCase
             'introduction' => 'introduction1',
             'pref_id'      => 1,
             'twitter_url'  => 'https://twitter.com',
+            'image'        => 'test.jpg',
         ])->create();
     }
 
@@ -37,6 +39,7 @@ class UserServiceTest extends TestCase
      */
     public function test_get_data()
     {
+        Config::set('filesystems.disks.s3.url', 'https://test');
         $service = new UserService();
 
         $actual = $service->getData($this->user->id);
@@ -50,7 +53,7 @@ class UserServiceTest extends TestCase
             'twitter_url'  => 'https://twitter.com',
             'old'          => 23,
             'pref_name'    => 'pref_1',
-
+            'image'        => 'https://test/test.jpg'
         ]);
     }
 

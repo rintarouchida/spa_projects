@@ -57,7 +57,6 @@ class AuthController extends Controller
         return response()->json(['message' => '登録が完了しました。'], 200);
     }
 
-    //todo:テスト作成
     /**
      * @return array
      */
@@ -69,7 +68,6 @@ class AuthController extends Controller
         return $data;
     }
 
-    //todo:テスト作成
     /**
      * @param UpdateRequest $request
      * @param int $auth_id
