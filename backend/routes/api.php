@@ -37,6 +37,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::get('/check_if_joined/{party_id}', 'PartyController@checkIfJoined')->name('check_if_joined');
         Route::put('/register', 'PartyController@register')->name('register');
         Route::post('/join', 'PartyController@join')->name('join');
+        Route::get('/search', 'PartyController@search')->name('search');
     });
 
     Route::prefix('user')->name('user.')->group(function () {
@@ -48,8 +49,5 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::get('/index_for_leader', 'MessageController@indexForLeader')->name('index_for_leader');
         Route::get('/get/{message_group_id}', 'MessageController@getMessage')->name('get');
         Route::post('/send_message', 'MessageController@sendMessage')->name('send_message');
-    });
-    Route::prefix('search')->name('search')->group(function () {
-        Route::get('', 'SearchController@index');
     });
 });

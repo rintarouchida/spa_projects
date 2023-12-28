@@ -7,6 +7,7 @@ use App\Models\Pref;
 use App\Models\User;
 use App\Models\Tag;
 use Carbon\Carbon;
+use Config;
 use DB;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -255,5 +256,53 @@ class PartyControllerTest extends TestCase
         $response = $this->post(route('party.join'), ['party_id' => $party->id]);
         $response->assertStatus(200);
         $this->assertTrue(DB::table('party_user')->where('party_id', $party->id)->where('user_id', $user->id)->exists());
+    }
+
+    /**
+    * search
+    *
+    * @return void
+    */
+    public function test_search()
+    {
+        Pref::factory(['id' => 1])->create();
+        Pref::factory(['id' => 2])->create();
+        Config::set('filesystems.disks.s3.url', 'https://test');
+
+        $user = User::factory(['id' => 1])->create();
+        User::factory(['id' => 2])->create();
+        Carbon::setTestNow('2023-10-29 10:00:00');
+
+        Tag::factory(4)->create(new Sequence(
+            ['id' => 1, 'name' => 'タグ1'],
+            ['id' => 2, 'name' => 'タグ2'],
+            ['id' => 3, 'name' => 'タグ3'],
+            ['id' => 4, 'name' => 'タグ4']
+        ));
+
+        Party::factory(['id' => 1, 'theme' => 'theme_1', 'pref_id' => 1, 'place' => 'place_1', 'due_max' => 1, 'created_at' => '2023-10-29 10:00:00', 'leader_id' => 2, 'image' => 'test.jpg'])->create()->tags()->attach([1,2]);
+
+        $data = [
+            'pref_id'  => 1,
+            'tag_ids'   => [2, 3],
+            'keyword' => 'place_1'
+        ];
+
+        $this->actingAs($user);
+        $response = $this->get(route('party.search', $data));
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            [
+                'id' => 1,
+                'theme' => 'theme_1',
+                'place' => 'place_1',
+                'image' => 'https://test/test.jpg',
+                'due_max' => 1,
+                'tags' => [
+                    ['name' => 'タグ1'],
+                    ['name' => 'タグ2']
+                ]
+            ],
+        ]);
     }
 }
