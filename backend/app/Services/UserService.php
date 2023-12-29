@@ -14,7 +14,7 @@ class UserService
      */
     public function getdata(int $user_id): array
     {
-        $user = User::find($user_id);
+        $user = User::with('pref')->find($user_id);
         $data = [];
         $data['id'] = $user->id;
         $data['name'] = $user->name;

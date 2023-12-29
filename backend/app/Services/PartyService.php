@@ -132,7 +132,7 @@ class PartyService
      */
     public function getdata(int $party_id): array
     {
-        $party = Party::find($party_id);
+        $party = Party::with(['leader', 'tags'])->find($party_id);
         $data = [];
         $data['id'] = $party->id;
         $data['theme'] = $party->theme;

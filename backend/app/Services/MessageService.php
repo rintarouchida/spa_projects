@@ -27,7 +27,7 @@ class MessageService
      */
     public function getMessageLists(int $user_id): array
     {
-        $message_groups = MessageGroup::whereHas('users', function ($query) use ($user_id) {
+        $message_groups = MessageGroup::with(['messages', 'party', 'users'])->whereHas('users', function ($query) use ($user_id) {
             $query->where('id', $user_id);
         })->get();
 
@@ -74,7 +74,7 @@ class MessageService
      */
     public function getMessageListsForLeader(int $user_id): array
     {
-        $message_groups = MessageGroup::whereHas('party', function ($query) use ($user_id) {
+        $message_groups = MessageGroup::with(['party', 'messages'])->whereHas('party', function ($query) use ($user_id) {
             $query->where('leader_id', $user_id);
         })->get();
 
