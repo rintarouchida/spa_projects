@@ -403,4 +403,89 @@ class PartyServiceTest extends TestCase
             ],
         ], $actual);
     }
+
+    /**
+     * @param Party $party
+     *
+     * @return bool
+     */
+    public function isEditableParty(Party $party): bool
+    {
+        return  $party->created_at->diffInHours(Carbon::now()) < 24;
+    }
+
+
+    public function update (array $params, Party $party): vool
+    {
+        $party->fill($params)->save();
+        if (!is_null($data['image'])) {
+            $this->registerImage($party, $data['image']);
+        }
+    }
+
+    /**
+     * isEditableParty
+     *
+     * @return void
+     */
+    public function test_isEditableParty(): void
+    {
+        Carbon::setTestNow('2023-12-29 10:00:00');
+        $party_1 = Party::factory(['id' => 1, 'created_at' => '2023-12-29 06:00:00'])->create();
+        $party_2 = Party::factory(['id' => 2, 'created_at' => '2023-12-28 06:00:00'])->create();
+
+        $service = new PartyService();
+
+        $this->assertTrue($service->isEditableParty($party_1));
+        $this->assertFalse($service->isEditableParty($party_2));
+    }
+
+    /**
+     * update
+     *
+     * @return void
+     */
+    public function test_update(): void
+    {
+        Tag::factory(3)->create(new Sequence(
+            ['id' => 1, 'name' => 'タグ1'],
+            ['id' => 2, 'name' => 'タグ2'],
+            ['id' => 3, 'name' => 'タグ3'],
+        ));
+
+        Pref::factory(['id' => 2])->create();
+        $party = Party::factory([
+            'id' => 1,
+            'place' => '東京都港区',
+            'theme' => 'テストパーティー1',
+            'pref_id' => 1,
+            'due_max' => 10,
+            'due_date' => '2023-12-29 00:00:00',
+            'introduction' => '詳細1',
+        ])->create();
+
+        $data = [
+            'place' => '東京都千代田区',
+            'theme' => 'テストパーティー2',
+            'pref_id' => 2,
+            'due_max' => 20,
+            'due_date' => '2023-12-30 00:00:00',
+            'introduction' => '詳細2',
+            'tag_ids' => [1, 2],
+            'image' => null,
+        ];
+
+        $service = new PartyService();
+        $service->update($data, $party);
+
+        $this->assertDatabaseHas('parties', [
+            'id'    => 1,
+            'theme' => 'テストパーティー2',
+            'place' => '東京都千代田区',
+            'due_max' => 20,
+            'due_date' => '2023-12-30 00:00:00',
+            'introduction' => '詳細2',
+            'pref_id' => 2,
+        ]);
+    }
 }

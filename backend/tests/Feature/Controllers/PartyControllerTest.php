@@ -305,4 +305,152 @@ class PartyControllerTest extends TestCase
             ],
         ]);
     }
+
+    /**
+    * update
+    *
+    * @return void
+    */
+    public function test_update()
+    {
+        Tag::factory(3)->create(new Sequence(
+            ['id' => 1, 'name' => 'tag_1'],
+            ['id' => 2, 'name' => 'tag_2'],
+            ['id' => 3, 'name' => 'tag_3'],
+        ));
+
+        Pref::factory(['id' => 1])->create();
+        Pref::factory(['id' => 2])->create();
+        $user = User::factory(['id' => 1])->create();
+        $this->actingAs($user);
+        Carbon::setTestNow('2023-12-29 08:00:00');
+        $party = Party::factory([
+            'id' => 1,
+            'leader_id' => $user->id,
+            'place' => '東京都港区',
+            'theme' => 'テストパーティー1',
+            'pref_id' => 1,
+            'due_max' => 10,
+            'due_date' => '2023-12-30 10:00:00',
+            'introduction' => '詳細1',
+            'created_at' => '2023-12-29 10:00:00',
+        ])->create();
+
+        $data = [
+            'place' => '東京都千代田区',
+            'theme' => 'テストパーティー2',
+            'pref_id' => 2,
+            'due_max' => 20,
+            'due_date' => '2023-12-30 00:00:00',
+            'introduction' => '詳細2',
+            'tag_ids' => [1, 2],
+            'image' => null,
+        ];
+
+        $response = $this->put(route('party.update', 1), $data);
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('parties', [
+            'id'    => 1,
+            'theme' => 'テストパーティー2',
+            'place' => '東京都千代田区',
+            'due_max' => 20,
+            'due_date' => '2023-12-30 00:00:00',
+            'introduction' => '詳細2',
+            'pref_id' => 2,
+        ]);
+    }
+
+    /**
+    * update
+    *
+    * @return void
+    */
+    public function test_update_if_invalid()
+    {
+        Tag::factory(3)->create(new Sequence(
+            ['id' => 1, 'name' => 'tag_1'],
+            ['id' => 2, 'name' => 'tag_2'],
+            ['id' => 3, 'name' => 'tag_3'],
+        ));
+
+        Pref::factory(['id' => 1])->create();
+        Pref::factory(['id' => 2])->create();
+        $user = User::factory(['id' => 1])->create();
+        User::factory(['id' => 2])->create();
+        $this->actingAs($user);
+        Carbon::setTestNow('2023-12-29 08:00:00');
+        $party = Party::factory([
+            'id' => 1,
+            'leader_id' => 2,
+            'place' => '東京都港区',
+            'theme' => 'テストパーティー1',
+            'pref_id' => 1,
+            'due_max' => 10,
+            'due_date' => '2023-12-30 10:00:00',
+            'introduction' => '詳細1',
+            'created_at' => '2023-12-29 10:00:00',
+        ])->create();
+
+        $data = [
+            'place' => '東京都千代田区',
+            'theme' => 'テストパーティー2',
+            'pref_id' => 2,
+            'due_max' => 20,
+            'due_date' => '2023-12-29 08:00:00',
+            'introduction' => '詳細2',
+            'tag_ids' => [1, 2],
+            'image' => null,
+        ];
+
+        $response = $this->put(route('party.update', 1), $data);
+        $response->assertStatus(400);
+        $response->assertJson(['message' => 'ログインユーザー以外が作成したもくもく会の内容は更新できません。']);
+    }
+
+    /**
+    * update
+    *
+    * @return void
+    */
+    public function test_update_if_after_one_day()
+    {
+        Tag::factory(3)->create(new Sequence(
+            ['id' => 1, 'name' => 'tag_1'],
+            ['id' => 2, 'name' => 'tag_2'],
+            ['id' => 3, 'name' => 'tag_3'],
+        ));
+
+        Pref::factory(['id' => 1])->create();
+        Pref::factory(['id' => 2])->create();
+        $user = User::factory(['id' => 1])->create();
+        $this->actingAs($user);
+        Carbon::setTestNow('2023-12-28 08:00:00');
+        $party = Party::factory([
+            'id' => 1,
+            'leader_id' => $user->id,
+            'place' => '東京都港区',
+            'theme' => 'テストパーティー1',
+            'pref_id' => 1,
+            'due_max' => 10,
+            'due_date' => '2023-12-30 10:00:00',
+            'introduction' => '詳細1',
+            'created_at' => '2023-12-26 10:00:00',
+        ])->create();
+
+        $data = [
+            'place' => '東京都千代田区',
+            'theme' => 'テストパーティー2',
+            'pref_id' => 2,
+            'due_max' => 20,
+            'due_date' => '2023-12-31 10:00:00',
+            'introduction' => '詳細2',
+            'tag_ids' => [1, 2],
+            'image' => null,
+        ];
+
+        $response = $this->put(route('party.update', 1), $data);
+        $response->assertStatus(400);
+        $response->assertJson(['message' => '作成から24時間経過したもくもく会の内容は変更できません。']);
+    }
 }
