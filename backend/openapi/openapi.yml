@@ -816,6 +816,101 @@ paths:
                     type: "string"
                     description: タグIDに関するエラーメッセージ
                     example: "指定されたタグは存在しません。"
+
+# もくもく会更新API
+  /party/update/{id}:
+    post:
+      tags:
+        - もくもく会
+      description: もくもく会を更新するAPI
+
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ログインユーザーが作成したもくもく会のID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                theme:
+                  type: string
+                  maxLength: 30
+                  description: もくもく会のテーマ
+                  example: プログラミング勉強会
+                introduction:
+                  type: string
+                  maxLength: 1000
+                  description: もくもく会の詳細
+                  example: 初心者から上級者まで、一緒にプログラミングを学びましょう。
+                pref_id:
+                  type: string
+                  description: 都道府県ID
+                  example: "13"
+                place:
+                  type: string
+                  maxLength: 255
+                  description: 開催場所
+                  example: 東京都新宿区新宿三丁目
+                due_max:
+                  type: string
+                  description: 定員
+                  example: "30"
+                due_date:
+                  type: string
+                  description: 開催日時
+                  example: "2024-01-01"
+                tag_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: タグID
+                  example: ["1", "2", "3"]
+              required:
+                - theme
+                - introduction
+                - pref_id
+                - place
+                - due_max
+                - due_date
+      responses:
+        '200':
+          description: 更新が完了しました
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 更新が完了しました
+        '400':
+          description: ログインユーザーが作成した以外のもくもく会がパラメータに含まれた場合|作成から24時間経過した場合
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example:
+                    - ログインユーザー以外が作成したもくもく会の内容は更新できません。
+                    - 作成から24時間経過したもくもく会の内容は変更できません
+        '422':
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 開催日時は明日以降にしてください。
+
 # メッセージ一覧取得API
   message/index:
     get:

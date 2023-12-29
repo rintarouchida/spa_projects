@@ -303,4 +303,32 @@ class PartyService
         });
         return $query;
     }
+
+    /**
+     * @param Party $party
+     *
+     * @return bool
+     */
+    public function isEditableParty(Party $party): bool
+    {
+        return  $party->created_at->diffInHours(Carbon::now()) < 24;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function update (array $data, Party $party): void
+    {
+        if (!is_null($data['tag_ids'])) {
+            $party->tags()->sync($data['tag_ids']);
+        }
+        if (!is_null($data['image'])) {
+            $this->registerImage($party, $data['image']);
+        }
+        unset($data['tag_ids']);
+        unset($data['image']);
+        $party->fill($data)->save();
+    }
 }
