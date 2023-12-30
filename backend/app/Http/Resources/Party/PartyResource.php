@@ -18,13 +18,17 @@ class PartyResource extends JsonResource
             'id' => $this->id,
             'theme' => $this->theme,
             'place' => $this->place,
-            'due_max' => $this->due_max - count($this->users),
+            'due_max' => $this->due_max,
+            'now_participated_num' => count($this->users),
             'user_name' => $this->leader->name,
             'user_id' => $this->leader->id,
             'introduction' => $this->introduction,
             'due_date' => $this->due_date,
             'image' => $this->image ? config('filesystems.disks.s3.url') . '/' . $this->image : null,
             'tags' => $this->tags->pluck('name'),
+            'pref_name' => $this->pref->name,
+            'pref_id' => $this->pref->id,
+            'tag_ids' => $this->tags->pluck('id'),
         ];
     }
 }

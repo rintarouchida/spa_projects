@@ -28,7 +28,8 @@ class UpdateRequest extends FormRequest
             'introduction' => 'required|max:1000',
             'pref_id' => 'required|exists:prefs,id',
             'place' => 'required|max:255',
-            'due_max' => 'required',
+            'due_max' => 'required|gte:now_participated_num',
+            'now_participated_num' => 'integer',
             'due_date' => 'required|after:today',
             'tag_ids' => 'nullable|max:3',
             'tag_ids.*' => 'nullable|exists:tags,id',
@@ -55,6 +56,8 @@ class UpdateRequest extends FormRequest
             'place.max'      => '開催場所は255文字以内で入力してください。',
 
             'due_max.required'  => '定員を選択してください。',
+            //todo:テスト作成
+            'due_max.gte'       => '定員は現在の参加人数以上にしてください。',
 
             'due_date.required' => '開催日時を入力してください。',
             'due_date.after'    => '開催日時は明日以降にしてください。',

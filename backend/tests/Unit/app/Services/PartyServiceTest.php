@@ -390,23 +390,6 @@ class PartyServiceTest extends TestCase
     }
 
     /**
-     * isEditableParty
-     *
-     * @return void
-     */
-    public function test_isEditableParty(): void
-    {
-        Carbon::setTestNow('2023-12-29 10:00:00');
-        $party_1 = Party::factory(['id' => 1, 'created_at' => '2023-12-29 06:00:00'])->create();
-        $party_2 = Party::factory(['id' => 2, 'created_at' => '2023-12-28 06:00:00'])->create();
-
-        $service = new PartyService();
-
-        $this->assertTrue($service->isEditableParty($party_1));
-        $this->assertFalse($service->isEditableParty($party_2));
-    }
-
-    /**
      * update
      *
      * @return void

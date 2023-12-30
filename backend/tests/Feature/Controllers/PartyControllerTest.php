@@ -99,9 +99,9 @@ class PartyControllerTest extends TestCase
         $response = $this->get(route('party.index_participated'));
         $response->assertStatus(200);
         $response->assertJson([
-            ['id' => 1, 'theme' => 'theme_1', 'place' => 'place_1', 'due_max' => 0],
-            ['id' => 2, 'theme' => 'theme_2', 'place' => 'place_2', 'due_max' => 1],
-            ['id' => 3, 'theme' => 'theme_3', 'place' => 'place_3', 'due_max' => 2],
+            ['id' => 1, 'theme' => 'theme_1', 'place' => 'place_1', 'due_max' => 1, 'now_participated_num' => 1],
+            ['id' => 2, 'theme' => 'theme_2', 'place' => 'place_2', 'due_max' => 2, 'now_participated_num' => 1],
+            ['id' => 3, 'theme' => 'theme_3', 'place' => 'place_3', 'due_max' => 3, 'now_participated_num' => 1],
         ]);
     }
 
@@ -155,7 +155,7 @@ class PartyControllerTest extends TestCase
     */
     public function test_getData()
     {
-        Pref::factory(['id' => 1])->create();
+        Pref::factory(['id' => 1, 'name' => 'pref_1'])->create();
         User::factory(['id' => 1, 'name' => 'ユーザー1'])->create();
         Tag::factory(3)->create(new Sequence(
             ['id' => 1, 'name' => 'tag_1'],
@@ -179,6 +179,7 @@ class PartyControllerTest extends TestCase
             [
                 'id' => 1,
                 'due_date' => '2023-05-08',
+                'now_participated_num' => 0,
                 'due_max' => 10,
                 'introduction' => '詳細1',
                 'place' => '東京都港区',
@@ -186,6 +187,9 @@ class PartyControllerTest extends TestCase
                 'user_name' => 'ユーザー1',
                 'user_id'   => 1,
                 'tags' => ['tag_1', 'tag_2', 'tag_3'],
+                'tag_ids' => [1, 2, 3],
+                'pref_name' => 'pref_1',
+                'pref_id' => 1,
                 'image' => '/test.jpg'
             ],
         );
@@ -339,7 +343,7 @@ class PartyControllerTest extends TestCase
             'image' => 'test.jpg',
         ])->create()->tags()->attach([1, 2]);
 
-        $response = $this->put(route('party.edit', 1));
+        $response = $this->get(route('party.edit', 1));
 
         $response->assertStatus(200);
 
@@ -394,6 +398,7 @@ class PartyControllerTest extends TestCase
             'theme' => 'テストパーティー2',
             'pref_id' => 2,
             'due_max' => 20,
+            'now_participated_num' => 10,
             'due_date' => '2023-12-30 00:00:00',
             'introduction' => '詳細2',
             'tag_ids' => [1, 2],
@@ -450,6 +455,7 @@ class PartyControllerTest extends TestCase
             'theme' => 'テストパーティー2',
             'pref_id' => 2,
             'due_max' => 20,
+            'now_participated_num' => 10,
             'due_date' => '2023-12-29 08:00:00',
             'introduction' => '詳細2',
             'tag_ids' => [1, 2],
@@ -496,6 +502,7 @@ class PartyControllerTest extends TestCase
             'theme' => 'テストパーティー2',
             'pref_id' => 2,
             'due_max' => 20,
+            'now_participated_num' => 10,
             'due_date' => '2023-12-31 10:00:00',
             'introduction' => '詳細2',
             'tag_ids' => [1, 2],

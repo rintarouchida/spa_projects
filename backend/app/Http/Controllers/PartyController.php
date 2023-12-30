@@ -87,6 +87,19 @@ class PartyController extends Controller
     }
 
     /**
+     * @param int $party_id
+     *
+     * @return array
+     */
+    public function checkIfEditable(int $party_id): array
+    {
+        $auth_id = Auth::id();
+        $party = Party::find($party_id);
+        $data['result'] = $party->leader_id === $auth_id && $party->created_at->diffInHours(Carbon::now()) < 24;
+        return $data;
+    }
+
+    /**
      * @param Request $request
      *
      * @return JsonResponse
@@ -139,7 +152,7 @@ class PartyController extends Controller
      */
     public function update(UpdateRequest $request, int $party_id): JsonResponse
     {
-        $params = $request->all();
+        $params = $request->except(['now_participated_num']);
         $auth_id = Auth::id();
 
         $query = Party::with(['tags']);

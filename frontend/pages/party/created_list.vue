@@ -24,7 +24,7 @@
       <div class="content_box">
         <h1 class="theme">
           <router-link
-            :to="`../party/${party.id}`"
+            :to="`../party/created/${party.id}`"
             style="text-decoration: none"
             >{{ party.theme }}</router-link
           >
@@ -36,7 +36,7 @@
           </span>
         </p>
         <p>開催場所: {{ party.place }}</p>
-        <p>定員: 残り{{ party.due_max }}人</p>
+        <p>定員: {{ party.due_max }}名(残り{{party.due_max - party.now_participated_num}}名)</p>
       </div>
       <span class="clear"></span>
     </div>
