@@ -109,6 +109,7 @@
         type="date"
         placeholder="開催日時"
       /><br />
+      <p style="text-align:left;">※6日後以降で指定してください。</p>
       <p
         v-for="(due_date, index) in validation.due_date"
         v-show="validation.due_date.length"

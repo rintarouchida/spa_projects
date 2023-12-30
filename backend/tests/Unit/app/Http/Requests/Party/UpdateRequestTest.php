@@ -47,10 +47,25 @@ class UpdateRequestTest extends TestCase
                     'place' => '場所1',
                     'due_max' => 2,
                     'now_participated_num' => 1,
-                    'due_date' => '2023-12-17 10:00:00',
+                    'due_date' => '2023-12-22 08:00:00',
                 ],
                 false,
                 [],
+            ],
+            '正常 開催日時 6日後以内' => [
+                [
+                    'theme' => str_repeat('a', 30),
+                    'introduction' => '詳細1',
+                    'pref_id' => 1,
+                    'place' => '場所1',
+                    'due_max' => 2,
+                    'now_participated_num' => 1,
+                    'due_date' => '2023-12-21 08:00:00',
+                ],
+                true,
+                [
+                    'due_date' => ['開催日時は6日後以降にしてください。'],
+                ],
             ],
             '異常 現在の参加人数が定員を超える' => [
                 [
@@ -60,7 +75,7 @@ class UpdateRequestTest extends TestCase
                     'place' => '場所1',
                     'due_max' => 2,
                     'now_participated_num' => 3,
-                    'due_date' => '2023-12-17 10:00:00',
+                    'due_date' => '2023-12-22 10:00:00',
                 ],
                 true,
                 [
@@ -87,7 +102,7 @@ class UpdateRequestTest extends TestCase
                     'place' => '場所1',
                     'due_max' => 2,
                     'now_participated_num' => 1,
-                    'due_date' => '2023-12-17 10:00:00',
+                    'due_date' => '2023-12-22 10:00:00',
                 ],
                 true,
                 [
@@ -102,7 +117,7 @@ class UpdateRequestTest extends TestCase
                     'place' => '場所1',
                     'due_max' => 2,
                     'now_participated_num' => 1,
-                    'due_date' => '2023-12-17 10:00:00',
+                    'due_date' => '2023-12-22 10:00:00',
                 ],
                 true,
                 [
