@@ -816,7 +816,84 @@ paths:
                     type: "string"
                     description: タグIDに関するエラーメッセージ
                     example: "指定されたタグは存在しません。"
-
+# もくもく会編集データ取得API
+  party/edit/{id}:
+    get:
+      tags:
+        - もくもく会
+      summary: もくもく会の編集用データを取得
+      description: 特定のもくもく会に対する編集用詳細情報を取得するAPI
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 取得したいもくもく会のID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功したレスポンス
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: もくもく会のID
+                    example: 1
+                  theme:
+                    type: string
+                    description: もくもく会のテーマ
+                    example: "プログラミング勉強会"
+                  place:
+                    type: string
+                    description: 開催場所
+                    example: "オンライン"
+                  due_max:
+                    type: string
+                    description: 最大参加可能人数
+                    example: "50"
+                  user_name:
+                    type: string
+                    description: リーダーの名前
+                    example: "田中太郎"
+                  user_id:
+                    type: integer
+                    description: リーダーのユーザーID
+                    example: 100
+                  introduction:
+                    type: string
+                    description: もくもく会の紹介文
+                    example: "この会は初心者向けのプログラミング学習もくもく会です。"
+                  due_date:
+                    type: string
+                    description: 開催期限
+                    format: date-time
+                    example: "2023-12-30T14:00:00.000Z"
+                  image:
+                    type: string
+                    description: もくもく会の画像のURL
+                    example: "https://example.com/images/mokumoku.jpg"
+                  tags:
+                    type: array
+                    description: もくもく会のタグリスト
+                    items:
+                      type: string
+                    example: ["プログラミング", "勉強会"]
+        '400':
+          description: ログインユーザーが作成した以外のもくもく会がパラメータに含まれた場合|作成から24時間経過した場合
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: エラーメッセージ
+                    example:
+                    - ログインユーザー以外が作成したもくもく会の内容は編集できません。
+                    - 作成から24時間経過したもくもく会の内容は編集できません
 # もくもく会更新API
   /party/update/{id}:
     post:
