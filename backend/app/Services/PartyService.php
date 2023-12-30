@@ -189,7 +189,7 @@ class PartyService
         if (isset($params['keyword'])) {
             $query = $this->fetchRecordByKeyword($query, $params['keyword']);
         }
-        
+
         return $query->get();
     }
 
@@ -241,16 +241,6 @@ class PartyService
             $q->where('id', $pref_id);
         });
         return $query;
-    }
-
-    /**
-     * @param Party $party
-     *
-     * @return bool
-     */
-    public function isEditableParty(Party $party): bool
-    {
-        return  $party->created_at->diffInHours(Carbon::now()) < 24;
     }
 
     /**

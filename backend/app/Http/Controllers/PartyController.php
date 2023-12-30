@@ -9,8 +9,10 @@ use App\Http\Requests\Party\UpdateRequest;
 use App\Http\Resources\Party\PartyResource;
 use App\Http\Resources\Party\PartyCollection;
 use App\Models\Party;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 
@@ -111,6 +113,25 @@ class PartyController extends Controller
     }
 
     /**
+     * @param int $party_id
+     *
+     * @return JsonResource|JsonResponse
+     */
+    public function edit(int $party_id)
+    {
+        $party = $this->service->getParty($party_id);
+        $auth_id = Auth::id();
+        if ($party->leader_id != $auth_id) {
+            return response()->json(['message' => 'ログインユーザー以外が作成したもくもく会の内容は編集できません。'], 400);
+        }
+        if ($party->created_at->diffInHours(Carbon::now()) > 24) {
+            return response()->json(['message' => '作成から24時間経過したもくもく会の内容は編集できません。'], 400);
+        }
+
+        return PartyResource::make($party);
+    }
+
+    /**
      * @param UpdateRequest $request
      * @param int $party_id
      *
@@ -127,7 +148,7 @@ class PartyController extends Controller
             return response()->json(['message' => 'ログインユーザー以外が作成したもくもく会の内容は更新できません。'], 400);
         }
         $party = $query->first();
-        if (!$this->service->isEditableParty($party)) {
+        if ($party->created_at->diffInHours(Carbon::now()) > 24) {
             return response()->json(['message' => '作成から24時間経過したもくもく会の内容は変更できません。'], 400);
         }
 

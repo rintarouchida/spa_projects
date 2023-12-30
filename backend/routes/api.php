@@ -37,6 +37,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::put('/register', 'PartyController@register')->name('register');
         Route::post('/join', 'PartyController@join')->name('join');
         Route::get('/search', 'PartyController@search')->name('search');
+        Route::put('/edit/{id}', 'PartyController@edit')->name('edit');
         Route::put('/update/{id}', 'PartyController@update')->name('update');
     });
 
