@@ -67,20 +67,7 @@ class MessageServiceTest extends TestCase
         ));
         $service = new MessageService();
         $actual = $service->getMessageLists(1);
-        $this->assertSame($actual,[
-            [
-                'id'                  => 1,
-                'party_theme'         => 'party_1',
-                'latest_message'      => 'メッセージ1',
-                'latest_message_time' => '2023-10-14 10:00',
-            ],
-            [
-                'id'                  => 2,
-                'party_theme'         => 'party_2',
-                'latest_message'      => 'メッセージ4',
-                'latest_message_time' => '2023-10-12 10:00',
-            ],
-        ]);
+        $this->assertSame($actual->pluck('id')->toArray(), [1, 2]);
     }
 
     /**
@@ -88,7 +75,7 @@ class MessageServiceTest extends TestCase
      *
      * @return void
      */
-    public function test_get_messages_by_group_id()
+    public function test_getMessagesByMessageGroup()
     {
         Config::set('filesystems.disks.s3.url', 'https://test');
         $user = User::factory(['id' => 1, 'name' => 'ユーザー1', 'image' => 'test1.jpg'])->create();
@@ -96,51 +83,16 @@ class MessageServiceTest extends TestCase
             'id' => 1,
             'party_id' => Party::factory(['theme' => 'party_1'])->create()->id,
         ])->create();
+        MessageGroup::factory(['id' => 2])->create();
         Message::factory(4)->create(new Sequence(
             ['id' => 1, 'message_group_id' => $message_group->id, 'content' => 'メッセージ1', 'user_id' => $user->id, 'created_at' => '2023-10-13 10:00:00'],
-            ['id' => 2, 'message_group_id' => $message_group->id, 'content' => 'メッセージ2', 'user_id' => User::factory(['id' => 2, 'name' => 'ユーザー2', 'image' => 'test2.jpg'])->create()->id, 'created_at' => '2023-10-14 10:00:00'],
+            ['id' => 2, 'message_group_id' => 2, 'content' => 'メッセージ2', 'user_id' => User::factory(['id' => 2, 'name' => 'ユーザー2', 'image' => 'test2.jpg'])->create()->id, 'created_at' => '2023-10-14 10:00:00'],
             ['id' => 3, 'message_group_id' => $message_group->id, 'content' => 'メッセージ3', 'user_id' => User::factory(['id' => 3, 'name' => 'ユーザー3', 'image' => 'test3.jpg'])->create()->id, 'created_at' => '2023-10-15 10:00:00'],
-            ['id' => 4, 'message_group_id' => $message_group->id, 'content' => 'メッセージ4', 'user_id' => User::factory(['id' => 4, 'name' => 'ユーザー4', 'image' => 'test4.jpg'])->create()->id, 'created_at' => '2023-10-16 10:00:00'],
+            ['id' => 4, 'message_group_id' => 2, 'content' => 'メッセージ4', 'user_id' => User::factory(['id' => 4, 'name' => 'ユーザー4', 'image' => 'test4.jpg'])->create()->id, 'created_at' => '2023-10-16 10:00:00'],
         ));
         $service = new MessageService();
-        $actual = $service->getMessagesByGroupId($message_group->id, $user->id);
-        $this->assertSame($actual,[
-            'theme' => 'party_1',
-            'messages' => [
-                [
-                    'id'               => 1,
-                    'content'          => 'メッセージ1',
-                    'created_at'       => '2023-10-13 10:00:00',
-                    'is_users_message' => true,
-                    'user_name'        => 'ユーザー1',
-                    'user_image'       => 'https://test/test1.jpg'
-                ],
-                [
-                    'id'               => 2,
-                    'content'          => 'メッセージ2',
-                    'created_at'       => '2023-10-14 10:00:00',
-                    'is_users_message' => false,
-                    'user_name'        => 'ユーザー2',
-                    'user_image'       => 'https://test/test2.jpg'
-                ],
-                [
-                    'id'               => 3,
-                    'content'          => 'メッセージ3',
-                    'created_at'       => '2023-10-15 10:00:00',
-                    'is_users_message' => false,
-                    'user_name'        => 'ユーザー3',
-                    'user_image'       => 'https://test/test3.jpg'
-                ],
-                [
-                    'id'               => 4,
-                    'content'          => 'メッセージ4',
-                    'created_at'       => '2023-10-16 10:00:00',
-                    'is_users_message' => false,
-                    'user_name'        => 'ユーザー4',
-                    'user_image'       => 'https://test/test4.jpg'
-                ],
-            ],
-        ]);
+        $actual = $service->getMessagesByMessageGroup($message_group);
+        $this->assertSame($actual->pluck('id')->toArray(), [1, 3]);
     }
 
     /**
@@ -172,19 +124,6 @@ class MessageServiceTest extends TestCase
 
         $service = new MessageService();
         $actual = $service->getMessageListsForLeader(1);
-        $this->assertSame($actual,[
-            [
-                'id'                  => 1,
-                'party_theme'         => 'party_1',
-                'latest_message'      => 'メッセージ2',
-                'latest_message_time' => '2023-10-14 10:00',
-            ],
-            [
-                'id'                  => 2,
-                'party_theme'         => 'party_2',
-                'latest_message'      => 'メッセージ4',
-                'latest_message_time' => '2023-10-16 10:00',
-            ],
-        ]);
+        $this->assertSame($actual->pluck('id')->toArray(), [1, 2]);
     }
 }

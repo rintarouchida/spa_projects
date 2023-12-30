@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Message\SendMessageRequest;
+use App\Http\Resources\Message\MessageGroupCollection;
+use App\Http\Resources\Message\MessageCollection;
+use App\Models\MessageGroup;
 use App\Services\MessageService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,23 +35,23 @@ class MessageController extends Controller
     }
 
     /**
-     * @return array
+     * @return ResourceCollection
      */
-    public function index(): array
+    public function index(): ResourceCollection
     {
         $user_id = Auth::id();
         $message_lists = $this->service->getMessageLists($user_id);
-        return $message_lists;
+        return MessageGroupCollection::make($message_lists);
     }
 
     /**
-     * @return array
+     * @return ResourceCollection
      */
-    public function indexForLeader(): array
+    public function indexForLeader(): ResourceCollection
     {
         $user_id = Auth::id();
         $message_lists = $this->service->getMessageListsForLeader($user_id);
-        return $message_lists;
+        return MessageGroupCollection::make($message_lists);
     }
 
     /**
@@ -56,8 +60,13 @@ class MessageController extends Controller
      */
     public function getMessage(int $message_group_id): array
     {
-        $user_id = Auth::id();
-        $messages = $this->service->getMessagesByGroupId($message_group_id, $user_id);
-        return $messages;
+        $message_group = MessageGroup::find($message_group_id);
+        $messages = $this->service->getMessagesByMessageGroup($message_group);
+
+        $collection = (array)MessageCollection::make($messages);
+        $resource['messages'] = $collection['collection'];
+        $resource['theme'] = $message_group->party->theme;
+
+        return $resource;
     }
 }

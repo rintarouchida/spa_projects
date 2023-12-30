@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Auth\UpdateRequest;
-use App\Models\User;
 use App\Services\UserService;
 use App\Http\Resources\UserResource;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -22,9 +19,9 @@ class UserController extends Controller
     /**
      * @param int $user_id
      *
-     * @return array
+     * @return JsonResource
      */
-    public function getData(int $user_id)
+    public function getData(int $user_id): JsonResource
     {
         $user = $this->service->getUser($user_id);
         return UserResource::make($user);

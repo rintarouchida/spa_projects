@@ -12,7 +12,7 @@ use Tests\TestCase;
 class UserResourceTest extends TestCase
 {
 
-    public function testUserResourceReturnsExpectedFormat()
+    public function testUserResource()
     {
         Config::set('filesystems.disks.s3.url', 'https://test');
 
