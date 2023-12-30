@@ -130,7 +130,7 @@ class PartyControllerTest extends TestCase
             'theme' => 'テストパーティー1',
             'pref_id' => 1,
             'due_max' => 10,
-            'due_date' => '2023-12-28 10:00:00',
+            'due_date' => '2024-01-10 10:00:00',
             'introduction' => '詳細1',
             'tag_ids' => null,
             'image'   => null
@@ -143,7 +143,7 @@ class PartyControllerTest extends TestCase
             'theme' => 'テストパーティー1',
             'pref_id' => 1,
             'due_max' => 10,
-            'due_date' => '2023-12-28 00:00:00',
+            'due_date' => '2024-01-10',
             'introduction' => '詳細1'
         ]);
     }
@@ -399,7 +399,7 @@ class PartyControllerTest extends TestCase
             'pref_id' => 2,
             'due_max' => 20,
             'now_participated_num' => 10,
-            'due_date' => '2023-12-30 00:00:00',
+            'due_date' => '2024-01-30 00:00:00',
             'introduction' => '詳細2',
             'tag_ids' => [1, 2],
             'image' => null,
@@ -413,7 +413,7 @@ class PartyControllerTest extends TestCase
             'theme' => 'テストパーティー2',
             'place' => '東京都千代田区',
             'due_max' => 20,
-            'due_date' => '2023-12-30 00:00:00',
+            'due_date' => '2024-01-30 00:00:00',
             'introduction' => '詳細2',
             'pref_id' => 2,
         ]);
@@ -456,7 +456,7 @@ class PartyControllerTest extends TestCase
             'pref_id' => 2,
             'due_max' => 20,
             'now_participated_num' => 10,
-            'due_date' => '2023-12-29 08:00:00',
+            'due_date' => '2024-12-29 08:00:00',
             'introduction' => '詳細2',
             'tag_ids' => [1, 2],
             'image' => null,
@@ -492,7 +492,7 @@ class PartyControllerTest extends TestCase
             'theme' => 'テストパーティー1',
             'pref_id' => 1,
             'due_max' => 10,
-            'due_date' => '2023-12-30 10:00:00',
+            'due_date' => '2024-01-30 10:00:00',
             'introduction' => '詳細1',
             'created_at' => '2023-12-26 10:00:00',
         ])->create();
@@ -503,7 +503,7 @@ class PartyControllerTest extends TestCase
             'pref_id' => 2,
             'due_max' => 20,
             'now_participated_num' => 10,
-            'due_date' => '2023-12-31 10:00:00',
+            'due_date' => '2024-01-31 10:00:00',
             'introduction' => '詳細2',
             'tag_ids' => [1, 2],
             'image' => null,
