@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\UpdateRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\AuthService;
 use App\Services\UserService;
@@ -57,15 +58,12 @@ class AuthController extends Controller
         return response()->json(['message' => '登録が完了しました。'], 200);
     }
 
-    /**
-     * @return array
-     */
-    public function getAuthData(): array
+    public function getAuthData()
     {
         $user_id = Auth::id();
         $service = new UserService();
-        $data = $service->getData($user_id);
-        return $data;
+        $data = $service->getUser($user_id);
+        return UserResource::make($data);
     }
 
     /**
