@@ -34,10 +34,11 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::get('/index_participated', 'PartyController@indexParticipated')->name('index_participated');
         Route::get('/get/{id}', 'PartyController@getData')->name('get');
         Route::get('/check_if_joined/{party_id}', 'PartyController@checkIfJoined')->name('check_if_joined');
+        Route::get('/check_if_editable/{party_id}', 'PartyController@checkIfEditable')->name('check_if_editable');
         Route::put('/register', 'PartyController@register')->name('register');
         Route::post('/join', 'PartyController@join')->name('join');
         Route::get('/search', 'PartyController@search')->name('search');
-        Route::put('/edit/{id}', 'PartyController@edit')->name('edit');
+        Route::get('/edit/{id}', 'PartyController@edit')->name('edit');
         Route::put('/update/{id}', 'PartyController@update')->name('update');
     });
 

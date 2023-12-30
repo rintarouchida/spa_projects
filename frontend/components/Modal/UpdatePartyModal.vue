@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-btn color="primary"
-          @click="openModal()">登録する</v-btn>
+          @click="openModal()">更新する</v-btn>
     <div
       class="overlay"
       v-show="modalContent"
     >
       <div class="content">
-        <h3 style="color:red; margin-bottom:20px;">以下の内容でもくもく会を登録します。よろしいですか?
+        <h3 style="color:red; margin-bottom:20px;">以下の内容でもくもく会の内容を更新します。よろしいですか?
         </h3>
         <span style="text-align: left;">
           <p v-show="theme === ''">題名: <span style="color:red;">未入力です</span></p>

@@ -14,26 +14,23 @@
      <span class="tag" v-for="(tag, index) in party.tags" :key="index">{{ tag }}</span>
     <p style="margin-top:15px;">主催者: <router-link :to="`../user/${party.user_id}`">{{ party.user_name }}</router-link>
     <p style="margin-top:15px;">開催場所: {{ party.place }}</p>
-    <p style="margin-top:15px;">定員: {{ party.due_max }}名(残り{{party.now_due_max}}名)</p>
+    <p style="margin-top:15px;">定員: {{ party.due_max }}名(残り{{party.due_max - party.now_participated_num}}名)</p>
     <p style="margin-top:15px;">締切: {{ party.due_date }}</p>
     </div>
     <div class="clear"></div>
-    <p>{{ party.introduction }}</p>
-    <JoinPartyModal v-show="joinable" style="text-align: center;" @close-modal="join"/>
+    <p>{{ party.introduction }}</p>aaa
+    <v-btn v-show="editable" type="primary" style="float: right" @click="edit">編集する</v-btn>
   </div>
 </template>
 
 <script>
-import JoinPartyModal from '~/components/Modal/JoinPartyModal.vue';
 export default {
-  components: {
-    JoinPartyModal
-  },
    data(){
     return {
       show: false,
       party: '',
-      joinable: false,
+      id: 10,
+      editble: false,
     }
   },
   async mounted() {
@@ -41,8 +38,8 @@ export default {
     this.party = await this.$axios.get(`api/party/get/${this.$route.params.id}`).then(res => {
       return res.data;
     });
-    this.joinable = await this.$axios.get(`api/party/check_if_joined/${this.$route.params.id}`).then(res => {
-      return !res.data.result;
+    this.editable = await this.$axios.get(`api/party/check_if_editable/${this.$route.params.id}`).then(res => {
+      return res.data.result;
     });
     this.show = true
     this.$nuxt.$loading.finish();
@@ -58,7 +55,10 @@ export default {
         window.alert(res.data.message);
         this.$router.push("/");
       });
-    }
+    },
+    edit() {
+      this.$router.push(`../edit/${this.party.id}`)
+    },
   }
 }
 </script>
