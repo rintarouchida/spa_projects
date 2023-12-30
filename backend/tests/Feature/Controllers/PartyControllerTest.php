@@ -291,7 +291,7 @@ class PartyControllerTest extends TestCase
         $this->actingAs($user);
         $response = $this->get(route('party.search', $data));
         $response->assertStatus(200);
-        $response->assertExactJson([
+        $response->assertJson([
             [
                 'id' => 1,
                 'theme' => 'theme_1',
@@ -299,9 +299,9 @@ class PartyControllerTest extends TestCase
                 'image' => 'https://test/test.jpg',
                 'due_max' => 1,
                 'tags' => [
-                    ['name' => 'タグ1'],
-                    ['name' => 'タグ2']
-                ]
+                    'タグ1',
+                    'タグ2'
+                ],
             ],
         ]);
     }

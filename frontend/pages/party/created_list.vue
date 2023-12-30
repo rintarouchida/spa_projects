@@ -32,7 +32,7 @@
         <p>
           関連タグ:
           <span v-for="(tag, index) in party.tags" :key="index" class="tag">
-            {{ tag.name }}
+            {{ tag }}
           </span>
         </p>
         <p>開催場所: {{ party.place }}</p>
