@@ -52,10 +52,7 @@ class PartyServiceTest extends TestCase
 
         $actual = $service->fetchPickUpParties(1);
         //(登録から1週間以内)かつ(自身が作成したものでない)かつ(自身がまだ参加していない)もくもく会が抽出される
-        $this->assertSame($actual, [
-            ['id' => 2, 'theme' => 'theme_2', 'place' => 'place_2', 'due_max' => 2, 'image' => 'https://test/test2.jpg'],
-            ['id' => 4, 'theme' => 'theme_4', 'place' => 'place_4', 'due_max' => 4, 'image' => 'https://test/test4.jpg']
-        ]);
+        $this->assertSame($actual->pluck('id')->toArray(), [2, 4]);
     }
 
     /**
@@ -77,11 +74,7 @@ class PartyServiceTest extends TestCase
 
         $service = new PartyService();
         $actual = $service->fetchPickUpCreatedParties(1);
-        $this->assertSame($actual, [
-            ['id' => 1, 'theme' => 'theme_1', 'place' => 'place_1', 'due_max' => 1, 'image' => 'https://test/test1.jpg'],
-            ['id' => 3, 'theme' => 'theme_3', 'place' => 'place_3', 'due_max' => 3, 'image' => 'https://test/test3.jpg'],
-            ['id' => 5, 'theme' => 'theme_5', 'place' => 'place_5', 'due_max' => 5, 'image' => 'https://test/test5.jpg'],
-        ]);
+        $this->assertSame($actual->pluck('id')->toArray(), [1, 3, 5]);
     }
 
     /**
@@ -109,11 +102,7 @@ class PartyServiceTest extends TestCase
         $service = new PartyService();
         $actual = $service->fetchPickUpParticipatedParties(1);
         //紐ずくユーザーがもくもく会に参加しているのでdue_maxは一人減る
-        $this->assertSame($actual, [
-            ['id' => 1, 'theme' => 'theme_1', 'place' => 'place_1', 'due_max' => 0, 'image' => 'https://test/test1.jpg'],
-            ['id' => 2, 'theme' => 'theme_2', 'place' => 'place_2', 'due_max' => 1, 'image' => 'https://test/test2.jpg'],
-            ['id' => 3, 'theme' => 'theme_3', 'place' => 'place_3', 'due_max' => 2, 'image' => 'https://test/test3.jpg'],
-        ]);
+        $this->assertSame($actual->pluck('id')->toArray(), [1, 2, 3]);
     }
 
     /**
@@ -162,11 +151,11 @@ class PartyServiceTest extends TestCase
     }
 
     /**
-     * getData
+     * getParty
      *
      * @return void
      */
-    public function test_getData()
+    public function test_getParty()
     {
         Tag::factory(3)->create(new Sequence(
             ['id' => 1, 'name' => 'tag_1'],
@@ -186,20 +175,9 @@ class PartyServiceTest extends TestCase
         ])->create()->tags()->attach([1, 2, 3]);
 
         $service = new PartyService();
-        $actual = $service->getdata(1);
+        $actual = $service->getParty(1);
 
-        $this->assertSame($actual, [
-            'id' => 1,
-            'theme' => 'テストパーティー1',
-            'place' => '東京都港区',
-            'due_max' => 10,
-            'user_name' => 'ユーザー1',
-            'user_id'   => 1,
-            'introduction' => '詳細1',
-            'due_date' => '2023-05-08',
-            'image' => 'https://test/test.jpg',
-            'tags' => ['tag_1', 'tag_2', 'tag_3'],
-        ]);
+        $this->assertSame($actual->id, 1);
     }
 
     /**
@@ -389,19 +367,7 @@ class PartyServiceTest extends TestCase
         $service = new PartyService();
 
         $actual = $service->searchParties($data, $this->user->id);
-        $this->assertSame([
-            [
-                'id' => 1,
-                'theme' => 'theme_1',
-                'place' => 'place_1',
-                'due_max' => 1,
-                'image' => 'https://test/test.jpg',
-                'tags' => [
-                    ['name' => 'タグ1'],
-                    ['name' => 'タグ2']
-                ]
-            ],
-        ], $actual);
+        $this->assertSame([1], $actual->pluck('id')->toArray());
     }
 
     /**

@@ -6,8 +6,11 @@ use App\Http\Requests\Party\RegisterRequest;
 use App\Services\PartyService;
 use App\Http\Requests\Party\SearchPartyRequest;
 use App\Http\Requests\Party\UpdateRequest;
+use App\Http\Resources\Party\PartyResource;
+use App\Http\Resources\Party\PartyCollection;
 use App\Models\Party;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 
@@ -21,33 +24,33 @@ class PartyController extends Controller
     }
 
     /**
-     * @return array
+     * @return ResourceCollection
      */
-    public function index(): array
+    public function index(): ResourceCollection
     {
         $auth_id = Auth::id();
-        $data = $this->service->fetchPickUpParties($auth_id);
-        return $data;
+        $parties = $this->service->fetchPickUpParties($auth_id);
+        return PartyCollection::make($parties);
     }
 
     /**
-     * @return array
+     * @return ResourceCollection
      */
-    public function indexCreated(): array
+    public function indexCreated(): ResourceCollection
     {
         $auth_id = Auth::id();
-        $data = $this->service->fetchPickUpCreatedParties($auth_id);
-        return $data;
+        $parties = $this->service->fetchPickUpCreatedParties($auth_id);
+        return PartyCollection::make($parties);
     }
 
     /**
-     * @return array
+     * @return ResourceCollection
      */
-    public function indexParticipated(): array
+    public function indexParticipated(): ResourceCollection
     {
         $auth_id = Auth::id();
-        $data = $this->service->fetchPickUpParticipatedParties($auth_id);
-        return $data;
+        $parties = $this->service->fetchPickUpParticipatedParties($auth_id);
+        return PartyCollection::make($parties);
     }
 
     /**
@@ -63,21 +66,17 @@ class PartyController extends Controller
         return response()->json(['message' => 'もくもく会の作成が完了しました。'], 200);
     }
 
-    /**
-     * @param int $party_id
-     *
-     * @return array
-     */
-    public function getData(int $party_id): array
+
+    public function getData(int $party_id)
     {
-        $data = $this->service->getData($party_id);
-        return $data;
+        $party = $this->service->getParty($party_id);
+        return PartyResource::make($party);
     }
 
     /**
      * @param int $party_id
      *
-     * @return bool
+     * @return array
      */
     public function checkIfJoined(int $party_id): array
     {
@@ -101,14 +100,14 @@ class PartyController extends Controller
     /**
      * @param SearchPartyRequest $request
      *
-     * @return array
+     * @return ResourceCollection
      */
-    public function search(SearchPartyRequest $request): array
+    public function search(SearchPartyRequest $request): ResourceCollection
     {
         $params = $request->all();
         $auth_id = Auth::id();
-        $data = $this->service->searchParties($params, $auth_id);
-        return $data;
+        $parties = $this->service->searchParties($params, $auth_id);
+        return PartyCollection::make($parties);
     }
 
     /**

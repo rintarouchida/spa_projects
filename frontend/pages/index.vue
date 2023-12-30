@@ -26,7 +26,7 @@
               class="input_form"
               :value="tag.id"
             >
-              {{ tag.name }}
+              {{ tag }}
             </option>
           </select>
         </v-col>

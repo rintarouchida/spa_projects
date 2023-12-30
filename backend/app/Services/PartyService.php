@@ -8,6 +8,7 @@ use App\Models\Party;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,11 +17,12 @@ class PartyService
     /**
      * @param int $auth_id
      *
-     * @return array
+     * @return Collection
      */
-    public function fetchPickUpParties(int $auth_id): array
+    public function fetchPickUpParties(int $auth_id): Collection
     {
-        $sevendays=Carbon::today()->subDay(7);
+        $sevendays = Carbon::today()->subDay(7);
+
         $parties = Party::with(['tags', 'users'])->whereDate('created_at', '>=', $sevendays)
         ->where('leader_id', '!=', $auth_id)
         ->where(function ($query) use ($auth_id) {
@@ -30,54 +32,30 @@ class PartyService
             ->orWhereDoesntHave('users');
         })->get();
 
-        $data = [];
-
-        foreach ($parties as $key => $party) {
-            $data[$key]['id']      = $party->id;
-            $data[$key]['theme']   = $party->theme;
-            $data[$key]['place']   = $party->place;
-            $data[$key]['due_max'] = $party->due_max - count($party->users);
-            $data[$key]['image']   = config('filesystems.disks.s3.url').'/'.$party->image;
-            foreach ($party->tags as $index => $tag) {
-                $data[$key]['tags'][$index]['name'] = $tag->name;
-            }
-        }
-        return $data;
+        return $parties;
     }
 
     /**
      * @param int $auth_id
      *
-     * @return array
+     * @return Collection
      */
-    public function fetchPickUpCreatedParties(int $auth_id): array
+    public function fetchPickUpCreatedParties(int $auth_id): Collection
     {
         $sevendays=Carbon::today()->subDay(7);
         $parties = Party::with(['tags', 'users'])->whereDate('created_at', '>=', $sevendays)
         ->where('leader_id', $auth_id)
         ->get();
 
-        $data = [];
-
-        foreach ($parties as $key => $party) {
-            $data[$key]['id']      = $party->id;
-            $data[$key]['theme']   = $party->theme;
-            $data[$key]['place']   = $party->place;
-            $data[$key]['due_max'] = $party->due_max - count($party->users);
-            $data[$key]['image']   = config('filesystems.disks.s3.url').'/'.$party->image;
-            foreach ($party->tags as $index => $tag) {
-                $data[$key]['tags'][$index]['name'] = $tag->name;
-            }
-        }
-        return $data;
+        return $parties;
     }
 
     /**
      * @param int $auth_id
      *
-     * @return array
+     * @return Collection
      */
-    public function fetchPickUpParticipatedParties(int $auth_id): array
+    public function fetchPickUpParticipatedParties(int $auth_id): Collection
     {
         $sevendays=Carbon::today()->subDay(7);
         $parties = Party::with(['tags', 'users'])->whereDate('created_at', '>=', $sevendays)
@@ -85,19 +63,7 @@ class PartyService
             $q->whereIn('id', [$auth_id]);
         })->get();
 
-        $data = [];
-
-        foreach ($parties as $key => $party) {
-            $data[$key]['id']      = $party->id;
-            $data[$key]['theme']   = $party->theme;
-            $data[$key]['place']   = $party->place;
-            $data[$key]['due_max'] = $party->due_max - count($party->users);
-            $data[$key]['image']   = config('filesystems.disks.s3.url').'/'.$party->image;
-            foreach ($party->tags as $index => $tag) {
-                $data[$key]['tags'][$index]['name'] = $tag->name;
-            }
-        }
-        return $data;
+        return $parties;
     }
 
     /**
@@ -128,26 +94,12 @@ class PartyService
     /**
      * @param int $party_id
      *
-     * @return array
+     * @return Party
      */
-    public function getdata(int $party_id): array
+    public function getParty(int $party_id): Party
     {
         $party = Party::with(['leader', 'tags'])->find($party_id);
-        $data = [];
-        $data['id'] = $party->id;
-        $data['theme'] = $party->theme;
-        $data['place'] = $party->place;
-        $data['due_max'] = $party->due_max;
-        $data['user_name'] = $party->leader->name;
-        $data['user_id'] = $party->leader->id;
-        $data['introduction'] = $party->introduction;
-        $data['due_date'] = $party->due_date;
-        $data['image'] = config('filesystems.disks.s3.url').'/'.$party->image;
-        foreach ($party->tags as $index => $tag) {
-            $data['tags'][$index] = $tag->name;
-        }
-
-        return $data;
+        return $party;
     }
 
     /**
@@ -213,9 +165,9 @@ class PartyService
      * @param array $params
      * @param int $auth_id
      *
-     * @return array
+     * @return Collection
      */
-    public function searchParties(array $params, int $auth_id): array
+    public function searchParties(array $params, int $auth_id): Collection
     {
         $sevendays=Carbon::today()->subDay(7);
         $query = Party::with('tags')->whereDate('created_at', '>=', $sevendays)
@@ -237,21 +189,8 @@ class PartyService
         if (isset($params['keyword'])) {
             $query = $this->fetchRecordByKeyword($query, $params['keyword']);
         }
-
-        $data = [];
-
-        foreach ($query->get() as $key => $party) {
-            $data[$key]['id']      = $party->id;
-            $data[$key]['theme']   = $party->theme;
-            $data[$key]['place']   = $party->place;
-            $data[$key]['due_max'] = $party->due_max;
-            $data[$key]['image']   = config('filesystems.disks.s3.url').'/'.$party->image;
-            foreach($party->tags as $index => $tag) {
-                $data[$key]['tags'][$index]['name'] = $tag->name;
-            }
-        }
-
-        return $data;
+        
+        return $query->get();
     }
 
     /**
