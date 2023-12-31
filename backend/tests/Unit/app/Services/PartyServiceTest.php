@@ -199,12 +199,69 @@ class PartyServiceTest extends TestCase
             'introduction' => '詳細1',
         ])->create();
 
+        MessageGroup::factory(['party_id' => $party->id])->create();
+
         $this->assertFalse(DB::table('party_user')->where('party_id', $party->id)->where('user_id', $this->user->id)->exists());
 
         $this->actingAs($this->user);
         $service = new PartyService();
         $service->join($party->id);
         $this->assertTrue(DB::table('party_user')->where('party_id', $party->id)->where('user_id', $this->user->id)->exists());
+    }
+
+    /**
+     * cancel
+     *
+     * @return void
+     */
+    public function test_cancel()
+    {
+        $cancel_user = User::factory(['id' => 2])->create();
+        $party = Party::factory([
+            'id' => 1,
+            'leader_id' => $this->user->id,
+            'place' => '東京都港区',
+            'theme' => 'テストパーティー1',
+            'pref_id' => 1,
+            'due_max' => 10,
+            'due_date' => '2023-05-08 00:00:00',
+            'introduction' => '詳細1',
+        ])->create();
+        $cancel_user->parties()->attach($party->id);
+        $message_group = MessageGroup::factory(['id' => 1, 'party_id' => $party->id])->create();
+        $message_group->users()->attach($cancel_user->id);
+
+        $this->assertDatabaseMissing('messages', [
+            'user_id' => $this->user->id,
+            'message_group_id' => $message_group->id,
+            'content' => $cancel_user->name.'さんが参加をキャンセルしました。',
+        ]);
+        $this->assertDatabaseHas('party_user', [
+            'user_id' => $cancel_user->id,
+            'party_id' => $party->id,
+        ]);
+        $this->assertDatabaseHas('user_message_group', [
+            'user_id' => $cancel_user->id,
+            'message_group_id' => $message_group->id,
+        ]);
+
+        $service = new PartyService();
+        $service->cancel($party, $cancel_user->id);
+
+        $this->assertDatabaseMissing('party_user', [
+            'user_id' => $cancel_user->id,
+            'party_id' => $party->id,
+        ]);
+        $this->assertDatabaseMissing('user_message_group', [
+            'user_id' => $cancel_user->id,
+            'message_group_id' => $message_group->id,
+        ]);
+
+        $this->assertDatabaseHas('messages', [
+            'user_id' => $this->user->id,
+            'message_group_id' => $message_group->id,
+            'content' => $cancel_user->name.'さんが参加をキャンセルしました。',
+        ]);
     }
 
     /**
@@ -242,7 +299,7 @@ class PartyServiceTest extends TestCase
      */
     public function test_create_message_group()
     {
-        $leader = User::factory()->create();
+        $leader = User::factory(['id' => 2])->create();
         $party = Party::factory([
             'id'        => 1,
             'leader_id' => $leader->id,
@@ -251,27 +308,21 @@ class PartyServiceTest extends TestCase
         $this->assertDatabaseMissing('message_groups', [
             'party_id' => $party->id,
         ]);
-        $this->assertDatabaseMissing('user_message_group', [
-            'user_id' => $this->user->id,
-        ]);
         $this->assertDatabaseMissing('messages', [
             'user_id' => $leader->id,
-            'content' => 'ユーザー1さんが参加しました、よろしくお願いします!!',
+            'content' => 'もくもく会を作成しました。',
         ]);
 
         $method = new ReflectionMethod(PartyService::class, 'createMessageGroup');
         $method->setAccessible(true);
-        $method->invoke(new PartyService, $this->user->id, $party->id);
+        $method->invoke(new PartyService, $party->id, $leader->id);
 
         $this->assertDatabaseHas('message_groups', [
             'party_id' => $party->id,
         ]);
-        $this->assertDatabaseHas('user_message_group', [
-            'user_id' => $this->user->id,
-        ]);
         $this->assertDatabaseHas('messages', [
             'user_id' => $leader->id,
-            'content' => 'ユーザー1さんが参加しました、よろしくお願いします!!',
+            'content' => 'もくもく会を作成しました。',
         ]);
     }
 

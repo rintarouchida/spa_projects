@@ -19,11 +19,16 @@
     </div>
     <div class="clear"></div>
     <p>{{ party.introduction }}</p>
+    <CancelPartyModal v-show="party.cancelable" style="text-align: center;" @close-modal="cancel"/>
   </div>
 </template>
 
 <script>
+import CancelPartyModal from '~/components/Modal/CancelPartyModal.vue'
 export default {
+  components: {
+    CancelPartyModal
+  },
    data(){
     return {
       show: false,
@@ -39,12 +44,8 @@ export default {
     this.$nuxt.$loading.finish();
   },
   methods:{
-    async join(){
-      await this.$axios.post('/api/party/join',
-        {
-          party_id: this.$route.params.id,
-        }
-      ).then((res) => {
+    async cancel(){
+      await this.$axios.delete(`api/party/cancel/${this.$route.params.id}`).then((res) => {
         console.log(res);
         window.alert(res.data.message);
         this.$router.push("/");

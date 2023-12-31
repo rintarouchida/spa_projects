@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PartySeeder::class);
         $this->call(TagSeeder::class);
         $this->call(PartyTagSeeder::class);
+        $this->call(MessageGroupSeeder::class);
+        $this->call(MessageSeeder::class);
     }
 }

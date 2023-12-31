@@ -6,6 +6,7 @@ use App\Models\Party;
 use App\Models\Pref;
 use App\Models\User;
 use App\Models\Tag;
+use App\Models\MessageGroup;
 use Carbon\Carbon;
 use Config;
 use DB;
@@ -175,7 +176,7 @@ class PartyControllerTest extends TestCase
             ])->create()->tags()->attach([1, 2, 3]);
         $response = $this->get(route('party.get', 1));
         $response->assertStatus(200);
-        $response->assertExactJson(
+        $response->assertJson(
             [
                 'id' => 1,
                 'due_date' => '2023-05-08',
@@ -255,6 +256,8 @@ class PartyControllerTest extends TestCase
             'due_date' => '2023-05-08 00:00:00',
             'introduction' => '詳細1',
             ])->create();
+
+            MessageGroup::factory(['party_id' => $party->id])->create();
 
         $this->assertFalse(DB::table('party_user')->where('party_id', $party->id)->where('user_id', $user->id)->exists());
         $response = $this->post(route('party.join'), ['party_id' => $party->id]);
@@ -512,5 +515,65 @@ class PartyControllerTest extends TestCase
         $response = $this->put(route('party.update', 1), $data);
         $response->assertStatus(400);
         $response->assertJson(['message' => '作成から24時間経過したもくもく会の内容は変更できません。']);
+    }
+
+    /**
+    * update
+    *
+    * @return void
+    */
+    public function test_cancel()
+    {
+        Pref::factory(['id' => 1])->create();
+        $leader = User::factory(['id' => 1])->create();
+        $cancel_user = User::factory(['id' => 2])->create();
+        $party = Party::factory([
+            'id' => 1,
+            'leader_id' => $leader->id,
+            'place' => '東京都港区',
+            'theme' => 'テストパーティー1',
+            'pref_id' => 1,
+            'due_max' => 10,
+            'due_date' => '2023-12-28 00:00:00',
+            'introduction' => '詳細1',
+            'created_at' => '2023-12-20 08:00:00',
+        ])->create();
+        Carbon::setTestNow('2023-12-21 08:00:00');
+
+        $cancel_user->parties()->attach($party->id);
+        $message_group = MessageGroup::factory(['id' => 1, 'party_id' => $party->id])->create();
+        $message_group->users()->attach($cancel_user->id);
+
+        $this->assertDatabaseMissing('messages', [
+            'user_id' => $leader->id,
+            'message_group_id' => $message_group->id,
+            'content' => $cancel_user->name.'さんが参加をキャンセルしました。',
+        ]);
+        $this->assertDatabaseHas('party_user', [
+            'user_id' => $cancel_user->id,
+            'party_id' => $party->id,
+        ]);
+        $this->assertDatabaseHas('user_message_group', [
+            'user_id' => $cancel_user->id,
+            'message_group_id' => $message_group->id,
+        ]);
+
+        $this->actingAs($cancel_user);
+        $response = $this->delete(route('party.cancel', $party->id));
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('messages', [
+            'user_id' => $leader->id,
+            'message_group_id' => $message_group->id,
+            'content' => $cancel_user->name.'さんが参加をキャンセルしました。',
+        ]);
+        $this->assertDatabaseMissing('party_user', [
+            'user_id' => $cancel_user->id,
+            'party_id' => $party->id,
+        ]);
+        $this->assertDatabaseMissing('user_message_group', [
+            'user_id' => $cancel_user->id,
+            'message_group_id' => $message_group->id,
+        ]);
     }
 }

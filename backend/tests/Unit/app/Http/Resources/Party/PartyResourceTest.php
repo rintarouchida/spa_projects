@@ -54,6 +54,8 @@ class PartyResourceTest extends TestCase
             'tag_ids' => $tags->pluck('id'),
             'pref_id' => $pref->id,
             'pref_name' => $pref->name,
+            'cancelable' => true,
+            'cancelable_hours' => 72
         ];
 
         $this->assertEquals($expectedArray, $partyArray);

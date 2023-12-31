@@ -169,4 +169,23 @@ class PartyController extends Controller
 
         return response()->json(['message' => '更新が完了しました。'], 200);
     }
+
+    /**
+     * @param int $party_id
+     *
+     * @return JsonResponse
+     */
+    public function cancel(int $party_id): JsonResponse
+    {
+        $auth_id = Auth::id();
+        $party = Party::find($party_id);
+
+        if ($party->leader_id==$auth_id || $party->created_at->diffInHours(Carbon::now()) > 72) {
+            return response()->json(['message' => 'こちらのもくもく会はキャンセルできません。'], 400);
+        }
+
+        $this->service->cancel($party, $auth_id);
+
+        return response()->json(['message' => 'もくもく会のキャンセルが完了しました。'], 200);
+    }
 }
