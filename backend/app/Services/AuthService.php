@@ -44,6 +44,7 @@ class AuthService
             $user->update([
                 'image' => $this->createS3Image($user, $data['image'])
             ]);
+            unset($data['image']);
         }
 
         $user->fill($data)->save();
@@ -58,6 +59,7 @@ class AuthService
     protected function createS3Image(User $user, string $image): string
     {
         $image_name = Storage::disk('s3')->putFile('/', $image);
+
         return $image_name;
     }
 }

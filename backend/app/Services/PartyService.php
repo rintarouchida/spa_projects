@@ -263,6 +263,7 @@ class PartyService
         }
         if (!is_null($data['image'])) {
             $this->registerImage($party, $data['image']);
+            unset($data['image']);
         }
         unset($data['tag_ids']);
         unset($data['image']);
