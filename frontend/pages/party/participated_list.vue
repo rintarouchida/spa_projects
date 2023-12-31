@@ -37,6 +37,8 @@
         </p>
         <p>開催場所: {{ party.place }}</p>
         <p>定員: {{ party.due_max }}名(残り{{party.due_max - party.now_participated_num}}名)</p>
+        <p v-show="party.cancelable" style="color:red;">参加確定まであと{{party.cancelable_hours}}時間です。</p>
+        <p v-show="!party.cancelable" style="color:red;">参加確定</p>
       </div>
       <span class="clear"></span>
     </div>
@@ -70,7 +72,7 @@ export default {
   border: 2px solid black;
   margin-bottom: 50px;
   padding: 15px;
-  height: 200px;
+  height: 300px;
 }
 .picture_box {
   background-color: #d9d9d9;

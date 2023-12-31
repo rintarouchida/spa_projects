@@ -28,7 +28,6 @@
             </span>
             <p style="clear:both;"></p>
           </div>
-          <input type="text">
           <input type="text" v-model="content">
           <v-btn color="red" style="color:white" @click="sendMessage">メッセージ送信</v-btn>
           <p v-show="validation.content" v-for="(content, index) in validation.content" :key="index" class="validation_error">・{{content}}</p>

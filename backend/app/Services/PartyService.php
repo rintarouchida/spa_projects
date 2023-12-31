@@ -88,7 +88,11 @@ class PartyService
             $this->registerImage($party, $data['image']);
         }
 
-        $party->tags()->attach($data['tag_ids']);
+        if (!is_null($data['tag_ids'])) {
+            $party->tags()->attach($data['tag_ids']);
+        }
+
+        $this->createMessageGroup($party->id, $user_id);
     }
 
     /**
@@ -111,7 +115,13 @@ class PartyService
     {
         $user = Auth::User();
         $user->parties()->attach($party_id);
-        $this->createMessageGroup($party_id, $user->id);
+        $mesage_group = MessageGroup::where('party_id', $party_id)->first();
+        $mesage_group->users()->attach($user->id);
+        Message::create([
+            'user_id' => $user->id,
+            'message_group_id' => $mesage_group->id,
+            'content' => $user->name.'です。お願いします。'
+        ]);
     }
 
     /**
@@ -141,13 +151,11 @@ class PartyService
         $message_group = MessageGroup::create([
             'party_id' => $party_id,
         ]);
-        $message_group->users()->attach($user_id);
-        $party = Party::find($party_id);
-        $user = User::find($user_id);
+
         Message::create([
-            'user_id' => $party->leader->id,
+            'user_id' => $user_id,
             'message_group_id' => $message_group->id,
-            'content' => $user->name.'さんが参加しました、よろしくお願いします!!',
+            'content' => 'もくもく会を作成しました。'
         ]);
     }
 
@@ -259,5 +267,22 @@ class PartyService
         unset($data['tag_ids']);
         unset($data['image']);
         $party->fill($data)->save();
+    }
+
+    public function cancel(Party $party, int $auth_id): void
+    {
+        //もくもく会とキャンセルユーザーの紐付けを削除
+        $party->users()->detach($auth_id);
+
+        $message_group = MessageGroup::where('party_id', $party->id)->first();
+        //キャンセルしたもくもく会のメッセージを取得できなくする
+        $message_group->users()->detach($auth_id);
+
+        //主催者がキャンセルを自動アナウンス
+        Message::create([
+            'user_id' => $party->leader->id,
+            'message_group_id' => $message_group->id,
+            'content' => User::find($auth_id)->name.'さんが参加をキャンセルしました。',
+        ]);
     }
 }

@@ -906,7 +906,7 @@ paths:
           name: id
           required: true
           schema:
-            type: string
+            type: integer
           description: ログインユーザーが作成したもくもく会のID
       requestBody:
         content:
@@ -987,7 +987,41 @@ paths:
                   message:
                     type: string
                     example: 開催日時は明日以降にしてください。
-
+# もくもくキャンセルAPI
+  /party/cancel/{id}:
+    delete:
+      tags:
+        - もくもく会
+      description: 指定したIDノもくもく会参加をキャンセルするAPI
+      parameters:
+        - name: id
+          in: path
+          description: キャンセルするもくもく会イベントのID
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: キャンセルが完了しました。
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "キャンセルが完了しました。"
+        '400':
+          description: もくもく会が作成されてから3日後以降の場合
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "こちらのもくもく会はキャンセルできません。"
 # メッセージ一覧取得API
   message/index:
     get:

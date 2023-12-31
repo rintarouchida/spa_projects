@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources\Party;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class PartyResource extends JsonResource
 {
@@ -14,6 +16,9 @@ class PartyResource extends JsonResource
      */
     public function toArray($request): array
     {
+        $auth_id = Auth::id();
+        $now = Carbon::now();
+
         return [
             'id' => $this->id,
             'theme' => $this->theme,
@@ -29,6 +34,8 @@ class PartyResource extends JsonResource
             'pref_name' => $this->pref->name,
             'pref_id' => $this->pref->id,
             'tag_ids' => $this->tags->pluck('id'),
+            'cancelable' => $this->leader->id !== $auth_id && $this->created_at->diffInHours($now) < 72,
+            'cancelable_hours' => 72 - $this->created_at->diffInHours($now)
         ];
     }
 }

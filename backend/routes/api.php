@@ -37,6 +37,7 @@ Route::namespace('App\Http\Controllers')->group(function () {
         Route::get('/check_if_editable/{party_id}', 'PartyController@checkIfEditable')->name('check_if_editable');
         Route::put('/register', 'PartyController@register')->name('register');
         Route::post('/join', 'PartyController@join')->name('join');
+        Route::delete('/cancel/{id}', 'PartyController@cancel')->name('cancel');
         Route::get('/search', 'PartyController@search')->name('search');
         Route::get('/edit/{id}', 'PartyController@edit')->name('edit');
         Route::put('/update/{id}', 'PartyController@update')->name('update');
