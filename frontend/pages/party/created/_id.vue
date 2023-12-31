@@ -18,7 +18,7 @@
     <p style="margin-top:15px;">締切: {{ party.due_date }}</p>
     </div>
     <div class="clear"></div>
-    <p>{{ party.introduction }}</p>aaa
+    <p>{{ party.introduction }}</p>
     <v-btn v-show="editable" type="primary" style="float: right" @click="edit">編集する</v-btn>
   </div>
 </template>
