@@ -31,9 +31,9 @@ class PartyResource extends JsonResource
             'due_date' => $this->due_date,
             'image' => $this->image ? config('filesystems.disks.s3.url') . '/' . $this->image : null,
             'tags' => $this->tags->pluck('name'),
+            'tag_ids' => $this->tags->pluck('id'),
             'pref_name' => $this->pref->name,
             'pref_id' => $this->pref->id,
-            'tag_ids' => $this->tags->pluck('id'),
             'cancelable' => $this->leader->id !== $auth_id && $this->created_at->diffInHours($now) < 72,
             'cancelable_hours' => 72 - $this->created_at->diffInHours($now)
         ];

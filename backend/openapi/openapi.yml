@@ -13,8 +13,8 @@ paths:
   login/:
     post:
       tags:
-        - ログインAPI
-      description: アプリケーションにログインする
+        - ログインユーザー
+      description: アプリケーションにログインするAPI
       requestBody:
         content:
           application/json:
@@ -48,13 +48,13 @@ paths:
               schema:
                 type: object
               example:
-                message: "メールアドレスまたはパスワードが間違っています"
+                message: "パスワードかメールアドレスが間違っています。もう一度ログインし直してください。"
   # ログアウトAPI
   logout/:
     post:
       tags:
-        - ログアウトAPI
-      description: アプリケーションをログアウトさせる
+        - ログインユーザー
+      description: アプリケーションをログアウトするAPI
       responses:
         "200":
           description: ログアウトに成功
@@ -68,8 +68,8 @@ paths:
   register/:
     post:
       tags:
-        - ユーザー登録API
-      description: アプリケーションにユーザー登録する
+        - ログインユーザー
+      description: アプリケーションにユーザー登録するAPI
       requestBody:
          content:
             application/json:
@@ -131,7 +131,7 @@ paths:
               schema:
                 type: object
               example:
-                message: "ユーザー登録が完了しました。"
+                message: "登録が完了しました。"
         "422":
           description: バリデーションエラー
           content:
@@ -145,8 +145,8 @@ paths:
   update_auth/{auth_id}:
     post:
       tags:
-        - ログインユーザ情報編集API
-      description: ログインユーザ情報を更新する
+        - ログインユーザー
+      description: ログインユーザ情報を更新するAPI
       parameters:
         - name: "auth_id"
           in: "path"
@@ -221,10 +221,10 @@ paths:
   get_auth:
     get:
       tags:
-        - ログインユーザ情報取得API
+        - ログインユーザー
+      description: ログインユーザー情報を取得するAPI
       responses:
         '200':
-          description: ログインユーザー情報を取得する
           content:
             application/json:
               schema:
@@ -419,6 +419,26 @@ paths:
                       type: "integer"
                       description: 参加上限人数
                       example: 3
+                    now_participated_num:
+                      type: "integer"
+                      description: 現在の参加人数
+                      example: 2
+                    user_name:
+                      type: "string"
+                      description: もくもく会の開催者の名前
+                      example: 山田太郎
+                    user_id:
+                      type: "integer"
+                      description: もくもく会の開催者のユーザーID
+                      example: 1
+                    introduction:
+                      type: "string"
+                      description: もくもく会の詳細
+                      example: "MySQLに関する勉強会を行います。"
+                    due_date:
+                      type: "date"
+                      description: もくもく会の開催日
+                      example: "2024-01-15"
                     image:
                       type: "string"
                       description: 画像のURL
@@ -433,6 +453,32 @@ paths:
                             type: "string"
                             description: タグ名
                             example: "データベース"
+                    tag_ids:
+                      type: "array"
+                      description: タグIDのリスト
+                      items:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "integer"
+                            description: タグID
+                            example: 1
+                    pref_name:
+                      type: "string"
+                      description: もくもく会を開催する都道府県名
+                      example: 東京都
+                    pref_id:
+                      type: "integer"
+                      description: もくもく会を開催する都道府県ID
+                      example: 1
+                    cancelable:
+                      type: "boolean"
+                      description: もくもく会をキャンセル可能かどうか
+                      example: true
+                    cancelable_hours:
+                      type: "integer"
+                      description: もくもく会をキャンセル可能な時間(作成から72時間以内)
+                      example: 24
 # 作成したもくもく一覧取得API
   party/index_created:
     get:
@@ -465,6 +511,26 @@ paths:
                       type: "integer"
                       description: 参加上限人数
                       example: 3
+                    now_participated_num:
+                      type: "integer"
+                      description: 現在の参加人数
+                      example: 2
+                    user_name:
+                      type: "string"
+                      description: もくもく会の開催者の名前
+                      example: 山田太郎
+                    user_id:
+                      type: "integer"
+                      description: もくもく会の開催者のユーザーID
+                      example: 1
+                    introduction:
+                      type: "string"
+                      description: もくもく会の詳細
+                      example: "MySQLに関する勉強会を行います。"
+                    due_date:
+                      type: "date"
+                      description: もくもく会の開催日
+                      example: "2024-01-15"
                     image:
                       type: "string"
                       description: 画像のURL
@@ -479,6 +545,32 @@ paths:
                             type: "string"
                             description: タグ名
                             example: "データベース"
+                    tag_ids:
+                      type: "array"
+                      description: タグIDのリスト
+                      items:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "integer"
+                            description: タグID
+                            example: 1
+                    pref_name:
+                      type: "string"
+                      description: もくもく会を開催する都道府県名
+                      example: 東京都
+                    pref_id:
+                      type: "integer"
+                      description: もくもく会を開催する都道府県ID
+                      example: 1
+                    cancelable:
+                      type: "boolean"
+                      description: もくもく会をキャンセル可能かどうか
+                      example: true
+                    cancelable_hours:
+                      type: "integer"
+                      description: もくもく会をキャンセル可能な時間(作成から72時間以内)
+                      example: 24
 # 参加したもくもく一覧取得API
   party/index_participated:
     get:
@@ -511,6 +603,26 @@ paths:
                       type: "integer"
                       description: 参加上限人数
                       example: 3
+                    now_participated_num:
+                      type: "integer"
+                      description: 現在の参加人数
+                      example: 2
+                    user_name:
+                      type: "string"
+                      description: もくもく会の開催者の名前
+                      example: 山田太郎
+                    user_id:
+                      type: "integer"
+                      description: もくもく会の開催者のユーザーID
+                      example: 1
+                    introduction:
+                      type: "string"
+                      description: もくもく会の詳細
+                      example: "MySQLに関する勉強会を行います。"
+                    due_date:
+                      type: "date"
+                      description: もくもく会の開催日
+                      example: "2024-01-15"
                     image:
                       type: "string"
                       description: 画像のURL
@@ -525,6 +637,32 @@ paths:
                             type: "string"
                             description: タグ名
                             example: "データベース"
+                    tag_ids:
+                      type: "array"
+                      description: タグIDのリスト
+                      items:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "integer"
+                            description: タグID
+                            example: 1
+                    pref_name:
+                      type: "string"
+                      description: もくもく会を開催する都道府県名
+                      example: 東京都
+                    pref_id:
+                      type: "integer"
+                      description: もくもく会を開催する都道府県ID
+                      example: 1
+                    cancelable:
+                      type: "boolean"
+                      description: もくもく会をキャンセル可能かどうか
+                      example: true
+                    cancelable_hours:
+                      type: "integer"
+                      description: もくもく会をキャンセル可能な時間(作成から72時間以内)
+                      example: 24
 # もくもく会作成API
   party/register:
     put:
@@ -639,48 +777,81 @@ paths:
                 type: "object"
                 properties:
                   id:
-                    type: integer
-                    description: "もくもく会のID"
+                    type: "integer"
+                    description: もくもく会のID
                     example: 1
                   theme:
-                    type: string
-                    description: "もくもく会の題名"
-                    example: "プログラミングもくもく会"
+                    type: "string"
+                    description: もくもく会のテーマ
+                    example: "データベースの学習"
                   place:
-                    type: string
-                    description: "もくもく会の開催場所"
+                    type: "string"
+                    description: 開催場所
                     example: "東京"
                   due_max:
-                    type: integer
-                    description: "もくもく会の定員"
-                    example: 10
+                    type: "integer"
+                    description: 参加上限人数
+                    example: 3
+                  now_participated_num:
+                    type: "integer"
+                    description: 現在の参加人数
+                    example: 2
                   user_name:
-                    type: string
-                    description: "主催者の名前"
-                    example: "山田太郎"
+                    type: "string"
+                    description: もくもく会の開催者の名前
+                    example: 山田太郎
                   user_id:
-                    type: integer
-                    description: "主催者のID"
-                    example: 1234
+                    type: "integer"
+                    description: もくもく会の開催者のユーザーID
+                    example: 1
                   introduction:
-                    type: string
-                    description: "もくもく会の詳細"
-                    example: "初心者から上級者まで参加可能なもくもく会です。"
+                    type: "string"
+                    description: もくもく会の詳細
+                    example: "MySQLに関する勉強会を行います。"
                   due_date:
-                    type: string
-                    format: date
-                    description: "もくもく会の開催日時"
-                    example: "2023-12-30"
+                    type: "date"
+                    description: もくもく会の開催日
+                    example: "2024-01-15"
                   image:
-                    type: string
-                    description: "もくもく会の画像"
-                    example: "https://s3.example.com/path/to/image.jpg"
+                    type: "string"
+                    description: 画像のURL
+                    example: "https://s3.example.com/image.jpg"
                   tags:
-                    type: array
+                    type: "array"
+                    description: タグのリスト
                     items:
-                      type: string
-                    description: "もくもく会のタグ配列"
-                    example: ["Ruby", "Python", "PHP"]
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          description: タグ名
+                          example: "データベース"
+                  tag_ids:
+                    type: "array"
+                    description: タグIDのリスト
+                    items:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "integer"
+                          description: タグID
+                          example: 1
+                  pref_name:
+                    type: "string"
+                    description: もくもく会を開催する都道府県名
+                    example: 東京都
+                  pref_id:
+                    type: "integer"
+                    description: もくもく会を開催する都道府県ID
+                    example: 1
+                  cancelable:
+                    type: "boolean"
+                    description: もくもく会をキャンセル可能かどうか
+                    example: true
+                  cancelable_hours:
+                    type: "integer"
+                    description: もくもく会をキャンセル可能な時間(作成から72時間以内)
+                    example: 24
 
 # もくもく会参加API
   party/join:
@@ -780,9 +951,29 @@ paths:
                       description: 開催場所
                       example: "東京"
                     due_max:
+                      type: "integer"
+                      description: 参加上限人数
+                      example: 3
+                    now_participated_num:
+                      type: "integer"
+                      description: 現在の参加人数
+                      example: 2
+                    user_name:
                       type: "string"
-                      description: 締め切り日
-                      example: "2024-01-01"
+                      description: もくもく会の開催者の名前
+                      example: 山田太郎
+                    user_id:
+                      type: "integer"
+                      description: もくもく会の開催者のユーザーID
+                      example: 1
+                    introduction:
+                      type: "string"
+                      description: もくもく会の詳細
+                      example: "MySQLに関する勉強会を行います。"
+                    due_date:
+                      type: "date"
+                      description: もくもく会の開催日
+                      example: "2024-01-15"
                     image:
                       type: "string"
                       description: 画像のURL
@@ -797,6 +988,32 @@ paths:
                             type: "string"
                             description: タグ名
                             example: "データベース"
+                    tag_ids:
+                      type: "array"
+                      description: タグIDのリスト
+                      items:
+                        type: "object"
+                        properties:
+                          name:
+                            type: "integer"
+                            description: タグID
+                            example: 1
+                    pref_name:
+                      type: "string"
+                      description: もくもく会を開催する都道府県名
+                      example: 東京都
+                    pref_id:
+                      type: "integer"
+                      description: もくもく会を開催する都道府県ID
+                      example: 1
+                    cancelable:
+                      type: "boolean"
+                      description: もくもく会をキャンセル可能かどうか
+                      example: true
+                    cancelable_hours:
+                      type: "integer"
+                      description: もくもく会をキャンセル可能な時間(作成から72時間以内)
+                      example: 24
         "422":
           description: バリデーションエラー時のレスポンス
           content:
@@ -836,51 +1053,84 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: "object"
                 properties:
                   id:
-                    type: integer
+                    type: "integer"
                     description: もくもく会のID
                     example: 1
                   theme:
-                    type: string
+                    type: "string"
                     description: もくもく会のテーマ
-                    example: "プログラミング勉強会"
+                    example: "データベースの学習"
                   place:
-                    type: string
+                    type: "string"
                     description: 開催場所
-                    example: "オンライン"
+                    example: "東京"
                   due_max:
-                    type: string
-                    description: 最大参加可能人数
-                    example: "50"
+                    type: "integer"
+                    description: 参加上限人数
+                    example: 3
+                  now_participated_num:
+                    type: "integer"
+                    description: 現在の参加人数
+                    example: 2
                   user_name:
-                    type: string
-                    description: リーダーの名前
-                    example: "田中太郎"
+                    type: "string"
+                    description: もくもく会の開催者の名前
+                    example: 山田太郎
                   user_id:
-                    type: integer
-                    description: リーダーのユーザーID
-                    example: 100
+                    type: "integer"
+                    description: もくもく会の開催者のユーザーID
+                    example: 1
                   introduction:
-                    type: string
-                    description: もくもく会の紹介文
-                    example: "この会は初心者向けのプログラミング学習もくもく会です。"
+                    type: "string"
+                    description: もくもく会の詳細
+                    example: "MySQLに関する勉強会を行います。"
                   due_date:
-                    type: string
-                    description: 開催期限
-                    format: date-time
-                    example: "2023-12-30T14:00:00.000Z"
+                    type: "date"
+                    description: もくもく会の開催日
+                    example: "2024-01-15"
                   image:
-                    type: string
-                    description: もくもく会の画像のURL
-                    example: "https://example.com/images/mokumoku.jpg"
+                    type: "string"
+                    description: 画像のURL
+                    example: "https://s3.example.com/image.jpg"
                   tags:
-                    type: array
-                    description: もくもく会のタグリスト
+                    type: "array"
+                    description: タグのリスト
                     items:
-                      type: string
-                    example: ["プログラミング", "勉強会"]
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          description: タグ名
+                          example: "データベース"
+                  tag_ids:
+                    type: "array"
+                    description: タグIDのリスト
+                    items:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "integer"
+                          description: タグID
+                          example: 1
+                  pref_name:
+                    type: "string"
+                    description: もくもく会を開催する都道府県名
+                    example: 東京都
+                  pref_id:
+                    type: "integer"
+                    description: もくもく会を開催する都道府県ID
+                    example: 1
+                  cancelable:
+                    type: "boolean"
+                    description: もくもく会をキャンセル可能かどうか
+                    example: true
+                  cancelable_hours:
+                    type: "integer"
+                    description: もくもく会をキャンセル可能な時間(作成から72時間以内)
+                    example: 24
         '400':
           description: ログインユーザーが作成した以外のもくもく会がパラメータに含まれた場合|作成から24時間経過した場合
           content:
