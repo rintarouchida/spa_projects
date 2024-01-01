@@ -3,6 +3,8 @@
     <h1 v-show="parties.length > 0" style="margin-bottom: 20px">
       参加済みのもくもく会一覧
     </h1>
+    <!-- todo:実装できたら消す -->
+    <p style="color:red;">※開催日が昨日より前のものは表示しない</p>
 
     <span v-show="parties.length == 0">
       <h1>参加済みのもくもく会はまだありません</h1>
