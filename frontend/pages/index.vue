@@ -44,11 +44,6 @@
     </div>
 
     <h1 style="margin-bottom: 20px">もくもく会一覧</h1>
-    <!-- todo:実装したら消す -->
-    <p style="color:red;">※開催日が明日以降のもくもく会のみ表示</p>
-    <!-- todo:実装したら消す -->
-    <p style="color:red;">※参加人数が定員に達してないもくもく会のみ表示</p>
-
     <div
       v-for="(party, index) in parties"
       v-show="party.due_max > 0"
@@ -78,6 +73,7 @@
           </p>
           <p>開催場所: {{ party.place }}</p>
           <p>定員: 残り{{ party.due_max }}人</p>
+          <p>開催日: {{ party.due_date }}</p>
         </v-col>
       </v-row>
     </div>

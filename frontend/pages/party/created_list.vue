@@ -2,9 +2,8 @@
   <div v-show="show">
     <h1 v-show="parties.length > 0" style="margin-bottom: 20px">
       作成したもくもく会一覧
-      <!-- todo:実装できたら消す -->
-      <p style="color:red;">※開催日が昨日より前のものは表示しない</p>
     </h1>
+      <p style="color:red;">※開催日が昨日以前のもくもく会は表示されません</p>
     <span v-show="parties.length == 0">
       <h1>作成したもくもく会はまだありません</h1>
       <router-link to="../create_party">もくもく会作成はこちらから</router-link>
@@ -39,6 +38,7 @@
         </p>
         <p>開催場所: {{ party.place }}</p>
         <p>定員: {{ party.due_max }}名(残り{{party.due_max - party.now_participated_num}}名)</p>
+        <p>開催日: {{ party.due_date }}</p>
       </div>
       <span class="clear"></span>
     </div>
@@ -72,7 +72,7 @@ export default {
   border: 2px solid black;
   margin-bottom: 50px;
   padding: 15px;
-  height: 200px;
+  height: 300px;
 }
 .picture_box {
   background-color: #d9d9d9;
