@@ -44,6 +44,10 @@
     </div>
 
     <h1 style="margin-bottom: 20px">もくもく会一覧</h1>
+    <!-- todo:実装したら消す -->
+    <p style="color:red;">※開催日が明日以降のもくもく会のみ表示</p>
+    <!-- todo:実装したら消す -->
+    <p style="color:red;">※参加人数が定員に達してないもくもく会のみ表示</p>
 
     <div
       v-for="(party, index) in parties"

@@ -2,6 +2,8 @@
   <div v-show="show">
     <h1 v-show="parties.length > 0" style="margin-bottom: 20px">
       作成したもくもく会一覧
+      <!-- todo:実装できたら消す -->
+      <p style="color:red;">※開催日が昨日より前のものは表示しない</p>
     </h1>
     <span v-show="parties.length == 0">
       <h1>作成したもくもく会はまだありません</h1>

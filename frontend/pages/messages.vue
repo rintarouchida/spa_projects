@@ -1,6 +1,8 @@
 <template>
   <div v-show="show">
     メッセージ一覧
+        <!-- todo:実装できたら消す -->
+        <p style="color:red;">※紐ずくもくもく会の開催日が昨日より前のものは表示しない</p>
     <span v-show="message_lists.length == 0">
       <h1>メッセージはまだありません</h1>
     </span>
