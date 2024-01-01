@@ -10,6 +10,7 @@ use App\Services\AuthService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -58,12 +59,12 @@ class AuthController extends Controller
         return response()->json(['message' => '登録が完了しました。'], 200);
     }
 
-    public function getAuthData()
+    /**
+     * @return JsonResource
+     */
+    public function getAuthData(): JsonResource
     {
-        $user_id = Auth::id();
-        $service = new UserService();
-        $data = $service->getUser($user_id);
-        return UserResource::make($data);
+        return UserResource::make(Auth::user());
     }
 
     /**
