@@ -20,7 +20,7 @@
           <p v-show="introduction !== ''">自己紹介: {{introduction}}</p>
           <p v-show="twitter_url !== ''">TwiiterのURL: {{twitter_url}}</p>
         </span>
-        <v-btn style="margin-right:100px; color:white" color="red" class="btn btn-secondary" @click="updateAndCloseModal">はい</v-btn>
+        <v-btn style="margin-right:100px; color:white" color="red" class="btn btn-secondary" @click="updateUserAndCloseModal">はい</v-btn>
         <v-btn color="primary"
           @click="closeModal"
         >いいえ</v-btn>
@@ -81,7 +81,7 @@ export default {
     closeModal(){
       this.modalContent = false;
     },
-    updateAndCloseModal() {
+    updateUserAndCloseModal() {
       this.modalContent = false;
       this.$emit('close-modal')
     }

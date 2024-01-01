@@ -167,6 +167,7 @@
         :place="old_data.place"
         :due_max="old_data.due_max"
         :event_date="old_data.event_date"
+        :tag_ids="old_data.tag_ids"
         @close-modal="update"
       />
     </div>
