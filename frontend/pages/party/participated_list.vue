@@ -3,8 +3,7 @@
     <h1 v-show="parties.length > 0" style="margin-bottom: 20px">
       参加済みのもくもく会一覧
     </h1>
-    <!-- todo:実装できたら消す -->
-    <p style="color:red;">※開催日が昨日より前のものは表示しない</p>
+    <p style="color:red;">※開催日が昨日以前のもくもく会は表示されません</p>
 
     <span v-show="parties.length == 0">
       <h1>参加済みのもくもく会はまだありません</h1>
@@ -39,6 +38,7 @@
         </p>
         <p>開催場所: {{ party.place }}</p>
         <p>定員: {{ party.due_max }}名(残り{{party.due_max - party.now_participated_num}}名)</p>
+        <p>開催日: {{ party.due_date }}</p>
         <p v-show="party.cancelable" style="color:red;">参加確定まであと{{party.cancelable_hours}}時間です。</p>
         <p v-show="!party.cancelable" style="color:red;">参加確定</p>
       </div>
