@@ -179,8 +179,9 @@ class PartyService
      */
     public function searchParties(array $params, int $auth_id): Collection
     {
-        $sevendays=Carbon::today()->subDay(7);
-        $query = Party::with('tags')->whereDate('created_at', '>=', $sevendays)
+        $next_day = Carbon::today()->addDay(1);
+        //開催日が翌日以降のもくもく会のみ抽出
+        $parties = Party::with(['tags', 'users'])->whereDate('due_date', '>=', $next_day)
         ->where('leader_id', '!=', $auth_id)
         ->where(function ($query) use ($auth_id) {
             $query->whereHas('users', function ($q) use ($auth_id) {
