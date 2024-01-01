@@ -68,8 +68,12 @@ class PartyController extends Controller
         return response()->json(['message' => 'もくもく会の作成が完了しました。'], 200);
     }
 
-
-    public function getData(int $party_id)
+    /**
+     * @param int $party_id
+     *
+     * @return JsonResource
+     */
+    public function getData(int $party_id): JsonResource
     {
         $party = $this->service->getParty($party_id);
         return PartyResource::make($party);
@@ -111,7 +115,6 @@ class PartyController extends Controller
         return response()->json(['message' => '参加が完了しました。'], 200);
     }
 
-    //todo:tag_id追加分のテスト修正
     /**
      * @param SearchPartyRequest $request
      *
