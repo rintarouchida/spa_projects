@@ -167,6 +167,7 @@
         :place="place"
         :due_max="due_max"
         :event_date="event_date"
+        :tag_ids="tag_ids"
         @close-modal="register"
       />
     </div>

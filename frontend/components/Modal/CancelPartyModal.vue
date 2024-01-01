@@ -9,7 +9,7 @@
       <div class="content">
         <h3 style="color:red; margin-bottom:20px;">こちらのもくもく会の参加をキャンセルします。よろしいですか?
         </h3>
-        <v-btn style="margin-right:100px; color:white" color="red" class="btn btn-secondary" @click="cancelAndCloseModal">はい</v-btn>
+        <v-btn style="margin-right:100px; color:white" color="red" class="btn btn-secondary" @click="cancelPartyAndCloseModal">はい</v-btn>
         <v-btn color="primary"
           @click="closeModal"
         >いいえ</v-btn>
@@ -20,44 +20,6 @@
 
 <script>
 export default {
-  props: {
-    theme:
-    {
-      type: String,
-      default: '',
-      required: true
-    },
-    introduction:
-    {
-      type: String,
-      default: '',
-      required: true
-    },
-    pref_name:
-    {
-      type: String,
-      default: '',
-      required: true
-    },
-    place:
-    {
-      type: String,
-      default: '',
-      required: true
-    },
-    due_max:
-    {
-      type: String,
-      default: '',
-      required: true
-    },
-    event_date:
-    {
-      type: String,
-      default: '',
-      required: true
-    },
-  },
   data(){
     return{
       modalContent:false,
@@ -70,7 +32,7 @@ export default {
     closeModal(){
       this.modalContent = false;
     },
-    cancelAndCloseModal() {
+    cancelPartyAndCloseModal() {
       this.modalContent = false;
       this.$emit('close-modal')
     }

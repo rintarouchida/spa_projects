@@ -22,9 +22,11 @@
           <p v-show="due_max !== ''">定員: {{due_max}}人</p>
           <p v-show="event_date === ''">開催日時: <span style="color:red;">未入力です</span></p>
           <p v-show="event_date !== ''">開催日時: {{event_date}}</p>
-
+          <p v-show="tag_ids !== '[]'">
+            タグ: <span v-for="(tag_id, index) in tag_ids" :key="index">・{{tags[tag_id - 1]['name']}}</span>
+          </p>
         </span>
-        <v-btn style="margin-right:100px; color:white" color="red" class="btn btn-secondary" @click="registerAndCloseModal">はい</v-btn>
+        <v-btn style="margin-right:100px; color:white" color="red" class="btn btn-secondary" @click="createPartyAndCloseModal">はい</v-btn>
         <v-btn color="primary"
           @click="closeModal"
         >いいえ</v-btn>
@@ -72,10 +74,17 @@ export default {
       default: '',
       required: true
     },
+    tag_ids:
+    {
+      type: Array,
+      default: () => [],
+      required: true
+    },
   },
   data(){
     return{
       modalContent:false,
+      tags: this.$TAG,
     }
   },
   methods:{
@@ -85,7 +94,7 @@ export default {
     closeModal(){
       this.modalContent = false;
     },
-    registerAndCloseModal() {
+    createPartyAndCloseModal() {
       this.modalContent = false;
       this.$emit('close-modal')
     }
