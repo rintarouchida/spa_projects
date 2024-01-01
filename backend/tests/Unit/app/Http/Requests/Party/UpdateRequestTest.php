@@ -47,7 +47,7 @@ class UpdateRequestTest extends TestCase
                     'place' => '場所1',
                     'due_max' => 2,
                     'now_participated_num' => 1,
-                    'due_date' => '2023-12-22 08:00:00',
+                    'event_date' => '2023-12-22 08:00:00',
                 ],
                 false,
                 [],
@@ -60,11 +60,11 @@ class UpdateRequestTest extends TestCase
                     'place' => '場所1',
                     'due_max' => 2,
                     'now_participated_num' => 1,
-                    'due_date' => '2023-12-21 08:00:00',
+                    'event_date' => '2023-12-21 08:00:00',
                 ],
                 true,
                 [
-                    'due_date' => ['開催日時は6日後以降にしてください。'],
+                    'event_date' => ['開催日時は6日後以降にしてください。'],
                 ],
             ],
             '異常 現在の参加人数が定員を超える' => [
@@ -75,7 +75,7 @@ class UpdateRequestTest extends TestCase
                     'place' => '場所1',
                     'due_max' => 2,
                     'now_participated_num' => 3,
-                    'due_date' => '2023-12-22 10:00:00',
+                    'event_date' => '2023-12-22 10:00:00',
                 ],
                 true,
                 [
@@ -91,7 +91,7 @@ class UpdateRequestTest extends TestCase
                     'introduction' => ['詳細を入力してください。'],
                     'place' => ['開催場所を入力してください。'],
                     'due_max' => ['定員を選択してください。'],
-                    'due_date' => ['開催日時を入力してください。'],
+                    'event_date' => ['開催日時を入力してください。'],
                 ],
             ],
             '異常 異なる型' => [
@@ -102,7 +102,7 @@ class UpdateRequestTest extends TestCase
                     'place' => '場所1',
                     'due_max' => 2,
                     'now_participated_num' => 1,
-                    'due_date' => '2023-12-22 10:00:00',
+                    'event_date' => '2023-12-22 10:00:00',
                 ],
                 true,
                 [
@@ -117,7 +117,7 @@ class UpdateRequestTest extends TestCase
                     'place' => '場所1',
                     'due_max' => 2,
                     'now_participated_num' => 1,
-                    'due_date' => '2023-12-22 10:00:00',
+                    'event_date' => '2023-12-22 10:00:00',
                 ],
                 true,
                 [

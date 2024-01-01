@@ -21,7 +21,7 @@ class PartyFactory extends Factory
             'theme' => $this->faker->name(),
             'place' => $this->faker->name(),
             'due_max' => $this->faker->randomDigit(),
-            'due_date' => now(),
+            'event_date' => now(),
             'introduction' => $this->faker->name(),
             'pref_id' => Pref::factory()->create()->id,
             'leader_id' => User::factory()->create()->id,

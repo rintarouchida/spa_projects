@@ -35,7 +35,7 @@ class MessageService
         })
         //開催日が昨日以前のもくもく会に紐ずくメッセージは取得しない
         ->whereHas('party', function ($query) use ($today) {
-            $query->whereDate('due_date', '>=', $today);
+            $query->whereDate('event_date', '>=', $today);
         })->get();
 
         return $message_groups;
@@ -65,7 +65,7 @@ class MessageService
         })
         //開催日が昨日以前のもくもく会に紐ずくメッセージは取得しない
         ->whereHas('party', function ($query) use ($today) {
-            $query->whereDate('due_date', '>=', $today);
+            $query->whereDate('event_date', '>=', $today);
         })->get();
 
         return $message_groups;

@@ -15,7 +15,7 @@
     <p style="margin-top:15px;">主催者: <router-link :to="`../user/${party.user_id}`">{{ party.user_name }}</router-link>
     <p style="margin-top:15px;">開催場所: {{ party.place }}</p>
     <p style="margin-top:15px;">定員: {{ party.due_max }}名(残り{{party.due_max - party.now_participated_num}}名)</p>
-    <p style="margin-top:15px;">締切: {{ party.due_date }}</p>
+    <p style="margin-top:15px;">締切: {{ party.event_date }}</p>
     </div>
     <div class="clear"></div>
     <p>{{ party.introduction }}</p>

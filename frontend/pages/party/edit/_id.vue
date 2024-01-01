@@ -104,19 +104,19 @@
 
       <h3 class="register_items">開催日時<span class="required">必須</span></h3>
       <input
-        v-model="old_data.due_date"
+        v-model="old_data.event_date"
         class="input_form"
         type="date"
         placeholder="開催日時"
       /><br />
       <p style="text-align:left;">※6日後以降で指定してください。</p>
       <p
-        v-for="(due_date, index) in validation.due_date"
-        v-show="validation.due_date.length"
+        v-for="(event_date, index) in validation.event_date"
+        v-show="validation.event_date.length"
         :key="index"
         class="validation_error"
       >
-        ・{{ due_date }}
+        ・{{ event_date }}
       </p>
 
       <h3 class="register_items">画像</h3>
@@ -166,7 +166,7 @@
         :pref_name="old_data.pref_name"
         :place="old_data.place"
         :due_max="old_data.due_max"
-        :due_date="old_data.due_date"
+        :event_date="old_data.event_date"
         @close-modal="update"
       />
     </div>
@@ -193,7 +193,7 @@ export default {
         pref_id: [],
         place: [],
         due_max: [],
-        due_date: [],
+        event_date: [],
         image: [],
       },
       numbers: [
@@ -227,7 +227,7 @@ export default {
       formData.append('place', this.old_data.place)
       formData.append('due_max', this.old_data.due_max)
       formData.append('now_participated_num', this.old_data.now_participated_num)
-      formData.append('due_date', this.old_data.due_date)
+      formData.append('event_date', this.old_data.event_date)
       formData.append('image', this.uploadFile)
       for (let i = 0; i < this.old_data.tag_ids.length; i++) {
         formData.append('tag_ids[' + i + ']', this.old_data.tag_ids[i])
@@ -277,10 +277,10 @@ export default {
             } else {
               this.validation.due_max = []
             }
-            if ('due_date' in this.validation.errors) {
-              this.validation.due_date = this.validation.errors.due_date
+            if ('event_date' in this.validation.errors) {
+              this.validation.event_date = this.validation.errors.event_date
             } else {
-              this.validation.due_date = []
+              this.validation.event_date = []
             }
             if ('tag_ids' in this.validation.errors) {
               this.validation.tag_ids = this.validation.errors.tag_ids

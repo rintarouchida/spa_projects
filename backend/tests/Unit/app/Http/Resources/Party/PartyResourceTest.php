@@ -48,7 +48,7 @@ class PartyResourceTest extends TestCase
             'user_name' => $leader->name,
             'user_id' => $leader->id,
             'introduction' => $party->introduction,
-            'due_date' => $party->due_date,
+            'event_date' => $party->event_date,
             'image' => 'https://example-s3.com/test.jpg',
             'tags' => $tags->pluck('name'),
             'tag_ids' => $tags->pluck('id'),

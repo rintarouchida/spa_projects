@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
             'pref_id' => 'required|exists:prefs,id',
             'place' => 'required|max:255',
             'due_max' => 'required',
-            'due_date' => 'required|after:'.Carbon::now()->addWeek()->format('Y-m-d'),
+            'event_date' => 'required|after:'.Carbon::now()->addWeek()->format('Y-m-d'),
             'tag_ids' => 'nullable|max:3',
             'tag_ids.*' => 'nullable|exists:tags,id',
         ];
@@ -57,8 +57,8 @@ class RegisterRequest extends FormRequest
 
             'due_max.required'  => '定員を選択してください。',
 
-            'due_date.required' => '開催日時を入力してください。',
-            'due_date.after'    => '開催日時は1週間後以降にしてください。',
+            'event_date.required' => '開催日時を入力してください。',
+            'event_date.after'    => '開催日時は1週間後以降にしてください。',
 
             //todo:テスト作成
             'tag_ids.max' => 'タグの選択は3つまでです。',
