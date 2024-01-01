@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Message;
 use App\Models\MessageGroup;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class MessageService
@@ -28,8 +29,13 @@ class MessageService
      */
     public function getMessageLists(int $user_id): Collection
     {
+        $today = Carbon::today();
         $message_groups = MessageGroup::with(['messages', 'party', 'users'])->whereHas('users', function ($query) use ($user_id) {
             $query->where('id', $user_id);
+        })
+        //開催日が昨日以前のもくもく会に紐ずくメッセージは取得しない
+        ->whereHas('party', function ($query) use ($today) {
+            $query->whereDate('due_date', '>=', $today);
         })->get();
 
         return $message_groups;
@@ -52,8 +58,14 @@ class MessageService
      */
     public function getMessageListsForLeader(int $user_id): Collection
     {
+        $today = Carbon::today();
+
         $message_groups = MessageGroup::with(['party', 'messages'])->whereHas('party', function ($query) use ($user_id) {
             $query->where('leader_id', $user_id);
+        })
+        //開催日が昨日以前のもくもく会に紐ずくメッセージは取得しない
+        ->whereHas('party', function ($query) use ($today) {
+            $query->whereDate('due_date', '>=', $today);
         })->get();
 
         return $message_groups;
