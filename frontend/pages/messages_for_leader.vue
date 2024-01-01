@@ -1,8 +1,5 @@
 <template>
   <div v-show="show">
-    メッセージ一覧(主催者用)
-    <!-- todo:実装できたら消す -->
-    <p style="color:red;">※紐ずくもくもく会の開催日が昨日より前のものは表示しない</p>
     <span v-show="message_lists.length == 0">
       <h1>メッセージ(主催者用)はまだありません</h1>
     </span>
@@ -56,6 +53,7 @@ export default {
   padding-right: 5%;
   background-color: #e8e6e6;
   padding-bottom: 20px;
+  height:100vh;
 }
 .message_box {
   background-color: white;
