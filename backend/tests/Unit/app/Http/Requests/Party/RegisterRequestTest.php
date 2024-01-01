@@ -46,7 +46,7 @@ class RegisterRequestTest extends TestCase
                     'pref_id' => 1,
                     'place' => '場所1',
                     'due_max' => 2,
-                    'due_date' => '2023-12-23 10:00:00',
+                    'event_date' => '2023-12-23 10:00:00',
                 ],
                 false,
                 [],
@@ -58,11 +58,11 @@ class RegisterRequestTest extends TestCase
                     'pref_id' => 1,
                     'place' => '場所1',
                     'due_max' => 2,
-                    'due_date' => '2023-12-22 10:00:00',
+                    'event_date' => '2023-12-22 10:00:00',
                 ],
                 true,
                 [
-                    'due_date' => ['開催日時は1週間後以降にしてください。']
+                    'event_date' => ['開催日時は1週間後以降にしてください。']
                 ],
             ],
             '異常 必須項目未入力' => [
@@ -74,7 +74,7 @@ class RegisterRequestTest extends TestCase
                     'introduction' => ['詳細を入力してください。'],
                     'place' => ['開催場所を入力してください。'],
                     'due_max' => ['定員を選択してください。'],
-                    'due_date' => ['開催日時を入力してください。'],
+                    'event_date' => ['開催日時を入力してください。'],
                 ],
             ],
             '異常 異なる型' => [
@@ -84,7 +84,7 @@ class RegisterRequestTest extends TestCase
                     'introduction' => '詳細1',
                     'place' => '場所1',
                     'due_max' => 2,
-                    'due_date' => '2023-12-23 10:00:00',
+                    'event_date' => '2023-12-23 10:00:00',
                 ],
                 true,
                 [
@@ -98,7 +98,7 @@ class RegisterRequestTest extends TestCase
                     'introduction' => '詳細1',
                     'place' => '場所1',
                     'due_max' => 2,
-                    'due_date' => '2023-12-23 10:00:00',
+                    'event_date' => '2023-12-23 10:00:00',
                 ],
                 true,
                 [

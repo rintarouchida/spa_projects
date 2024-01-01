@@ -28,7 +28,7 @@ class PartyResource extends JsonResource
             'user_name' => $this->leader->name,
             'user_id' => $this->leader->id,
             'introduction' => $this->introduction,
-            'due_date' => $this->due_date,
+            'event_date' => $this->event_date,
             'image' => $this->image ? config('filesystems.disks.s3.url') . '/' . $this->image : null,
             'tags' => $this->tags->pluck('name'),
             'tag_ids' => $this->tags->pluck('id'),

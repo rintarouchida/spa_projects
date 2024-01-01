@@ -18,7 +18,7 @@ class CreatePartiesTable extends Migration
             $table->string('theme');
             $table->string('place');
             $table->integer('due_max');
-            $table->date('due_date');
+            $table->date('event_date');
             $table->string('introduction');
             $table->string('image')->nullable();
             $table->timestamps();

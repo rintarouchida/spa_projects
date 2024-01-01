@@ -51,7 +51,7 @@ export default {
       default: '',
       required: true
     },
-    due_date:
+    event_date:
     {
       type: String,
       default: '',

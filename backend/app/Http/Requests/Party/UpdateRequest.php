@@ -30,7 +30,7 @@ class UpdateRequest extends FormRequest
             'place' => 'required|max:255',
             'due_max' => 'required|gte:now_participated_num',
             'now_participated_num' => 'integer',
-            'due_date' => 'required|after:+5days',
+            'event_date' => 'required|after:+5days',
             'tag_ids' => 'nullable|max:3',
             'tag_ids.*' => 'nullable|exists:tags,id',
         ];
@@ -58,8 +58,8 @@ class UpdateRequest extends FormRequest
             'due_max.required'  => '定員を選択してください。',
             'due_max.gte'       => '定員は現在の参加人数以上にしてください。',
 
-            'due_date.required' => '開催日時を入力してください。',
-            'due_date.after'    => '開催日時は6日後以降にしてください。',
+            'event_date.required' => '開催日時を入力してください。',
+            'event_date.after'    => '開催日時は6日後以降にしてください。',
 
             'tag_ids.max' => 'タグの選択は3つまでです。',
 

@@ -38,7 +38,7 @@
         </p>
         <p>開催場所: {{ party.place }}</p>
         <p>定員: {{ party.due_max }}名(残り{{party.due_max - party.now_participated_num}}名)</p>
-        <p>開催日: {{ party.due_date }}</p>
+        <p>開催日: {{ party.event_date }}</p>
       </div>
       <span class="clear"></span>
     </div>

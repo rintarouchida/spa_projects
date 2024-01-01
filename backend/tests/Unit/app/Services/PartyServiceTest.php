@@ -116,7 +116,7 @@ class PartyServiceTest extends TestCase
             'theme' => 'theme_1',
             'place' => 'place_1',
             'due_max' => 1,
-            'due_date' => '2023-05-12',
+            'event_date' => '2023-05-12',
             'introduction' => 'introduction_1',
             'pref_id' => 1,
             'leader_id' => 1,
@@ -127,7 +127,7 @@ class PartyServiceTest extends TestCase
             'theme' => 'theme_1',
             'place' => 'place_1',
             'due_max' => 1,
-            'due_date' => '2023-05-12',
+            'event_date' => '2023-05-12',
             'introduction' => 'introduction_1',
             'pref_id' => 1,
             'leader_id' => 1,
@@ -142,7 +142,7 @@ class PartyServiceTest extends TestCase
             'theme' => 'theme_1',
             'place' => 'place_1',
             'due_max' => 1,
-            'due_date' => '2023-05-12',
+            'event_date' => '2023-05-12',
             'introduction' => 'introduction_1',
             'pref_id' => 1,
             'leader_id' => 1,
@@ -169,7 +169,7 @@ class PartyServiceTest extends TestCase
             'theme' => 'テストパーティー1',
             'pref_id' => 1,
             'due_max' => 10,
-            'due_date' => '2023-05-08 00:00:00',
+            'event_date' => '2023-05-08 00:00:00',
             'introduction' => '詳細1',
             'image' => 'test.jpg'
         ])->create()->tags()->attach([1, 2, 3]);
@@ -195,7 +195,7 @@ class PartyServiceTest extends TestCase
             'theme' => 'テストパーティー1',
             'pref_id' => 1,
             'due_max' => 10,
-            'due_date' => '2023-05-08 00:00:00',
+            'event_date' => '2023-05-08 00:00:00',
             'introduction' => '詳細1',
         ])->create();
 
@@ -224,7 +224,7 @@ class PartyServiceTest extends TestCase
             'theme' => 'テストパーティー1',
             'pref_id' => 1,
             'due_max' => 10,
-            'due_date' => '2023-05-08 00:00:00',
+            'event_date' => '2023-05-08 00:00:00',
             'introduction' => '詳細1',
         ])->create();
         $cancel_user->parties()->attach($party->id);
@@ -279,7 +279,7 @@ class PartyServiceTest extends TestCase
             'theme' => 'テストパーティー1',
             'pref_id' => 1,
             'due_max' => 10,
-            'due_date' => '2023-05-08 00:00:00',
+            'event_date' => '2023-05-08 00:00:00',
             'introduction' => '詳細1',
         ])->create();
 
@@ -460,7 +460,7 @@ class PartyServiceTest extends TestCase
             'theme' => 'テストパーティー1',
             'pref_id' => 1,
             'due_max' => 10,
-            'due_date' => '2023-12-29 00:00:00',
+            'event_date' => '2023-12-29 00:00:00',
             'introduction' => '詳細1',
         ])->create();
 
@@ -469,7 +469,7 @@ class PartyServiceTest extends TestCase
             'theme' => 'テストパーティー2',
             'pref_id' => 2,
             'due_max' => 20,
-            'due_date' => '2023-12-30 00:00:00',
+            'event_date' => '2023-12-30 00:00:00',
             'introduction' => '詳細2',
             'tag_ids' => [1, 2],
             'image' => null,
@@ -483,7 +483,7 @@ class PartyServiceTest extends TestCase
             'theme' => 'テストパーティー2',
             'place' => '東京都千代田区',
             'due_max' => 20,
-            'due_date' => '2023-12-30 00:00:00',
+            'event_date' => '2023-12-30 00:00:00',
             'introduction' => '詳細2',
             'pref_id' => 2,
         ]);

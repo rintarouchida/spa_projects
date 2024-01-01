@@ -435,7 +435,7 @@ paths:
                       type: "string"
                       description: もくもく会の詳細
                       example: "MySQLに関する勉強会を行います。"
-                    due_date:
+                    event_date:
                       type: "date"
                       description: もくもく会の開催日
                       example: "2024-01-15"
@@ -527,7 +527,7 @@ paths:
                       type: "string"
                       description: もくもく会の詳細
                       example: "MySQLに関する勉強会を行います。"
-                    due_date:
+                    event_date:
                       type: "date"
                       description: もくもく会の開催日
                       example: "2024-01-15"
@@ -619,7 +619,7 @@ paths:
                       type: "string"
                       description: もくもく会の詳細
                       example: "MySQLに関する勉強会を行います。"
-                    due_date:
+                    event_date:
                       type: "date"
                       description: もくもく会の開催日
                       example: "2024-01-15"
@@ -700,7 +700,7 @@ paths:
                   type: "integer"
                   description: "もくもく会の参加上限人数"
                   example: 20
-                due_date:
+                event_date:
                   type: "string"
                   format: "date"
                   description: "もくもく会の参加期限"
@@ -721,7 +721,7 @@ paths:
                   - pref_id
                   - place
                   - due_max
-                  - due_date
+                  - event_date
       responses:
         '200':
           description: "もくもく会作成完了"
@@ -751,8 +751,8 @@ paths:
                       'place.required': "開催場所を入力してください。"
                       'place.max': "開催場所は255文字以内で入力してください。"
                       'due_max.required': "定員を選択してください。"
-                      'due_date.required': "開催日時を入力してください。"
-                      'due_date.after': "開催日時は明日以降にしてください。"
+                      'event_date.required': "開催日時を入力してください。"
+                      'event_date.after': "開催日時は明日以降にしてください。"
                       'tag_ids.max': "タグの選択は3つまでです。"
                       'tag_ids.*.exists': "存在しないタグが含まれています。"
 # もくもく会取得API
@@ -808,7 +808,7 @@ paths:
                     type: "string"
                     description: もくもく会の詳細
                     example: "MySQLに関する勉強会を行います。"
-                  due_date:
+                  event_date:
                     type: "date"
                     description: もくもく会の開催日
                     example: "2024-01-15"
@@ -970,7 +970,7 @@ paths:
                       type: "string"
                       description: もくもく会の詳細
                       example: "MySQLに関する勉強会を行います。"
-                    due_date:
+                    event_date:
                       type: "date"
                       description: もくもく会の開催日
                       example: "2024-01-15"
@@ -1087,7 +1087,7 @@ paths:
                     type: "string"
                     description: もくもく会の詳細
                     example: "MySQLに関する勉強会を行います。"
-                  due_date:
+                  event_date:
                     type: "date"
                     description: もくもく会の開催日
                     example: "2024-01-15"
@@ -1187,7 +1187,7 @@ paths:
                   type: string
                   description: 定員
                   example: "30"
-                due_date:
+                event_date:
                   type: string
                   description: 開催日時
                   example: "2024-01-01"
@@ -1203,7 +1203,7 @@ paths:
                 - pref_id
                 - place
                 - due_max
-                - due_date
+                - event_date
       responses:
         '200':
           description: 更新が完了しました

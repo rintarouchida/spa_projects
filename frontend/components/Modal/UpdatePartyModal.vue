@@ -20,8 +20,8 @@
           <p v-show="place !== ''">開催場所: {{place}}</p>
           <p v-show="due_max === ''">定員: <span style="color:red;">未選択です</span></p>
           <p v-show="due_max !== ''">定員: {{due_max}}人</p>
-          <p v-show="due_date === ''">開催日時: <span style="color:red;">未入力です</span></p>
-          <p v-show="due_date !== ''">開催日時: {{due_date}}</p>
+          <p v-show="event_date === ''">開催日時: <span style="color:red;">未入力です</span></p>
+          <p v-show="event_date !== ''">開催日時: {{event_date}}</p>
 
         </span>
         <v-btn style="margin-right:100px; color:white" color="red" class="btn btn-secondary" @click="registerAndCloseModal">はい</v-btn>
@@ -66,7 +66,7 @@ export default {
       default: '',
       required: true
     },
-    due_date:
+    event_date:
     {
       type: String,
       default: '',
