@@ -292,6 +292,9 @@ export default {
               this.validation.image = []
             }
           }
+          if (err.response.status === 500) {
+            this.$router.push('/errors/error_500')
+          }
         })
     },
     getPrefName(prefId) {

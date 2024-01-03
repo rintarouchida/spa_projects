@@ -9,7 +9,7 @@
       <div class="content">
         <h3 style="color:red; margin-bottom:20px;">こちらのもくもく会に参加します。よろしいですか?
         </h3>
-        <v-btn style="margin-right:100px; color:white" color="red" class="btn btn-secondary" @click="joinPartyrAndCloseModal">はい</v-btn>
+        <v-btn style="margin-right:100px; color:white" color="red" class="btn btn-secondary" @click="joinPartyAndCloseModal">はい</v-btn>
         <v-btn color="primary"
           @click="closeModal"
         >いいえ</v-btn>

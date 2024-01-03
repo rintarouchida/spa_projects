@@ -99,6 +99,10 @@ export default {
 
     this.parties = await this.$axios.get('/api/party/index').then((res) => {
       return res.data
+    }).catch((err) => {
+      if (err.response.status === 500) {
+        this.$router.push('/errors/error_500')
+      }
     })
 
     this.prefs = this.$PREF
@@ -123,7 +127,9 @@ export default {
           return res.data
         })
         .catch((err) => {
-          console.log(err)
+          if (err.response.status === 500) {
+            this.$router.push('/errors/error_500')
+          }
           this.$nuxt.$loading.finish()
         })
     },
