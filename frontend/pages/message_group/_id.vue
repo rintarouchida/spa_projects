@@ -58,6 +58,10 @@ export default {
     setTimeout(() => this.$nuxt.$loading.start(), 500);
     this.data = await this.$axios.get(`api/message/get/${this.$route.params.id}`).then(res => {
       return res.data;
+    }).catch((err) => {
+      if (err.response.status === 500) {
+        this.$router.push('/errors/error_500')
+      }
     });
 
     this.party_theme = this.data.theme;
@@ -72,6 +76,10 @@ export default {
     async getMessages(){
       this.messages = await this.$axios.get(`api/message/get/${this.$route.params.id}`).then(res => {
         return res.data.messages;
+      }).catch((err) => {
+      if (err.response.status === 500) {
+        this.$router.push('/errors/error_500')
+      }
       });
     },
     async sendMessage(){
@@ -90,6 +98,9 @@ export default {
           if ("content" in this.validation.errors) {
             this.validation.content = this.validation.errors.content;
           }
+        }
+        if (err.response.status === 500) {
+          this.$router.push('/errors/error_500')
         }
       });
     },

@@ -28,7 +28,11 @@ export default {
       .get(`api/user/get/${this.$route.params.id}`)
       .then((res) => {
         return res.data
-      })
+      }).catch((err) => {
+      if (err.response.status === 500) {
+        this.$router.push('/errors/error_500')
+      }
+    })
 
     this.$nuxt.$loading.finish()
   },

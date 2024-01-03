@@ -39,6 +39,10 @@ export default {
     setTimeout(() => this.$nuxt.$loading.start(), 500);
     this.party = await this.$axios.get(`api/party/get/${this.$route.params.id}`).then(res => {
       return res.data;
+    }).catch((err) => {
+      if (err.response.status === 500) {
+        this.$router.push('/errors/error_500')
+      }
     });
     this.show = true
     this.$nuxt.$loading.finish();
@@ -49,7 +53,11 @@ export default {
         console.log(res);
         window.alert(res.data.message);
         this.$router.push("/");
-      });
+      }).catch((err) => {
+      if (err.response.status === 500) {
+        this.$router.push('/errors/error_500')
+      }
+    });
     }
   }
 }

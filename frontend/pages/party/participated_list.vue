@@ -62,7 +62,11 @@ export default {
       .get('/api/party/index_participated')
       .then((res) => {
         return res.data
-      })
+      }).catch((err) => {
+      if (err.response.status === 500) {
+        this.$router.push('/errors/error_500')
+      }
+    })
     this.show = true
     this.$nuxt.$loading.finish()
   },

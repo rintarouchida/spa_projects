@@ -169,6 +169,10 @@ export default {
     this.prefs = this.$PREF
     this.old_data = await this.$axios.get(`api/get_auth`).then((res) => {
       return res.data
+    }).catch((err) => {
+      if (err.response.status === 500) {
+        this.$router.push('/errors/error_500')
+      }
     })
     this.getPrefName(this.old_data.pref_id)
     this.$nuxt.$loading.finish()
@@ -232,6 +236,9 @@ export default {
             if ('introduction' in this.validation.errors) {
               this.validation.introduction = this.validation.errors.introduction
             }
+          }
+          if (err.response.status === 500) {
+            this.$router.push('/errors/error_500')
           }
         })
     },
