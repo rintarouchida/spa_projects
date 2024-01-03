@@ -10,13 +10,14 @@
         />
       </p>
     </div>
-    <div style="width: 70%; float: right">
+    <div style="width: 70%; padding-left:10%; float: right">
       <h2 style="margin-top: 15px">{{ user.name }}さん</h2>
-      <p style="margin-top: 15px">{{ user.old }}才</p>
-      <p style="margin-top: 15px">{{ user.pref_name }}在住</p>
+      <p style="margin-top: 15px">(年齢){{ user.old }}才</p>
+      <p style="margin-top: 15px">(在住){{ user.pref_name }}</p>
+      <p>(TwitterのURL)<a :href="user.twitter_url">{{ user.twitter_url }}</a></p>
     </div>
     <div class="clear"></div>
-    <p>{{ user.introduction }}</p>
+    <p style="white-space: pre-wrap;">(自己紹介)<br>{{ user.introduction }}</p>
     <v-btn type="primary" style="float: right" @click="edit">編集する</v-btn>
   </div>
 </template>
@@ -58,5 +59,12 @@ export default {
 }
 .clear {
   clear: both;
+}
+
+@media (max-width: 600px) {
+  .picture{
+    height: 200px;
+    height: 200px;
+  }
 }
 </style>
