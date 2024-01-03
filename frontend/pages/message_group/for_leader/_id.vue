@@ -60,6 +60,7 @@ export default {
         errors: [],
         content: [],
       },
+      intervalId: null, // タイマーIDを保持するためのプロパティ
     }
   },
   async created() {
@@ -72,11 +73,17 @@ export default {
 
     this.party_theme = this.data.theme
     this.messages = this.data.messages
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       this.getMessages()
       console.log('メッセージを更新')
     }, 10000)
     this.$nuxt.$loading.finish()
+  },
+  beforeDestroy() {
+    // コンポーネントが破棄される前にintervalをクリアする
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   },
   methods: {
     async getMessages() {
