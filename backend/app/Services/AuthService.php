@@ -32,13 +32,12 @@ class AuthService
         }
     }
 
-    //テスト作成
     /**
      * @param array $data
      *
-     * @return void|string
+     * @return void
      */
-    public function update(User $user, array $data)
+    public function update(User $user, array $data): void
     {
         if (!is_null($data['image'])) {
             $user->update([
