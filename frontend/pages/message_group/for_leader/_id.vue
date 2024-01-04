@@ -35,7 +35,7 @@
     </div>
     <div class="send_message">
       <input type="text" v-model="content">
-      <v-btn color="red" style="color:white" @click="sendMessage">送信</v-btn>
+      <v-btn color="red" class="send_message_btn" @click="sendMessage">送信</v-btn>
       <p v-show="validation.content" v-for="(content, index) in validation.content" :key="index" class="validation_error">・{{content}}</p>
     </div>
     </div>
@@ -138,6 +138,8 @@ export default {
     border-top:1px solid black;
     border-right:1px solid black;
     border-left:1px solid black;
+    padding-left:0px;
+    padding-right:0px;
     padding-bottom: 20px;
     overflow:scroll;
   }
@@ -155,10 +157,16 @@ export default {
   border-left:1px solid black;
 }
 .send_message>input{
-  width:80%;
+  width:70%;
   height:40px;
   margin-top:5px;
   border:1px solid black;
+  border-radius: 4px;
+}
+.send_message_btn {
+  color:white;
+  display:inline-block;
+  width:40px;
 }
 .others_message_group{
     float:left;
@@ -213,18 +221,27 @@ export default {
     text-align:left;
   }
 
-@media (max-width: 600px) {
-  .message_box{
-    font-size:12px;
+  @media (max-width: 600px) {
+    .message_box{
+      font-size:12px;
+    }
+    .others_message_group{
+      font-size:12px;
+    }
+    .others_name{
+      font-size:8px;
+    }
+    .created_at{
+      font-size:8px;
+    }
   }
-  .others_message_group{
-    font-size:12px;
+  @media (max-width: 400px) {
+    .send_message_btn{
+      font-size:10px;
+      width:30px !important;
+    }
+    .validation_error{
+      font-size:12px;
+    }
   }
-  .others_name{
-    font-size:8px;
-  }
-  .created_at{
-    font-size:8px;
-  }
-}
 </style>
