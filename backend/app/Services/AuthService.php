@@ -36,16 +36,16 @@ class AuthService
     /**
      * @param array $data
      *
-     * @return void
+     * @return void|string
      */
-    public function update(User $user, array $data): void
+    public function update(User $user, array $data)
     {
         if (!is_null($data['image'])) {
             $user->update([
                 'image' => $this->createS3Image($user, $data['image'])
             ]);
-            unset($data['image']);
         }
+        unset($data['image']);
 
         $user->fill($data)->save();
     }
