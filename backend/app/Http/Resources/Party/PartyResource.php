@@ -29,7 +29,7 @@ class PartyResource extends JsonResource
             'user_id' => $this->leader->id,
             'introduction' => $this->introduction,
             'event_date' => $this->event_date,
-            'image' => $this->image ? config('filesystems.disks.s3.url') . '/' . $this->image : null,
+            'image' => $this->image ? config('filesystems.disks.s3.url') . '/' . $this->image : config('filesystems.disks.s3.url') . '/no_image.png',
             'tags' => $this->tags->pluck('name'),
             'tag_ids' => $this->tags->pluck('id'),
             'pref_name' => $this->pref->name,

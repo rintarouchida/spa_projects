@@ -23,7 +23,7 @@ class MessageResource extends JsonResource
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'is_users_message' => $this->user->id === $auth_id,
             'user_name' => $this->user->name,
-            'user_image' => config('filesystems.disks.s3.url').'/'.$this->user->image
+            'user_image' => $this->user->image ? config('filesystems.disks.s3.url') . '/' . $this->user->image : config('filesystems.disks.s3.url') . '/no_image.png',
         ];
     }
 }

@@ -191,7 +191,6 @@ export default {
   display: block;
   width: 180px;
   height: 180px;
-  border:1px solid black;
   margin:10px;
 }
 .content_box {
