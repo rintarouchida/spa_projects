@@ -1,7 +1,5 @@
 <template>
   <div>
-<!--  todo:アイコン入れられるようにしたら再度デザイン調整 -->
-<!-- todo:メッセージ送信部分のデザイン -->
   <div style="text-align:center;">
     <div class="message_form">
       <div class="party_theme">
@@ -168,7 +166,6 @@ export default {
   border-radius:50%;
   width:40px;
   height:40px;
-  border:1px solid black;
 }
 .icon>img{
   width: 100%;

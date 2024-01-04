@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             'twitter_url'  => $this->twitter_url,
             'old'          => \Carbon\Carbon::parse($this->birthday)->age,
             'pref_name'    => $this->pref->name,
-            'image'        => config('filesystems.disks.s3.url').'/'.$this->image
+            'image'        => $this->image ? config('filesystems.disks.s3.url') . '/' . $this->image : config('filesystems.disks.s3.url') . '/no_image.png',
         ];
     }
 }
