@@ -7,30 +7,29 @@
       v-show="modalContent"
     >
       <div class="content">
-        <h3 style="color:red; margin-bottom:20px;">以下の内容でもくもく会の内容を更新します。よろしいですか?
+        <h3 class="alert" style="color:red; margin-bottom:20px;">以下の内容でもくもく会の内容を更新します。よろしいですか?
         </h3>
-        <span style="text-align: left;">
-          <p v-show="theme === ''">題名: <span style="color:red;">未入力です</span></p>
-          <p v-show="theme !== ''">題名: {{theme}}</p>
-          <p v-show="introduction === ''">詳細: <span style="color:red;">未入力です</span></p>
-          <p v-show="introduction !== ''">詳細: {{introduction}}</p>
-          <p v-show="pref_name === ''">開催する都道府県: <span style="color:red;">未選択です</span></p>
-          <p v-show="pref_name !== ''">開催する都道府県: {{pref_name}}</p>
-          <p v-show="place === ''">開催場所: <span style="color:red;">未入力です</span></p>
-          <p v-show="place !== ''">開催場所: {{place}}</p>
-          <p v-show="due_max === ''">定員: <span style="color:red;">未選択です</span></p>
-          <p v-show="due_max !== ''">定員: {{due_max}}人</p>
-          <p v-show="event_date === ''">開催日時: <span style="color:red;">未入力です</span></p>
-          <p v-show="event_date !== ''">開催日時: {{event_date}}</p>
-          <p v-show="tag_ids !== '[]'">
-            タグ: <span v-for="(tag_id, index) in tag_ids" :key="index">・{{tags[tag_id - 1]['name']}}</span>
-          </p>
-
-        </span>
-        <v-btn style="margin-right:100px; color:white" color="red" class="btn btn-secondary" @click="updatePartyAndCloseModal">はい</v-btn>
-        <v-btn color="primary"
-          @click="closeModal"
-        >いいえ</v-btn>
+        <p v-show="theme === ''">題名: <span style="color:red;">未入力です</span></p>
+        <p v-show="theme !== ''">題名: {{theme}}</p>
+        <p v-show="introduction === ''">詳細: <span style="color:red;">未入力です</span></p>
+        <p v-show="introduction !== ''">詳細: {{introduction}}</p>
+        <p v-show="pref_name === ''">開催する都道府県: <span style="color:red;">未選択です</span></p>
+        <p v-show="pref_name !== ''">開催する都道府県: {{pref_name}}</p>
+        <p v-show="place === ''">開催場所: <span style="color:red;">未入力です</span></p>
+        <p v-show="place !== ''">開催場所: {{place}}</p>
+        <p v-show="due_max === ''">定員: <span style="color:red;">未選択です</span></p>
+        <p v-show="due_max !== ''">定員: {{due_max}}人</p>
+        <p v-show="event_date === ''">開催日時: <span style="color:red;">未入力です</span></p>
+        <p v-show="event_date !== ''">開催日時: {{event_date}}</p>
+        <p v-show="tag_ids !== '[]'">
+          タグ: <span v-for="(tag_id, index) in tag_ids" :key="index">・{{tags[tag_id - 1]['name']}}</span>
+        </p>
+        <div style="text-align:center;">
+          <v-btn style="color:white" color="red" class="btn btn-secondary btn-ok" @click="updatePartyAndCloseModal">はい</v-btn>
+          <v-btn color="primary" class="btn btn-back"
+            @click="closeModal"
+          >いいえ</v-btn>
+        </div>
       </div>
     </div>
   </div>
@@ -124,5 +123,49 @@ export default {
     width:50%;
     padding: 1em;
     background:#fff;
+    text-align:left;
+  }
+  .btn-ok{
+    margin-right:40px;
+  }
+  .btn-back{
+    margin-left:40px;
+  }
+  @media (max-width: 600px) {
+    .alert {
+      font-size:18px;
+    }
+    .content{
+      width:90%;
+    }
+    .content>p{
+      font-size:14px;
+    }
+    .btn-ok{
+    margin-right:25px;
+    }
+    .btn-back{
+      margin-left:25px;
+    }
+  }
+  @media (max-width: 400px) {
+    .alert {
+      font-size:14px;
+    }
+    .btn{
+      font-size:10px !important;
+    }
+    .content>p{
+      font-size:12px;
+    }
+    .btn_span{
+      width:25px;
+    }
+    .btn-ok{
+    margin-right:15px;
+    }
+    .btn-back{
+      margin-left:15px;
+    }
   }
 </style>

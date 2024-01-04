@@ -1,7 +1,7 @@
 <template>
   <div style="text-align: center" v-show="show">
     <div class="register_form">
-      <h2>もくもく会編集</h2>
+      <h2 style="margin-bottom:50px;">もくもく会編集</h2>
 
       <h3 class="register_items">題名<span class="required">必須</span></h3>
       <input
@@ -210,6 +210,7 @@ export default {
       this.old_data = await this.$axios.get(`api/party/get/${this.$route.params.id}`).then(res => {
         return res.data;
       }).catch((err) => {
+
       if (err.response.status === 500) {
         this.$router.push('/errors/error_500')
       }
@@ -298,6 +299,11 @@ export default {
               this.validation.image = []
             }
           }
+          if (err.response.status === 400) {
+            window.alert(err.response.data.message)
+            this.$router.push('/')
+
+          }
           if (err.response.status === 500) {
             this.$router.push('/errors/error_500')
           }
@@ -347,6 +353,19 @@ export default {
 .validation_error {
   color: red;
   text-align: left;
+}
+
+@media (max-width: 400px) {
+  .register_form {
+    margin-left: 5%;
+    width: 90%;
+  }
+  .register_items {
+    font-size:14px;
+  }
+  .input_form{
+    height:30px;
+  }
 }
 </style>
 
