@@ -3,7 +3,7 @@
     <div class="search_box">
       <v-row>
         <v-col cols="12" sm="6" md="6" lg="6" xl="6" class="pref_form">
-          <h2>都道府県</h2>
+          <h3>都道府県</h3>
           <select v-model="pref_id">
             <option value="">選択してください。</option>
             <option
@@ -17,7 +17,7 @@
           </select>
         </v-col>
         <v-col cols="12" sm="6" md="6" lg="6" xl="6" class="tag_form">
-          <h2>タグ</h2>
+          <h3>タグ</h3>
           <select v-model="tag_id">
             <option value="">選択してください。</option>
             <option
@@ -31,19 +31,19 @@
           </select>
         </v-col>
         <v-col cols="12" class="keyword_form">
-          <h2>キーワード</h2>
+          <h3>キーワード</h3>
           <input v-model="keyword" type="text" />
         </v-col>
       </v-row>
 
-      <div style="text-align: center; margin-bottom: 20px">
-        <v-btn color="red" style="color: white" @click="searchParty"
+      <div style="text-align: center; margin: 10px 0px">
+        <v-btn class="search_btn" @click="searchParty"
           >検索する</v-btn
         >
       </div>
     </div>
 
-    <h1 style="margin-bottom: 20px">もくもく会一覧</h1>
+    <h2 style="margin-bottom: 20px">もくもく会一覧</h2>
     <div
       v-for="(party, index) in parties"
       v-show="party.due_max > 0"
@@ -51,13 +51,12 @@
       class="party_box"
     >
       <v-row>
-        <v-col cols="3" sm="3" md="3" lg="3" xl="3" class="picture_box">
-          <img
+        <v-col cols="12" sm="4" md="4" lg="4" xl="4">
+          <img class="party_img"
             :src="party.image"
             alt=""
-            style="display: block; width: 100%; height: 100%"
         /></v-col>
-        <v-col cols="9" sm="9" md="9" lg="9" xl="9" class="content_box">
+        <v-col cols="12" sm="8" md="8" lg="8" xl="8" class="content_box">
           <h1 class="theme">
             <router-link
               :to="`party/${party.id}`"
@@ -173,15 +172,23 @@ export default {
   border: 1px solid black;
 }
 
+.search_btn {
+  background-color: red !important;
+  color: white !important;
+}
+
 .party_box {
   border: 2px solid black;
   margin-bottom: 50px;
   padding: 15px;
   min-height: 200px;
 }
-.picture_box {
-  background-color: #d9d9d9;
-  height: 200px;
+.party_img{
+  display: block;
+  width: 180px;
+  height: 180px;
+  border:1px solid black;
+  margin:10px;
 }
 .content_box {
   height: 100%;
@@ -197,5 +204,43 @@ export default {
 }
 .clear {
   clear: both;
+}
+
+@media (max-width: 600px) {
+  .pref_form, .tag_form, .keyword_form {
+    padding-bottom:10px;
+  }
+  .pref_form > select {
+    height: 30px;
+    font-size: 12px;
+  }
+  .tag_form > select {
+    height: 30px;
+    font-size: 12px;
+  }
+  .keyword_form > input {
+    height: 30px;
+    font-size: 12px;
+  }
+  .search_btn {
+    font-size: 12px !important;
+  }
+}
+@media (max-width: 400px) {
+  .theme{
+    font-size:22px;
+  }
+  .party_img{
+    width: 120px;
+    height: 120px;
+    margin:30px 30px 30px 0px;
+  }
+  .content_box>p{
+    font-size:12px;
+  }
+  .tag{
+    font-size:8px;
+    margin-right: 5px;
+  }
 }
 </style>
