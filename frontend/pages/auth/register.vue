@@ -1,7 +1,7 @@
 <template>
   <div style="text-align: center">
     <div class="register_form">
-      <h2>ユーザー登録</h2>
+      <h2 style="margin-bottom:50px;">ユーザー登録</h2>
 
       <h3 class="register_items">
         ユーザー名<span class="required">必須</span>
@@ -145,6 +145,7 @@
         :twitter_url="twitter_url"
         :introduction="introduction"
         :pref_name="pref_name"
+        :password="password"
         @close-modal="register"
       />
     </div>
@@ -298,5 +299,18 @@ export default {
 .validation_error {
   color: red;
   text-align: left;
+}
+
+@media (max-width: 400px) {
+  .register_form {
+    margin-left: 5%;
+    width: 90%;
+  }
+  .register_items {
+    font-size:14px;
+  }
+  .input_form{
+    height:30px;
+  }
 }
 </style>
