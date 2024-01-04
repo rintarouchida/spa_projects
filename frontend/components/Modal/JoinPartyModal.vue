@@ -7,12 +7,15 @@
       v-show="modalContent"
     >
       <div class="content">
-        <h3 style="color:red; margin-bottom:20px;">こちらのもくもく会に参加します。よろしいですか?
+        <h3 class="alert" style="color:red; margin-bottom:20px;">こちらのもくもく会に参加します。よろしいですか?
         </h3>
-        <v-btn style="margin-right:100px; color:white" color="red" class="btn btn-secondary" @click="joinPartyAndCloseModal">はい</v-btn>
-        <v-btn color="primary"
-          @click="closeModal"
-        >いいえ</v-btn>
+        <div style="text-align:center;">
+          <v-btn style="color:white" color="red" class="btn btn-secondary btn-ok" @click="joinPartyAndCloseModal">はい</v-btn>
+          <v-btn color="primary" class="btn btn-back"
+            @click="closeModal"
+          >いいえ</v-btn>
+        </div>
+      </div>
       </div>
     </div>
   </div>
@@ -61,5 +64,36 @@ export default {
     width:50%;
     padding: 1em;
     background:#fff;
+  }
+  .btn-ok{
+    margin-right:40px;
+  }
+  .btn-back{
+    margin-left:40px;
+  }
+  @media (max-width: 600px) {
+    .alert {
+      font-size:18px;
+    }
+    .btn-ok{
+    margin-right:25px;
+    }
+    .btn-back{
+      margin-left:25px;
+    }
+  }
+  @media (max-width: 400px) {
+    .alert {
+      font-size:14px;
+    }
+    .btn{
+      font-size:10px !important;
+    }
+    .btn-ok{
+    margin-right:15px;
+    }
+    .btn-back{
+      margin-left:15px;
+    }
   }
 </style>
