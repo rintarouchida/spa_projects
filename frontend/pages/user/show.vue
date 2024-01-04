@@ -18,7 +18,9 @@
     </div>
     <div class="clear"></div>
     <p style="white-space: pre-wrap;">(自己紹介)<br>{{ user.introduction }}</p>
-    <v-btn type="primary" style="float: right" @click="edit">編集する</v-btn>
+    <v-row class="justify-center">
+      <v-btn type="primary" @click="edit">編集する</v-btn>
+    </v-row>
   </div>
 </template>
 
@@ -53,7 +55,6 @@ export default {
 
 <style>
 .picture {
-  background-color: yellow;
   width: 100%;
   height: 200px;
 }
@@ -63,8 +64,14 @@ export default {
 
 @media (max-width: 600px) {
   .picture{
-    height: 200px;
-    height: 200px;
+    height: 150px;
+    width: 150px;
+  }
+}
+@media (max-width: 400px) {
+  .picture{
+    height: 120px;
+    width: 120px;
   }
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div v-show="show">
-    <h1 v-show="parties.length > 0" style="margin-bottom: 20px">
+    <h2 v-show="parties.length > 0" style="margin-bottom: 20px">
       作成したもくもく会一覧
-    </h1>
-      <p style="color:red;">※開催日が昨日以前のもくもく会は表示されません</p>
+    </h2>
+      <p class="alert" style="color:red;">※開催日が過ぎたもくもく会は表示されません</p>
     <span v-show="parties.length == 0">
       <h1>作成したもくもく会はまだありません</h1>
       <router-link to="../create_party">もくもく会作成はこちらから</router-link>
@@ -14,33 +14,31 @@
       :key="index"
       class="party_box"
     >
-      <div class="picture_box">
-        <img
-          :src="party.image"
-          alt=""
-          style="display: block; width: 100%; height: 100%"
-        />
-      </div>
-
-      <div class="content_box">
-        <h1 class="theme">
-          <router-link
-            :to="`../party/created/${party.id}`"
-            style="text-decoration: none"
-            >{{ party.theme }}</router-link
-          >
-        </h1>
-        <p>
-          関連タグ:
-          <span v-for="(tag, index) in party.tags" :key="index" class="tag">
-            {{ tag }}
-          </span>
-        </p>
-        <p>開催場所: {{ party.place }}</p>
-        <p>定員: {{ party.due_max }}名(残り{{party.due_max - party.now_participated_num}}名)</p>
-        <p>開催日: {{ party.event_date }}</p>
-      </div>
-      <span class="clear"></span>
+      <v-row>
+        <v-col cols="12" sm="4" md="4" lg="4" xl="4">
+          <img class="party_img"
+            :src="party.image"
+            alt=""
+        /></v-col>
+        <v-col cols="12" sm="8" md="8" lg="8" xl="8" class="content_box">
+          <h1 class="theme">
+            <router-link
+              :to="`../party/created/${party.id}`"
+              style="text-decoration: none"
+              >{{ party.theme }}</router-link
+            >
+          </h1>
+          <p>
+            関連タグ:
+            <span v-for="(tag, index) in party.tags" :key="index" class="tag">
+              {{ tag }}
+            </span>
+          </p>
+          <p>開催場所: {{ party.place }}</p>
+          <p>定員: 残り{{ party.due_max }}人</p>
+          <p>開催日: {{ party.event_date }}</p>
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>
@@ -72,24 +70,28 @@ export default {
 </script>
 
 <style scope>
+
 .party_box {
   border: 2px solid black;
   margin-bottom: 50px;
   padding: 15px;
-  height: 300px;
+  min-height: 200px;
 }
-.picture_box {
-  background-color: #d9d9d9;
-  width: 25%;
-  height: 100%;
-  float: left;
+
+.party_img {
+  display: block;
+  width: 180px;
+  height: 180px;
+  border:1px solid black;
+  margin:10px;
 }
+
 .content_box {
   width: 75%;
   height: 100%;
   float: right;
-  padding-left: 40px;
 }
+
 .theme {
   color: #066aff;
 }
@@ -99,7 +101,29 @@ export default {
   width: fit-content;
   margin-right: 20px;
 }
+
 .clear {
   clear: both;
+}
+
+@media (max-width: 400px) {
+  .alert {
+    font-size:12px;
+  }
+  .theme{
+    font-size:22px;
+  }
+  .party_img{
+    width: 120px;
+    height: 120px;
+    margin:30px 30px 30px 0px;
+  }
+  .content_box>p{
+    font-size:12px;
+  }
+  .tag{
+    font-size:8px;
+    margin-right: 5px;
+  }
 }
 </style>
