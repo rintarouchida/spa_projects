@@ -138,7 +138,8 @@ export default {
 
 <style scope>
 .search_box {
-  border: 2px solid black;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+  padding:5px;
   margin-bottom: 50px;
   height: auto;
 }
@@ -150,6 +151,7 @@ export default {
   width: 100%;
   height: 50px;
   font-size: 20px;
+  border-radius: 4px;
   border: 1px solid black;
 }
 
@@ -160,6 +162,7 @@ export default {
   width: 100%;
   height: 50px;
   font-size: 20px;
+  border-radius: 4px;
   border: 1px solid black;
 }
 
@@ -169,6 +172,7 @@ export default {
 .keyword_form > input {
   width: 100%;
   height: 40px;
+  border-radius: 4px;
   border: 1px solid black;
 }
 
@@ -178,7 +182,7 @@ export default {
 }
 
 .party_box {
-  border: 2px solid black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   margin-bottom: 50px;
   padding: 15px;
   min-height: 200px;

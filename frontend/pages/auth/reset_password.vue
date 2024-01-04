@@ -79,6 +79,7 @@ export default {
   width: 100%;
   height: 40px;
   margin-bottom: 20px;
+  border-radius: 4px;
 }
 .validation_error{
   color:red;

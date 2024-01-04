@@ -72,7 +72,7 @@ export default {
 <style scope>
 
 .party_box {
-  border: 2px solid black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   margin-bottom: 50px;
   padding: 15px;
   min-height: 200px;
