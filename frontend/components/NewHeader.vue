@@ -22,7 +22,7 @@
           <button @mouseover="menu3 = !menu3; menu1 = false; menu2 = false">ユーザー</button>
           <div v-if="menu3" class="menu">
             <p><router-link class="link" to="/user/show">ユーザー情報</router-link></p>
-            <button class="link" @click="logout" style="margin-top:5px;">ログアウト</button>
+            <button class="link" @click="logout" style="margin:5px; padding-bottom:8px;">ログアウト</button>
           </div>
         </div>
       </nav>
@@ -115,7 +115,7 @@ nav {
   text-decoration: none;
   transition: color ease;
   font-family: 'Helvetica', 'Arial', sans-serif;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
 }
 .link:hover{
@@ -128,6 +128,7 @@ button {
 
 .menu {
   position: absolute;
+  padding:8px 8px 0px 8px;
   width: 200px;
   left: 0;
   top: 100%;
