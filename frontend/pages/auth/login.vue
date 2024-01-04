@@ -1,7 +1,7 @@
 <template>
   <div style="text-align:center;">
     <div class="login_form">
-      <h1>ログイン画面</h1>
+      <h2 style="margin-bottom:50px;">ログイン画面</h2>
       <h3 class="login_items">メールアドレス</h3>
       <input class="input_form" type="text" v-model="email" placeholder="メールアドレス"><br>
       <h3 class="login_items">パスワード</h3>
@@ -82,4 +82,20 @@
     color:red;
     text-align:left;
   }
+
+@media (max-width: 400px) {
+  .login_form {
+    margin-left: 5%;
+    width: 90%;
+  }
+  .login_items{
+    font-size:14px;
+  }
+  .failed_message{
+    font-size:14px;
+  }
+  .input_form{
+    height:30px;
+  }
+}
 </style>

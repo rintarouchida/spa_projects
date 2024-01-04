@@ -1,7 +1,7 @@
 <template>
   <div style="text-align: center">
     <div class="password_reset_form">
-      <h1>パスワードリセット画面</h1>
+      <h2 style="margin-bottom:50px;">パスワード<br>リセット画面</h2>
       <p>指定のアドレス先にメールを送信します。</p>
       <h3 class="password_reset_items">メールアドレス</h3>
       <input
@@ -83,5 +83,18 @@ export default {
 .validation_error{
   color:red;
   text-align:left;
+}
+
+@media (max-width: 400px) {
+  .password_reset_form {
+    margin-left: 5%;
+    width: 90%;
+  }
+  .password_reset_items {
+    font-size:14px;
+  }
+  .input_form{
+    height:30px;
+  }
 }
 </style>
