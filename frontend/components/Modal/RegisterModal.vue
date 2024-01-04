@@ -97,7 +97,7 @@ export default {
 }
 </script>
 
-<style>
+<style scope>
   li{
     list-style:none;
   }
