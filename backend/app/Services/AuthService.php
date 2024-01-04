@@ -32,7 +32,6 @@ class AuthService
         }
     }
 
-    //テスト作成
     /**
      * @param array $data
      *
@@ -44,8 +43,8 @@ class AuthService
             $user->update([
                 'image' => $this->createS3Image($user, $data['image'])
             ]);
-            unset($data['image']);
         }
+        unset($data['image']);
 
         $user->fill($data)->save();
     }
