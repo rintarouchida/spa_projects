@@ -1,25 +1,24 @@
 <template>
   <div v-show="show">
     <h2>ログインユーザーのプロフィール</h2>
-    <div style="width: 30%; float: left">
-      <p class="picture">
+    <v-row>
+      <v-col cols="12" sm="12" md="3" lg="3" xl="3">
         <img
           :src="user.image"
           alt=""
-          style="display: block; width: 100%; height: 100%"
+          class="picture"
         />
-      </p>
-    </div>
-    <div style="width: 70%; padding-left:10%; float: right">
-      <h2 style="margin-top: 15px">{{ user.name }}さん</h2>
-      <p style="margin-top: 15px">(年齢){{ user.old }}才</p>
-      <p style="margin-top: 15px">(在住){{ user.pref_name }}</p>
-      <p>(TwitterのURL)<a :href="user.twitter_url">{{ user.twitter_url }}</a></p>
-    </div>
-    <div class="clear"></div>
-    <p style="white-space: pre-wrap;">(自己紹介)<br>{{ user.introduction }}</p>
+      </v-col>
+      <v-col cols="12" sm="12" md="9" lg="9" xl="9">
+        <h1 style="margin-top: 15px">{{ user.name }}</h1>
+        <p style="margin-top: 10px"><span style="font-weight:bold;">年齢</span>  {{ user.old }}才</p>
+        <p style="margin-top: 10px"><span style="font-weight:bold;">在住</span>  {{ user.pref_name }}</p>
+        <p style="margin-top: 10px"><span style="font-weight:bold;">TwitterのURL</span>  <a :href="user.twitter_url">{{ user.twitter_url }}</a></p>
+        <p style="margin-top: 10px"><span style="font-weight:bold;">自己紹介</span> <br>{{ user.introduction }}</p>
+      </v-col>
+    </v-row>
     <v-row class="justify-center">
-      <v-btn type="primary" @click="edit">編集する</v-btn>
+      <v-btn color="primary" @click="edit">編集する</v-btn>
     </v-row>
   </div>
 </template>
@@ -55,23 +54,16 @@ export default {
 
 <style>
 .picture {
-  width: 100%;
+  display: block;
+  width: 200px;
   height: 200px;
-}
-.clear {
-  clear: both;
+  margin-top:15px;
 }
 
 @media (max-width: 600px) {
   .picture{
     height: 150px;
     width: 150px;
-  }
-}
-@media (max-width: 400px) {
-  .picture{
-    height: 120px;
-    width: 120px;
   }
 }
 </style>
