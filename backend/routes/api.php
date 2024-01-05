@@ -20,8 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // SPA認証
 Route::namespace('App\Http\Controllers')->group(function () {
     Route::post('/login', 'AuthController@login')->name('login');
-    Route::post('/logout', 'AuthController@logout');
-    Route::get('/user_info', 'AuthController@get');
+    Route::post('/logout', 'AuthController@logout')->name('logout');
     Route::put('/register', 'AuthController@register')->name('register');
     Route::get('/get_auth', 'AuthController@getAuthData')->name('get_auth');
     Route::put('/update_auth/{auth_id}', 'AuthController@updateAuthData')->name('update_auth');
