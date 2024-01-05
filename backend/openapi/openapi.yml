@@ -725,6 +725,11 @@ paths:
                   description: "タグIDの配列"
                   nullable: true
                   example: [1, 2, 3]
+                image:
+                    format: file
+                    description: プロフィール用画像。タイプは(png,jpg,jpeg)
+                    nullable: true
+                    example: "test.jpg"
               required:
                   - theme
                   - introduction
@@ -1207,6 +1212,11 @@ paths:
                     type: string
                   description: タグID
                   example: ["1", "2", "3"]
+                image:
+                    format: file
+                    description: プロフィール用画像。タイプは(png,jpg,jpeg)
+                    nullable: true
+                    example: "test.jpg"
               required:
                 - theme
                 - introduction

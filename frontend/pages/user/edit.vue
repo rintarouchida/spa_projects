@@ -117,6 +117,14 @@
 
       <h3 class="register_items">プロフィール画像</h3>
       <input class="input_form" type="file" @change="selectedFile" />
+      <p
+        v-for="(image, index) in validation.image"
+        v-show="validation.image.length"
+        :key="index"
+        class="validation_error"
+      >
+        ・{{ image }}
+      </p>
       <UpdateUserModal
         :name="old_data.name"
         :email="old_data.email"
@@ -149,7 +157,7 @@ export default {
       prefs: '',
       pref_id: '',
       pref_name: '',
-      uploadFile: null,
+      uploadFile: '',
       err: null,
       validation: {
         errors: [],
@@ -160,6 +168,7 @@ export default {
         pref_id: [],
         birthday: [],
         introduction: [],
+        image: [],
       },
       old_data: [],
     }
@@ -185,6 +194,9 @@ export default {
       console.log(this.uploadFile)
     },
     async update() {
+      Object.keys(this.validation).forEach(key => {
+        this.$set(this.validation, key, []);
+      });
       const formData = new FormData()
       formData.append('name', this.old_data.name)
       formData.append('email', this.old_data.email)
@@ -196,6 +208,9 @@ export default {
         'twitter_url',
         this.old_data.twitter_url !== null ? this.old_data.twitter_url : ''
       )
+      if (typeof this.uploadFile === "undefined") {
+        this.uploadFile = ''
+      }
       formData.append('image', this.uploadFile)
       const config = {
         headers: {
@@ -235,6 +250,9 @@ export default {
             }
             if ('introduction' in this.validation.errors) {
               this.validation.introduction = this.validation.errors.introduction
+            }
+            if ('image' in this.validation.errors) {
+              this.validation.image = this.validation.errors.image
             }
           }
           if (err.response.status === 500) {
