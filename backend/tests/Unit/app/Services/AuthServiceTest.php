@@ -21,9 +21,10 @@ class AuthServiceTest extends TestCase
     /**
      * register
      *
+     * @test
      * @return void
      */
-    public function test_register()
+    public function register()
     {
         Pref::factory(['id' => 1])->create();
         $data = [
@@ -59,9 +60,10 @@ class AuthServiceTest extends TestCase
     /**
      * update
      *
+     * @test
      * @return void
      */
-    public function test_update()
+    public function update()
     {
         Pref::factory(['id' => 1])->create();
         $user = User::factory([

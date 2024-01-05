@@ -12,9 +12,10 @@ class UserServiceTest extends TestCase
     /**
      * getUser
      *
+     * @test
      * @return void
      */
-    public function test_getUser()
+    public function getUser()
     {
         $user = User::factory(['id' => 1])->create();
         $service = new UserService();

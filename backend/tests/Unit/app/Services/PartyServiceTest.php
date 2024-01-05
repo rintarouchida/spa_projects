@@ -31,19 +31,20 @@ class PartyServiceTest extends TestCase
     /**
      * fetchPickUpParties
      *
+     * @test
      * @return void
      */
-    public function test_fetch_pick_up_parties()
+    public function fetchPickUpParties()
     {
         Carbon::setTestNow('2023-05-20 10:00:00');
         $user = User::find(1);
         User::factory(['id' => 2])->create();
         Party::factory(5)->create(new Sequence(
-            ['id' => 1, 'theme' => 'theme_1', 'place' => 'place_1', 'due_max' => 1, 'created_at' => '2023-05-19 10:00:00', 'leader_id' => 1, 'image' => 'test1.jpg'],
-            ['id' => 2, 'theme' => 'theme_2', 'place' => 'place_2', 'due_max' => 2, 'created_at' => '2023-05-17 10:00:00', 'leader_id' => 2, 'image' => 'test2.jpg'],
-            ['id' => 3, 'theme' => 'theme_3', 'place' => 'place_3', 'due_max' => 3, 'created_at' => '2023-05-15 10:00:00', 'leader_id' => 2, 'image' => 'test3.jpg'],
-            ['id' => 4, 'theme' => 'theme_4', 'place' => 'place_4', 'due_max' => 4, 'created_at' => '2023-05-14 10:00:00', 'leader_id' => 2, 'image' => 'test4.jpg'],
-            ['id' => 5, 'theme' => 'theme_5', 'place' => 'place_5', 'due_max' => 5, 'created_at' => '2023-05-12 10:00:00', 'leader_id' => 2, 'image' => 'test5.jpg'],
+            ['id' => 1, 'theme' => 'theme_1', 'place' => 'place_1', 'due_max' => 1, 'event_date' => '2023-05-24 10:00:00', 'leader_id' => 1, 'image' => 'test1.jpg'],
+            ['id' => 2, 'theme' => 'theme_2', 'place' => 'place_2', 'due_max' => 2, 'event_date' => '2023-05-23 10:00:00', 'leader_id' => 2, 'image' => 'test2.jpg'],
+            ['id' => 3, 'theme' => 'theme_3', 'place' => 'place_3', 'due_max' => 3, 'event_date' => '2023-05-22 10:00:00', 'leader_id' => 2, 'image' => 'test3.jpg'],
+            ['id' => 4, 'theme' => 'theme_4', 'place' => 'place_4', 'due_max' => 4, 'event_date' => '2023-05-21 10:00:00', 'leader_id' => 2, 'image' => 'test4.jpg'],
+            ['id' => 5, 'theme' => 'theme_5', 'place' => 'place_5', 'due_max' => 5, 'event_date' => '2023-05-20 10:00:00', 'leader_id' => 2, 'image' => 'test5.jpg'],
         ));
 
         $user->parties()->attach(3);
@@ -51,25 +52,26 @@ class PartyServiceTest extends TestCase
         $service = new PartyService();
 
         $actual = $service->fetchPickUpParties(1);
-        //(登録から1週間以内)かつ(自身が作成したものでない)かつ(自身がまだ参加していない)もくもく会が抽出される
+        //(開催日が翌日以降)かつ(自身が作成したものでない)かつ(自身がまだ参加していない)もくもく会が抽出される
         $this->assertSame($actual->pluck('id')->toArray(), [2, 4]);
     }
 
     /**
      * fetchPickUpCreatedParties
      *
+     * @test
      * @return void
      */
-    public function test_fetch_pick_up_created_parties()
+    public function fetchPickUpCreatedParties()
     {
         Carbon::setTestNow('2023-05-20 10:00:00');
         User::factory(['id' => 2])->create();
         Party::factory(5)->create(new Sequence(
-            ['id' => 1, 'theme' => 'theme_1', 'place' => 'place_1', 'due_max' => 1, 'created_at' => '2023-05-19 10:00:00', 'leader_id' => 1, 'image' => 'test1.jpg'],
-            ['id' => 2, 'theme' => 'theme_2', 'place' => 'place_2', 'due_max' => 2, 'created_at' => '2023-05-18 10:00:00', 'leader_id' => 2, 'image' => 'test2.jpg'],
-            ['id' => 3, 'theme' => 'theme_3', 'place' => 'place_3', 'due_max' => 3, 'created_at' => '2023-05-17 10:00:00', 'leader_id' => 1, 'image' => 'test3.jpg'],
-            ['id' => 4, 'theme' => 'theme_4', 'place' => 'place_4', 'due_max' => 4, 'created_at' => '2023-05-16 10:00:00', 'leader_id' => 2, 'image' => 'test4.jpg'],
-            ['id' => 5, 'theme' => 'theme_5', 'place' => 'place_5', 'due_max' => 5, 'created_at' => '2023-05-15 10:00:00', 'leader_id' => 1, 'image' => 'test5.jpg'],
+            ['id' => 1, 'theme' => 'theme_1', 'place' => 'place_1', 'due_max' => 1, 'event_date' => '2023-05-24 10:00:00', 'leader_id' => 1, 'image' => 'test1.jpg'],
+            ['id' => 2, 'theme' => 'theme_2', 'place' => 'place_2', 'due_max' => 2, 'event_date' => '2023-05-23 10:00:00', 'leader_id' => 2, 'image' => 'test2.jpg'],
+            ['id' => 3, 'theme' => 'theme_3', 'place' => 'place_3', 'due_max' => 3, 'event_date' => '2023-05-22 10:00:00', 'leader_id' => 1, 'image' => 'test3.jpg'],
+            ['id' => 4, 'theme' => 'theme_4', 'place' => 'place_4', 'due_max' => 4, 'event_date' => '2023-05-21 10:00:00', 'leader_id' => 2, 'image' => 'test4.jpg'],
+            ['id' => 5, 'theme' => 'theme_5', 'place' => 'place_5', 'due_max' => 5, 'event_date' => '2023-05-20 10:00:00', 'leader_id' => 1, 'image' => 'test5.jpg'],
         ));
 
         $service = new PartyService();
@@ -80,22 +82,23 @@ class PartyServiceTest extends TestCase
     /**
      * fetchPickUpParticipatedParties
      *
+     * @test
      * @return void
      */
-    public function test_fetch_pick_up_participated_parties()
+    public function fetchPickUpParticipatedParties()
     {
         Carbon::setTestNow('2023-05-20 10:00:00');
 
         Party::factory(3)->create(new Sequence(
-            ['id' => 1, 'theme' => 'theme_1', 'place' => 'place_1', 'due_max' => 1, 'created_at' => '2023-05-19 10:00:00', 'image' => 'test1.jpg'],
-            ['id' => 2, 'theme' => 'theme_2', 'place' => 'place_2', 'due_max' => 2, 'created_at' => '2023-05-18 10:00:00', 'image' => 'test2.jpg'],
-            ['id' => 3, 'theme' => 'theme_3', 'place' => 'place_3', 'due_max' => 3, 'created_at' => '2023-05-17 10:00:00', 'image' => 'test3.jpg'],
+            ['id' => 1, 'theme' => 'theme_1', 'place' => 'place_1', 'due_max' => 1, 'event_date' => '2023-05-24 10:00:00', 'image' => 'test1.jpg'],
+            ['id' => 2, 'theme' => 'theme_2', 'place' => 'place_2', 'due_max' => 2, 'event_date' => '2023-05-24 10:00:00', 'image' => 'test2.jpg'],
+            ['id' => 3, 'theme' => 'theme_3', 'place' => 'place_3', 'due_max' => 3, 'event_date' => '2023-05-24 10:00:00', 'image' => 'test3.jpg'],
         ));
         User::find(1)->parties()->attach([1, 2, 3]);
 
         Party::factory(2)->create(new Sequence(
-            ['id' => 4, 'theme' => 'theme_4', 'place' => 'place_4', 'due_max' => 4, 'created_at' => '2023-05-16 10:00:00'],
-            ['id' => 5, 'theme' => 'theme_5', 'place' => 'place_5', 'due_max' => 5, 'created_at' => '2023-05-15 10:00:00'],
+            ['id' => 4, 'theme' => 'theme_4', 'place' => 'place_4', 'due_max' => 4, 'event_date' => '2023-05-24 10:00:00'],
+            ['id' => 5, 'theme' => 'theme_5', 'place' => 'place_5', 'due_max' => 5, 'event_date' => '2023-05-24 10:00:00'],
         ));
         User::factory(['id' => 2])->create()->parties()->attach([4, 5]);
 
@@ -108,9 +111,10 @@ class PartyServiceTest extends TestCase
     /**
      * register
      *
+     * @test
      * @return void
      */
-    public function test_register()
+    public function register()
     {
         $this->assertDatabaseMissing('parties', [
             'theme' => 'theme_1',
@@ -153,9 +157,10 @@ class PartyServiceTest extends TestCase
     /**
      * getParty
      *
+     * ptesr
      * @return void
      */
-    public function test_getParty()
+    public function getParty()
     {
         Tag::factory(3)->create(new Sequence(
             ['id' => 1, 'name' => 'tag_1'],
@@ -183,9 +188,10 @@ class PartyServiceTest extends TestCase
     /**
      * join
      *
+     * @test
      * @return void
      */
-    public function test_join()
+    public function join()
     {
         User::factory(['id' => 2])->create();
         $party = Party::factory([
@@ -212,9 +218,10 @@ class PartyServiceTest extends TestCase
     /**
      * cancel
      *
+     * @test
      * @return void
      */
-    public function test_cancel()
+    public function cancel()
     {
         $cancel_user = User::factory(['id' => 2])->create();
         $party = Party::factory([
@@ -267,9 +274,10 @@ class PartyServiceTest extends TestCase
     /**
      * checkIfJoined
      *
+     * @test
      * @return void
      */
-    public function test_checkIfJoined()
+    public function checkIfJoined()
     {
         User::factory(['id' => 2])->create();
         $party = Party::factory([
@@ -295,9 +303,10 @@ class PartyServiceTest extends TestCase
     /**
      * createMessageGroup
      *
+     * @test
      * @return void
      */
-    public function test_create_message_group()
+    public function createMessageGroup()
     {
         $leader = User::factory(['id' => 2])->create();
         $party = Party::factory([
@@ -329,9 +338,10 @@ class PartyServiceTest extends TestCase
     /**
      * fetchRecordByPrefId
      *
+     * @test
      * @return void
      */
-    public function test_fetch_record_by_pref_id(): void
+    public function fetchRecordByPrefIdd(): void
     {
         Pref::factory(['id' => 2])->create();
 
@@ -350,9 +360,10 @@ class PartyServiceTest extends TestCase
     /**
      * fetchRecordByTagId
      *
+     * @test
      * @return void
      */
-    public function test_fetch_record_by_tags_id(): void
+    public function fetchRecordByTagId(): void
     {
         Tag::factory(4)->create(new Sequence(
             ['id' => 1], ['id' => 2], ['id' => 3], ['id' => 4]
@@ -371,9 +382,10 @@ class PartyServiceTest extends TestCase
     /**
      * fetchRecordByKeyword
      *
+     * @test
      * @return void
      */
-    public function test_fetch_record_by_keyword(): void
+    public function fetchRecordByKeyword(): void
     {
         Party::factory(['id' => 1, 'theme'        => '山田'])->create();
         Party::factory(['id' => 2, 'place'        => '山田'])->create();
@@ -391,9 +403,10 @@ class PartyServiceTest extends TestCase
     /**
      * searchParties
      *
+     * @test
      * @return void
      */
-    public function test_search_parties(): void
+    public function searchParties(): void
     {
         Carbon::setTestNow('2023-10-29 10:00:00');
 
@@ -407,7 +420,7 @@ class PartyServiceTest extends TestCase
             ['id' => 4, 'name' => 'タグ4']
         ));
 
-        Party::factory(['id' => 1, 'theme' => 'theme_1', 'pref_id' => 1, 'place' => 'place_1', 'due_max' => 1, 'created_at' => '2023-10-29 10:00:00', 'leader_id' => 2, 'image' => 'test.jpg'])->create()->tags()->attach([1,2]);
+        Party::factory(['id' => 1, 'theme' => 'theme_1', 'pref_id' => 1, 'place' => 'place_1', 'due_max' => 1, 'event_date' => '2023-10-30 10:00:00', 'leader_id' => 2, 'image' => 'test.jpg'])->create()->tags()->attach([1,2]);
 
         $data = [
             'pref_id'  => 1,
@@ -422,30 +435,12 @@ class PartyServiceTest extends TestCase
     }
 
     /**
-     * @param Party $party
-     *
-     * @return bool
-     */
-    public function isEditableParty(Party $party): bool
-    {
-        return  $party->created_at->diffInHours(Carbon::now()) < 24;
-    }
-
-
-    public function update (array $params, Party $party): vool
-    {
-        $party->fill($params)->save();
-        if (!is_null($data['image'])) {
-            $this->registerImage($party, $data['image']);
-        }
-    }
-
-    /**
      * update
      *
+     * @test
      * @return void
      */
-    public function test_update(): void
+    public function update(): void
     {
         Tag::factory(3)->create(new Sequence(
             ['id' => 1, 'name' => 'タグ1'],
