@@ -226,6 +226,9 @@ export default {
       console.log(this.uploadFile)
     },
     async update() {
+      Object.keys(this.validation).forEach(key => {
+        this.$set(this.validation, key, []);
+      });
       const formData = new FormData()
       formData.append('theme', this.old_data.theme)
       formData.append('introduction', this.old_data.introduction)
@@ -234,6 +237,9 @@ export default {
       formData.append('due_max', this.old_data.due_max)
       formData.append('now_participated_num', this.old_data.now_participated_num)
       formData.append('event_date', this.old_data.event_date)
+      if (typeof this.uploadFile === "undefined") {
+        this.uploadFile = ''
+      }
       formData.append('image', this.uploadFile)
       for (let i = 0; i < this.old_data.tag_ids.length; i++) {
         formData.append('tag_ids[' + i + ']', this.old_data.tag_ids[i])
@@ -260,43 +266,27 @@ export default {
             this.validation.errors = err.response.data.errors
             if ('theme' in this.validation.errors) {
               this.validation.theme = this.validation.errors.theme
-            } else {
-              this.validation.theme = []
             }
             if ('introduction' in this.validation.errors) {
               this.validation.introduction = this.validation.errors.introduction
-            } else {
-              this.validation.introduction = []
             }
             if ('pref_id' in this.validation.errors) {
               this.validation.pref_id = this.validation.errors.pref_id
-            } else {
-              this.validation.pref_id = []
             }
             if ('place' in this.validation.errors) {
               this.validation.place = this.validation.errors.place
-            } else {
-              this.validation.place = []
             }
             if ('due_max' in this.validation.errors) {
               this.validation.due_max = this.validation.errors.due_max
-            } else {
-              this.validation.due_max = []
             }
             if ('event_date' in this.validation.errors) {
               this.validation.event_date = this.validation.errors.event_date
-            } else {
-              this.validation.event_date = []
             }
             if ('tag_ids' in this.validation.errors) {
               this.validation.tag_ids = this.validation.errors.tag_ids
-            } else {
-              this.validation.tag_ids = []
             }
             if ('image' in this.validation.errors) {
               this.validation.image = this.validation.errors.image
-            } else {
-              this.validation.image = []
             }
           }
           if (err.response.status === 400) {

@@ -6,6 +6,7 @@ use App\Http\Requests\Party\RegisterRequest;
 use App\Models\Pref;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class RegisterRequestTest extends TestCase
@@ -49,6 +50,7 @@ class RegisterRequestTest extends TestCase
                     'place' => '場所1',
                     'due_max' => 2,
                     'event_date' => '2023-12-23 10:00:00',
+                    'image'       => UploadedFile::fake()->image('test.jpg'),
                 ],
                 false,
                 [],
@@ -105,6 +107,21 @@ class RegisterRequestTest extends TestCase
                 true,
                 [
                     'theme' => ['題名は30文字以内で入力してください。'],
+                ],
+            ],
+            '異常 画像のタイプ' => [
+                [
+                    'theme' => str_repeat('a', 30),
+                    'introduction' => '詳細1',
+                    'pref_id' => 1,
+                    'place' => '場所1',
+                    'due_max' => 2,
+                    'event_date' => '2023-12-23 10:00:00',
+                    'image'       => 'test.zip',
+                ],
+                true,
+                [
+                    'image' => ['拡張子がpng,jpg,jpegいずれかのデータを選択してください。'],
                 ],
             ],
         ];

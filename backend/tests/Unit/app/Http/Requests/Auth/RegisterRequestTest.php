@@ -21,8 +21,6 @@ class RegisterRequestTest extends TestCase
             'id' => 1,
             'email' => 'test@gmail.com',
         ])->create();
-
-        $invalid_image = UploadedFile::fake()->create('test.zip');
     }
 
     /**
