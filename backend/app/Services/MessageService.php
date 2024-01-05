@@ -48,7 +48,7 @@ class MessageService
      */
     public function getMessagesByMessageGroup(MessageGroup $message_group): Collection
     {
-        return $message_group->messages()->get();
+        return $message_group->messages()->with(['user'])->get();
     }
 
     /**
