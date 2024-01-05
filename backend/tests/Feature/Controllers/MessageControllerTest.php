@@ -16,9 +16,10 @@ class MessageControllerTest extends TestCase
     /**
      * sendMessage
      *
+     * @test
      * @return void
      */
-    public function test_send_message()
+    public function sendMessage()
     {
         $user = User::factory(['id' => 1])->create();
         $this->actingAs($user);
@@ -46,9 +47,10 @@ class MessageControllerTest extends TestCase
     /**
      * index
      *
+     * @test
      * @return void
      */
-    public function test_index()
+    public function index()
     {
         $user = User::factory(['id' => 1])->create();
         $this->actingAs($user);
@@ -89,9 +91,10 @@ class MessageControllerTest extends TestCase
     /**
      * getMessage
      *
+     * @test
      * @return void
      */
-    public function test_get_message()
+    public function getMessage()
     {
         $user = User::factory(['id' => 1, 'name' => 'ユーザー1'])->create();
         $this->actingAs($user);
@@ -146,9 +149,10 @@ class MessageControllerTest extends TestCase
     /**
      * indexForLeader
      *
+     * @test
      * @return void
      */
-    public function test_index_for_leader()
+    public function indexForLeader()
     {
         $user = User::factory(['id' => 1])->create();
         $this->actingAs($user);

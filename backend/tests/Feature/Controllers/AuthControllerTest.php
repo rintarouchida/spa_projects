@@ -5,6 +5,8 @@ namespace Tests\Feature\Controllers;
 use App\Models\Pref;
 use App\Models\User;
 use App\Services\AuthService;
+use Carbon\Carbon;
+use Config;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,9 +27,10 @@ class AuthControllerTest extends TestCase
     /**
      * register
      *
+     * @test
      * @return void
      */
-    public function test_register()
+    public function register()
     {
         Pref::factory(['id' => 1])->create();
 
@@ -67,9 +70,10 @@ class AuthControllerTest extends TestCase
     /**
      * login
      *
+     * @test
      * @return void
      */
-    public function test_login()
+    public function login()
     {
         Pref::factory(['id' => 1])->create();
         User::create(
@@ -96,9 +100,10 @@ class AuthControllerTest extends TestCase
     /**
      * login
      *
+     * @test
      * @return void
      */
-    public function test_login_if_notauthenticated()
+    public function loginIfNotauthenticated()
     {
         Pref::factory(['id' => 1])->create();
         User::create(
@@ -125,10 +130,14 @@ class AuthControllerTest extends TestCase
     /**
      * getAuthData
      *
+     * @test
      * @return void
      */
-    public function test_getAuthData()
+    public function getAuthData()
     {
+        Carbon::setTestNow('2024-01-01 00:00:00');
+        Config::set('filesystems.disks.s3.url', 'https://test');
+
         Pref::factory(['id' => 2, 'name' => 'pref_2'])->create();
         User::factory([
             'id'           => 2,
@@ -152,9 +161,9 @@ class AuthControllerTest extends TestCase
                 'birthday'     => '2000-01-01',
                 'introduction' => 'introduction2',
                 'twitter_url'  => 'https://twitter.com',
-                'old'          => 23,
+                'old'          => 24,
                 'pref_name'    => 'pref_2',
-                'image'        => '/test.jpg'
+                'image'        => 'https://test/test.jpg'
             ],
         );
     }
@@ -162,9 +171,10 @@ class AuthControllerTest extends TestCase
     /**
      * updateAuthData
      *
+     * @test
      * @return void
      */
-    public function test_updateAuthData()
+    public function updateAuthData()
     {
         Pref::factory(['id' => 1])->create();
         Pref::factory(['id' => 2])->create();

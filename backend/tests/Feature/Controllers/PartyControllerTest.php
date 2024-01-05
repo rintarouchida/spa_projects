@@ -20,20 +20,23 @@ class PartyControllerTest extends TestCase
     /**
     * index
     *
+    * test
     * @return void
     */
-    public function test_index()
+    public function index()
     {
         $user = User::factory(['id' => 1])->create();
         User::factory(['id' => 2])->create();
         $this->actingAs($user);
 
+        Carbon::setTestNow('2024-01-01 00:00:00');
+
         Party::factory(5)->create(new Sequence(
-            ['id' => 1, 'theme' => 'party_1', 'leader_id' => 1],
-            ['id' => 2, 'theme' => 'party_2', 'leader_id' => 2],
-            ['id' => 3, 'theme' => 'party_3', 'leader_id' => 2],
-            ['id' => 4, 'theme' => 'party_4', 'leader_id' => 2],
-            ['id' => 5, 'theme' => 'party_5', 'leader_id' => 2],
+            ['id' => 1, 'theme' => 'party_1', 'leader_id' => 1, 'event_date' => '2024-01-04 00:00:00'],
+            ['id' => 2, 'theme' => 'party_2', 'leader_id' => 2, 'event_date' => '2024-01-04 00:00:00'],
+            ['id' => 3, 'theme' => 'party_3', 'leader_id' => 2, 'event_date' => '2024-01-04 00:00:00'],
+            ['id' => 4, 'theme' => 'party_4', 'leader_id' => 2, 'event_date' => '2024-01-04 00:00:00'],
+            ['id' => 5, 'theme' => 'party_5', 'leader_id' => 2, 'event_date' => '2024-01-04 00:00:00'],
         ));
 
         $user->parties()->attach([2, 3]);
@@ -50,9 +53,10 @@ class PartyControllerTest extends TestCase
     /**
     * indexCreated
     *
+    * @test
     * @return void
     */
-    public function test_index_created()
+    public function indexCreated()
     {
         $user = User::factory(['id' => 1])->create();
         User::factory(['id' => 2])->create();
@@ -75,9 +79,10 @@ class PartyControllerTest extends TestCase
     /**
     * indexParticipated
     *
+    * @test
     * @return void
     */
-    public function test_index_participated()
+    public function indexParticipated()
     {
         $user = User::factory(['id' => 1])->create();
         $this->actingAs($user);
@@ -109,9 +114,10 @@ class PartyControllerTest extends TestCase
     /**
     * register
     *
+    * @test
     * @return void
     */
-    public function test_register()
+    public function register()
     {
         Carbon::setTestNow('2023-12-27 10:00:00');
         Pref::factory(['id' => 1])->create();
@@ -152,10 +158,13 @@ class PartyControllerTest extends TestCase
     /**
     * getData
     *
+    * @test
     * @return void
     */
-    public function test_getData()
+    public function getData()
     {
+        Config::set('filesystems.disks.s3.url', 'https://test');
+
         Pref::factory(['id' => 1, 'name' => 'pref_1'])->create();
         User::factory(['id' => 1, 'name' => 'ユーザー1'])->create();
         Tag::factory(3)->create(new Sequence(
@@ -191,7 +200,7 @@ class PartyControllerTest extends TestCase
                 'tag_ids' => [1, 2, 3],
                 'pref_name' => 'pref_1',
                 'pref_id' => 1,
-                'image' => '/test.jpg'
+                'image' => 'https://test/test.jpg'
             ],
         );
     }
@@ -199,9 +208,10 @@ class PartyControllerTest extends TestCase
     /**
     * checkIfJoined
     *
+    * @test
     * @return void
     */
-    public function test_checkIfJoined()
+    public function checkIfJoined()
     {
         $user     = User::factory(['id' => 1])->create();
         $this->actingAs($user);
@@ -236,9 +246,10 @@ class PartyControllerTest extends TestCase
     /**
     * join
     *
+    * @test
     * @return void
     */
-    public function test_join()
+    public function join()
     {
         $user     = User::factory(['id' => 1])->create();
         $this->actingAs($user);
@@ -268,17 +279,18 @@ class PartyControllerTest extends TestCase
     /**
     * search
     *
+    * @test
     * @return void
     */
-    public function test_search()
+    public function search()
     {
         Pref::factory(['id' => 1])->create();
         Pref::factory(['id' => 2])->create();
         Config::set('filesystems.disks.s3.url', 'https://test');
+        Carbon::setTestNow('2023-10-29 10:00:00');
 
         $user = User::factory(['id' => 1])->create();
         User::factory(['id' => 2])->create();
-        Carbon::setTestNow('2023-10-29 10:00:00');
 
         Tag::factory(4)->create(new Sequence(
             ['id' => 1, 'name' => 'タグ1'],
@@ -287,7 +299,7 @@ class PartyControllerTest extends TestCase
             ['id' => 4, 'name' => 'タグ4']
         ));
 
-        Party::factory(['id' => 1, 'theme' => 'theme_1', 'pref_id' => 1, 'place' => 'place_1', 'due_max' => 1, 'created_at' => '2023-10-29 10:00:00', 'leader_id' => 2, 'image' => 'test.jpg'])->create()->tags()->attach([1,2]);
+        Party::factory(['id' => 1, 'theme' => 'theme_1', 'pref_id' => 1, 'place' => 'place_1', 'due_max' => 1, 'event_date' => '2023-10-30 10:00:00', 'leader_id' => 2, 'image' => 'test.jpg'])->create()->tags()->attach([1,2]);
 
         $data = [
             'pref_id'  => 1,
@@ -316,9 +328,10 @@ class PartyControllerTest extends TestCase
     /**
     * edit
     *
+    * @test
     * @return void
     */
-    public function test_edit()
+    public function edit()
     {
         Config::set('filesystems.disks.s3.url', 'https://test');
 
@@ -369,9 +382,10 @@ class PartyControllerTest extends TestCase
     /**
     * update
     *
+    * @test
     * @return void
     */
-    public function test_update()
+    public function update()
     {
         Tag::factory(3)->create(new Sequence(
             ['id' => 1, 'name' => 'tag_1'],
@@ -425,9 +439,10 @@ class PartyControllerTest extends TestCase
     /**
     * update
     *
+    * @test
     * @return void
     */
-    public function test_update_if_invalid()
+    public function updateIfInvalid()
     {
         Tag::factory(3)->create(new Sequence(
             ['id' => 1, 'name' => 'tag_1'],
@@ -475,7 +490,7 @@ class PartyControllerTest extends TestCase
     *
     * @return void
     */
-    public function test_update_if_after_one_day()
+    public function testUpdateIfAfterOnDday()
     {
         Tag::factory(3)->create(new Sequence(
             ['id' => 1, 'name' => 'tag_1'],
@@ -518,11 +533,12 @@ class PartyControllerTest extends TestCase
     }
 
     /**
-    * update
+    * cancel
     *
+    * @test
     * @return void
     */
-    public function test_cancel()
+    public function cancel()
     {
         Pref::factory(['id' => 1])->create();
         $leader = User::factory(['id' => 1])->create();

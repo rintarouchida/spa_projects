@@ -44,9 +44,10 @@ class UserControllerTest extends TestCase
     /**
      * getData
      *
+     * @test
      * @return void
      */
-    public function test_getData()
+    public function getData()
     {
         $response = $this->get(route('user.get', 1));
         $response->assertStatus(200);
