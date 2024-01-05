@@ -13,12 +13,17 @@ use Illuminate\Support\Facades\Auth;
 class MessageResourceTest extends TestCase
 {
 
-    /** @test */
-    public function testMessageResource()
+    /**
+     * MessageResource
+     *
+     * @test
+     * @return void
+     */
+    public function MessageResource()
     {
         Config::set('filesystems.disks.s3.url', 'https://test');
 
-        $user = User::factory()->create();
+        $user = User::factory(['image' => 'test.jpg'])->create();
         //'is_users_message' => trueを期待
         $this->actingAs($user);
 
@@ -40,7 +45,7 @@ class MessageResourceTest extends TestCase
             'created_at' => $message->created_at->format('Y-m-d H:i:s'),
             'is_users_message' => true,
             'user_name' => $user->name,
-            'user_image' => 'https://test/'.$user->image
+            'user_image' => 'https://test/test.jpg',
         ];
 
         $this->assertEquals($expectedArray, $messageArray);
