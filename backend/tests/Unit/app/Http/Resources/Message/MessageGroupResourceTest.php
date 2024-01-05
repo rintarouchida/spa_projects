@@ -9,7 +9,13 @@ use Tests\TestCase;
 
 class MessageGroupResourceTest extends TestCase
 {
-    public function testMessageGroupResource()
+    /**
+     * MessageGroupResource
+     *
+     * @test
+     * @return void
+     */
+    public function MessageGroupResource()
     {
         $group = MessageGroup::factory()
             ->has(Message::factory()->count(5)->state([

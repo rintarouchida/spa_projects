@@ -20,9 +20,10 @@ class SearchPartyRequestTest extends TestCase
     /**
      * @dataProvider validationProvider
      *
+     * @test
      * @return void
      */
-    public function testValidation($inData, $outFail, $outMessage)
+    public function Validation($inData, $outFail, $outMessage)
     {
         $request = new SearchPartyRequest();
         $rules = $request->rules();

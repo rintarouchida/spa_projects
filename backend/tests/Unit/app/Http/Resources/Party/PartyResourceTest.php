@@ -12,6 +12,12 @@ use Tests\TestCase;
 
 class PartyResourceTest extends TestCase
 {
+    /**
+     * PartyResource
+     *
+     * @test
+     * @return void
+     */
     public function testPartyResource()
     {
         Config::set('filesystems.disks.s3.url', 'https://example-s3.com');

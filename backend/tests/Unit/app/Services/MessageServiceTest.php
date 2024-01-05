@@ -17,9 +17,10 @@ class MessageServiceTest extends TestCase
     /**
      * sendMessage
      *
+     * @test
      * @return void
      */
-    public function test_send_message()
+    public function sendMessage()
     {
         $user = User::factory(['id' => 1])->create();
         $data = [
@@ -45,9 +46,10 @@ class MessageServiceTest extends TestCase
     /**
      * getMessageLists
      *
+     * @test
      * @return void
      */
-    public function test_get_message_lists()
+    public function getMessageLists()
     {
         $user = User::factory(['id' => 1])->create();
         MessageGroup::factory([
@@ -71,11 +73,12 @@ class MessageServiceTest extends TestCase
     }
 
     /**
-     * getMessagesByGroupId
+     * getMessagesByMessageGroup
      *
+     * @test
      * @return void
      */
-    public function test_getMessagesByMessageGroup()
+    public function getMessagesByMessageGroup()
     {
         Config::set('filesystems.disks.s3.url', 'https://test');
         $user = User::factory(['id' => 1, 'name' => 'ユーザー1', 'image' => 'test1.jpg'])->create();
@@ -98,9 +101,10 @@ class MessageServiceTest extends TestCase
     /**
      * getMessageListsForLeader
      *
+     * @test
      * @return void
      */
-    public function test_get_message_lists_for_leader()
+    public function getMessageListsForLeader()
     {
         $user = User::factory(['id' => 1])->create();
         Party::factory(['id' => 1, 'theme' => 'party_1', 'leader_id' => $user->id])->create();
