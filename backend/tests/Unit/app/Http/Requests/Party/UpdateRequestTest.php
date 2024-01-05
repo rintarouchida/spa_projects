@@ -22,9 +22,11 @@ class UpdateRequestTest extends TestCase
 
     /**
      * @dataProvider validationProvider
+     *
+     * @test
      * @return void
      */
-    public function testValidation($inData, $outFail, $outMessage)
+    public function Validation($inData, $outFail, $outMessage)
     {
         $request = new UpdateRequest();
         $rules = $request->rules();

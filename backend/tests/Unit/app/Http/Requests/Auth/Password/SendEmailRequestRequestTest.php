@@ -17,7 +17,7 @@ class SendEmailRequestRequestTest extends TestCase
         Pref::factory([
             'id' => 1
         ])->create();
-        
+
         User::factory([
             'id' => 1,
             'email' => 'test@gmail.com',
@@ -27,9 +27,11 @@ class SendEmailRequestRequestTest extends TestCase
 
     /**
      * @dataProvider validationProvider
+     *
+     * @test
      * @return void
      */
-    public function testValidation($inData, $outFail, $outMessage)
+    public function Validation($inData, $outFail, $outMessage)
     {
         $request = new SendEmailRequest();
         $rules = $request->rules();
