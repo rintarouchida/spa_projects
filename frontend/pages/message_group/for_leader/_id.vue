@@ -3,7 +3,7 @@
   <div style="text-align:center;">
     <div class="message_form">
       <div class="party_theme">
-        <h2>タイトル: {{party_theme}}</h2>
+        <h2>{{party_theme}}</h2>
       </div>
 
       <div v-for="(message, index) in messages" :key="index" class="message_list">
@@ -127,6 +127,8 @@ export default {
 <style scoped>
 .party_theme{
   background-color: #EEEDED;
+  padding-top:8px;
+  padding-bottom:8px;
   width:100%;
 }
 .message_form{
@@ -236,6 +238,9 @@ export default {
     }
   }
   @media (max-width: 400px) {
+    .party_theme {
+      font-size:14px;
+    }
     .send_message_btn{
       font-size:10px;
       width:30px !important;
