@@ -31,6 +31,7 @@ class RegisterRequest extends FormRequest
             'pref_id'      => 'required|exists:prefs,id',
             'introduction' => 'nullable|string|max:1000',
             'twitter_url'  => 'nullable|url|max:255',
+            'image'        => 'nullable|mimes:png,jpg,jpeg',
         ];
     }
 
@@ -64,6 +65,8 @@ class RegisterRequest extends FormRequest
 
             'twitter_url.url' => '正しいURLの形式で入力してください。',
             'twitter_url.max' => 'URLは255文字以内で入力してください。',
+
+            'image.mimes' => '拡張子がpng,jpg,jpegいずれかのデータを選択してください。',
         ];
     }
 }

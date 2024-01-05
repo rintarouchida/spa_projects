@@ -118,6 +118,11 @@ paths:
                     maxLength: 255
                     nullable: true
                     example: "https://twitter/example.com"
+                  image:
+                    format: file
+                    description: プロフィール用画像。タイプは(png,jpg,jpeg)
+                    nullable: true
+                    example: "test.jpg"
                 required:
                   - name
                   - email
@@ -195,6 +200,11 @@ paths:
                   maxLength: 255
                   nullable: true
                   example: "https://twitter/example.com"
+                image:
+                    format: file
+                    description: プロフィール用画像。タイプは(png,jpg,jpeg)
+                    nullable: true
+                    example: "test.jpg"
               required:
                   - name
                   - email

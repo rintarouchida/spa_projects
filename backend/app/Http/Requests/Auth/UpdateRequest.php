@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
-//todo:テスト作成
 class UpdateRequest extends FormRequest
 {
     /**
@@ -33,6 +32,7 @@ class UpdateRequest extends FormRequest
             'pref_id'      => 'required|exists:prefs,id',
             'introduction' => 'nullable|string|max:1000',
             'twitter_url'  => 'nullable|url|max:255',
+            'image'        => 'nullable|mimes:png,jpg,jpeg',
         ];
     }
 
@@ -61,6 +61,8 @@ class UpdateRequest extends FormRequest
 
             'twitter_url.url' => '正しいURLの形式で入力してください。',
             'twitter_url.max' => 'URLは255文字以内で入力してください。',
+
+            'image.mimes' => '拡張子がpng,jpg,jpegいずれかのデータを選択してください。',
         ];
     }
 }
