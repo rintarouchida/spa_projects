@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class AuthControllerTest extends TestCase
@@ -21,7 +22,6 @@ class AuthControllerTest extends TestCase
     protected string $birthday = '2023-05-08 00:00:00';
     protected string $introduction = 'こんにちは';
     protected string $twitter_url = 'https://twitter.com';
-    protected string $image = 'test.jpg';
     protected string $mock_image = 's3_test.jpg';
 
     /**
@@ -46,7 +46,7 @@ class AuthControllerTest extends TestCase
             'pref_id' => 1,
             'introduction' => $this->introduction,
             'twitter_url' => $this->twitter_url,
-            'image' => $this->image,
+            'image' => UploadedFile::fake()->create('test.jpg'),
         ];
 
         $mockAuthService = $this->getMockBuilder(AuthService::class)
@@ -95,6 +95,34 @@ class AuthControllerTest extends TestCase
         ]);
         $response->assertStatus(200);
         $this->assertTrue(Auth::check());
+    }
+
+    /**
+     * login
+     *
+     * @test
+     * @return void
+     */
+    public function logout()
+    {
+        Pref::factory(['id' => 1])->create();
+        $user = User::create(
+            [
+                'id' => 1,
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => Hash::make($this->password),
+                'birthday' => $this->birthday,
+                'pref_id' => 1,
+                'introduction' => $this->introduction,
+                'twitter_url' => $this->twitter_url,
+            ]
+        );
+       $this->actingAs($user);
+       $this->assertTrue(Auth::check());
+        $response = $this->post(route('logout'));
+        $response->assertStatus(200);
+        $this->assertFalse(Auth::check());
     }
 
     /**
