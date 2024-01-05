@@ -98,7 +98,7 @@ class AuthControllerTest extends TestCase
     }
 
     /**
-     * login
+     * logout
      *
      * @test
      * @return void
