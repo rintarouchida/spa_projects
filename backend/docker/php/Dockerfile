@@ -13,4 +13,8 @@ RUN apt-get update \
     && apt-get install -y libpq-dev \
     && docker-php-ext-install pdo_mysql pdo_pgsql mysqli
 RUN echo "alias ll='ls -la'" >> ~/.bashrc && . ~/.bashrc
+
+RUN pecl install xdebug-2.9.8 && \
+    docker-php-ext-enable xdebug
+
 WORKDIR /var/www/html
