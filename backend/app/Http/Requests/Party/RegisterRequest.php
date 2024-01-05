@@ -25,14 +25,15 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'theme' => 'required|string|max:30',
+            'theme'        => 'required|string|max:30',
             'introduction' => 'required|max:1000',
-            'pref_id' => 'required|exists:prefs,id',
-            'place' => 'required|max:255',
-            'due_max' => 'required',
-            'event_date' => 'required|after:'.Carbon::now()->addWeek()->format('Y-m-d'),
-            'tag_ids' => 'nullable|max:3',
-            'tag_ids.*' => 'nullable|exists:tags,id',
+            'pref_id'      => 'required|exists:prefs,id',
+            'place'        => 'required|max:255',
+            'due_max'      => 'required',
+            'event_date'   => 'required|after:'.Carbon::now()->addWeek()->format('Y-m-d'),
+            'tag_ids'      => 'nullable|max:3',
+            'tag_ids.*'    => 'nullable|exists:tags,id',
+            'image'        => 'nullable|mimes:png,jpg,jpeg',
         ];
     }
 
@@ -60,10 +61,11 @@ class RegisterRequest extends FormRequest
             'event_date.required' => '開催日時を入力してください。',
             'event_date.after'    => '開催日時は1週間後以降にしてください。',
 
-            //todo:テスト作成
             'tag_ids.max' => 'タグの選択は3つまでです。',
 
-            'tag_ids.*.exists' => '存在しないタグが含まれています。'
+            'tag_ids.*.exists' => '存在しないタグが含まれています。',
+
+            'image.mimes' => '拡張子がpng,jpg,jpegいずれかのデータを選択してください。',
         ];
     }
 }

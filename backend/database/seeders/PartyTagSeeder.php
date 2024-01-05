@@ -36,11 +36,6 @@ class PartyTagSeeder extends Seeder
         ]);
         PartyTag::create([
             'id' => 5,
-            'tag_id' => 1,
-            'party_id' => 1,
-        ]);
-        PartyTag::create([
-            'id' => 6,
             'tag_id' => 3,
             'party_id' => 1,
         ]);
