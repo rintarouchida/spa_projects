@@ -16,6 +16,10 @@ class MessageGroupSeeder extends Seeder
     {
         MessageGroup::create([
             'id' => 1,
+            'party_id' => 2,
+        ]);
+        MessageGroup::create([
+            'id' => 2,
             'party_id' => 3,
         ]);
     }

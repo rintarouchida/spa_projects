@@ -17,6 +17,11 @@ class MessageSeeder extends Seeder
         Message::create([
             'message_group_id' => 1,
             'content' => 'こんにちは',
+            'user_id' => 2
+        ]);
+        Message::create([
+            'message_group_id' => 2,
+            'content' => 'こんにちは',
             'user_id' => 3
         ]);
     }

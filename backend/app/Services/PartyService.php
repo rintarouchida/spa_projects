@@ -23,7 +23,7 @@ class PartyService
     {
         $next_day = Carbon::today()->addDay(1);
         //開催日が翌日以降のもくもく会のみ抽出
-        $parties = Party::with(['tags', 'users'])->whereDate('event_date', '>=', $next_day)
+        $parties = Party::with(['tags', 'users', 'leader', 'pref'])->whereDate('event_date', '>=', $next_day)
         ->where('leader_id', '!=', $auth_id)
         ->where(function ($query) use ($auth_id) {
             $query->whereHas('users', function ($q) use ($auth_id) {
@@ -44,7 +44,7 @@ class PartyService
     {
         $today = Carbon::today();
         //開催日が当日以降のもくもく会のみ抽出
-        $parties = Party::with(['tags', 'users'])->whereDate('event_date', '>=', $today)
+        $parties = Party::with(['tags', 'users', 'leader', 'pref'])->whereDate('event_date', '>=', $today)
         ->where('leader_id', $auth_id)
         ->get();
 
@@ -60,7 +60,7 @@ class PartyService
     {
         $today = Carbon::today();
         //開催日が当日以降のもくもく会のみ抽出
-        $parties = Party::with(['tags', 'users'])->whereDate('event_date', '>=', $today)
+        $parties = Party::with(['tags', 'users', 'leader', 'pref'])->whereDate('event_date', '>=', $today)
         ->whereHas('users', function ($q) use ($auth_id) {
             $q->whereIn('id', [$auth_id]);
         })->get();
@@ -181,7 +181,7 @@ class PartyService
     {
         $next_day = Carbon::today()->addDay(1);
         //開催日が翌日以降のもくもく会のみ抽出
-        $query = Party::with(['tags', 'users'])->whereDate('event_date', '>=', $next_day)
+        $query = Party::with(['tags', 'users', 'leader', 'pref'])->whereDate('event_date', '>=', $next_day)
         ->where('leader_id', '!=', $auth_id)
         ->where(function ($query) use ($auth_id) {
             $query->whereHas('users', function ($q) use ($auth_id) {
