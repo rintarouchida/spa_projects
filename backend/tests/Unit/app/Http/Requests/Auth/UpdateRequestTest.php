@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\app\Http\Requests\Auth;
 
-use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\UpdateRequest;
 use App\Models\User;
 use App\Models\Pref;
 use Illuminate\Support\Facades\Validator;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
-class RegisterRequestTest extends TestCase
+class UpdateRequestTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -33,7 +33,7 @@ class RegisterRequestTest extends TestCase
      */
     public function Validation($inData, $outFail, $outMessage)
     {
-        $request = new RegisterRequest();
+        $request = new UpdateRequest();
         $rules = $request->rules();
         $messages = $request->messages();
         $validator = Validator::make($inData, $rules, $messages);
@@ -50,7 +50,6 @@ class RegisterRequestTest extends TestCase
                 [
                     'name' => str_repeat('a', 255),
                     'email' => 'test1@gmail.com',
-                    'password' => str_repeat('a', 255),
                     'birthday' => '2023-05-08',
                     'pref_id' => 1,
                     'introduction' => str_repeat('a', 1000),
@@ -64,7 +63,6 @@ class RegisterRequestTest extends TestCase
                 [
                     'name' => str_repeat('a', 255),
                     'email' => 'test1@gmail.com',
-                    'password' => str_repeat('a', 255),
                     'pref_id' => 1,
                 ],
                 false,
@@ -77,7 +75,6 @@ class RegisterRequestTest extends TestCase
                 [
                     'name' => ['名前を入力してください。'],
                     'email' => ['メールアドレスを入力してください。'],
-                    'password' => ['パスワードを入力してください。'],
                     'pref_id' => ['都道府県を選択してください。'],
                 ],
             ],
@@ -86,7 +83,6 @@ class RegisterRequestTest extends TestCase
                 [
                     'name' => str_repeat('a', 255),
                     'email' => 'test@gmail.com',
-                    'password' => str_repeat('a', 255),
                     'pref_id' => 1,
                 ],
                 true,
@@ -98,7 +94,6 @@ class RegisterRequestTest extends TestCase
                 [
                     'name' => str_repeat('a', 256),
                     'email' => str_repeat('a', 256).'test@gmail.com',
-                    'password' => str_repeat('a', 256),
                     'introduction' => str_repeat('a', 1001),
                     'pref_id' => 1,
                     'twitter_url' => 'https://'.str_repeat('a', 256).'.com',
@@ -107,28 +102,14 @@ class RegisterRequestTest extends TestCase
                 [
                     'name' => ['名前は255文字以内で入力してください。'],
                     'email' => ['メールアドレスは255文字以内入力してください。'],
-                    'password' => ['パスワードは255文字以下で入力してください。'],
                     'introduction' => ['自己紹介は1000文字以内で入力してください。'],
                     'twitter_url' => ['URLは255文字以内で入力してください。'],
-                ],
-            ],
-            '異常 文字数足りない' => [
-                [
-                    'name' => str_repeat('a', 255),
-                    'email' => 'test1@gmail.com',
-                    'password' => str_repeat('a', 7),
-                    'pref_id' => 1,
-                ],
-                true,
-                [
-                    'password' => ['パスワードは8文字以上で入力してください。'],
                 ],
             ],
             '異常 異なる型' => [
                 [
                     'name' => 1,
                     'email' => 'aaa',
-                    'password' => 11111111,
                     'birthday' => 'aaa',
                     'pref_id' => 1,
                     'introduction' => 1,
@@ -138,7 +119,6 @@ class RegisterRequestTest extends TestCase
                 [
                     'name' => ['名前は文字列で入力してください。'],
                     'email' => ['正しいメールアドレスの形式で入力してください。'],
-                    'password' => ['パスワードは文字列で入力してください。'],
                     'birthday' => ['生年月日は日付で入力してください。'],
                     'introduction' => ['自己紹介は文字列で入力してください。'],
                     'twitter_url' => ['正しいURLの形式で入力してください。'],
@@ -148,7 +128,6 @@ class RegisterRequestTest extends TestCase
                 [
                     'name' => str_repeat('a', 255),
                     'email' => 'test1@gmail.com',
-                    'password' => str_repeat('a', 255),
                     'birthday' => '2023-05-08',
                     'pref_id' => 1,
                     'introduction' => str_repeat('a', 1000),
