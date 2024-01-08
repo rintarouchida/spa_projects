@@ -30,7 +30,6 @@ class ResetPassword extends Mailable
      */
     public function build()
     {
-        //todo: テスト作成
         return $this->view('email.reset_password')
         ->with([
             'url' => config('app.front_url') . '/auth/edit_password/'.$this->token.'?email='.$this->email,
