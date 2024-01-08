@@ -18,7 +18,7 @@ class ResetPasswordController extends Controller
     //todo: テスト作成
     /**
      * @param SendEmailRequest $request
-     * 
+     *
      * @return JsonResponse
      */
     public function sendEmail(SendEmailRequest $request): JsonResponse
