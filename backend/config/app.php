@@ -123,6 +123,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'front_url' => 'http://' . env('SANCTUM_STATEFUL_DOMAINS'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
