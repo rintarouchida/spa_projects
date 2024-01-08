@@ -1,5 +1,6 @@
 <?php
 
+use Config;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -18,6 +19,7 @@ class ResetPasswordTest extends TestCase
      */
     public function ResetPasswordMail()
     {
+        Config::set('app.front_url', 'https://test');
         $email = 'test@example.com';
         $token = 'test_token';
         $name = 'Test User';
@@ -30,7 +32,7 @@ class ResetPasswordTest extends TestCase
         $this->assertEquals('mokumoku_map@gmail.com', $builtMail->from[0]['address']);
         $this->assertEquals('もくもくMAP', $builtMail->from[0]['name']);
         $this->assertEquals('パスワード再設定をお願いします。', $builtMail->subject);
-        $this->assertStringContainsString('http://localhost:3000/auth/edit_password/'.$token.'?email='.$email, $builtMail->viewData['url']);
+        $this->assertStringContainsString('https://test/auth/edit_password/'.$token.'?email='.$email, $builtMail->viewData['url']);
         $this->assertEquals($name, $builtMail->viewData['name']);
     }
 }
