@@ -1,13 +1,15 @@
 up:
-		docker-compose up -d
+	docker-compose up -d
 down:
-		docker-compose down
+	docker-compose down
 build:
-		docker-compose build
+	docker-compose build
+ps:
+        docker-copose ps
 php:
-		docker exec -it backend_app_1 bash
+	docker exec -it backend_app_1 bash
 mysql:
-		docker exec -it backend_mysql_1 bash
+	docker exec -it backend_mysql_1 bash
 web:
         docker exec -it backend_web_1 bash
 
@@ -18,6 +20,8 @@ prod_down:
         docker compose down
 prod_build:
         docker compose build
+prod_ps:
+        docker compose ps
 prod_php:
         docker exec -it backend-app-1 bash
 prod_mysql:
