@@ -12,8 +12,6 @@ class ResetPassword extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * Create a new message instance.
-     *
      * @return void
      */
     public function __construct(string $email, string $token, string $name)
@@ -24,8 +22,6 @@ class ResetPassword extends Mailable
     }
 
     /**
-     * Build the message.
-     *
      * @return $this
      */
     public function build()
