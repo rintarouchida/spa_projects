@@ -23,6 +23,7 @@ class AuthController extends Controller
     }
 
     /**
+     * ログイン
      * @param Request $request
      *
      * @return JsonResponse
@@ -37,6 +38,7 @@ class AuthController extends Controller
     }
 
     /**
+     * ログアウト
      * @param Request $request
      *
      * @return JsonResponse
@@ -48,6 +50,7 @@ class AuthController extends Controller
     }
 
     /**
+     * ユーザー登録
      * @param RegisterRequest $request
      *
      * @return JsonResponse
@@ -68,6 +71,7 @@ class AuthController extends Controller
     }
 
     /**
+     * ユーザー情報更新
      * @param UpdateRequest $request
      * @param int $auth_id
      *
