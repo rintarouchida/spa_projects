@@ -22,6 +22,7 @@ class MessageController extends Controller
     }
 
     /**
+     * メッセージ送信
      * @param SendMessageRequest $request
      *
      * @return void
@@ -35,6 +36,7 @@ class MessageController extends Controller
     }
 
     /**
+     * メッセージリスト一覧取得
      * @return ResourceCollection
      */
     public function index(): ResourceCollection
@@ -45,6 +47,7 @@ class MessageController extends Controller
     }
 
     /**
+     * メッセージリスト(自分が主催者のもの)一覧取得
      * @return ResourceCollection
      */
     public function indexForLeader(): ResourceCollection
@@ -55,6 +58,7 @@ class MessageController extends Controller
     }
 
     /**
+     * メッセージ一覧取得
      * @param int $message_group_id
      * @return array
      */
