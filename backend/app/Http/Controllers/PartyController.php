@@ -26,6 +26,7 @@ class PartyController extends Controller
     }
 
     /**
+     * もくもく会一覧取得
      * @return ResourceCollection
      */
     public function index(): ResourceCollection
@@ -36,6 +37,7 @@ class PartyController extends Controller
     }
 
     /**
+     * 自身が作成したもくもく会一覧取得
      * @return ResourceCollection
      */
     public function indexCreated(): ResourceCollection
@@ -46,6 +48,7 @@ class PartyController extends Controller
     }
 
     /**
+     * 自身が参加したもくもく会一覧取得
      * @return ResourceCollection
      */
     public function indexParticipated(): ResourceCollection
@@ -56,6 +59,7 @@ class PartyController extends Controller
     }
 
     /**
+     * もくもく会登録
      * @param RegisterRequest $request
      *
      * @return JsonResponse
@@ -69,6 +73,7 @@ class PartyController extends Controller
     }
 
     /**
+     * もくもく会詳細情報取得
      * @param int $party_id
      *
      * @return JsonResource
@@ -80,6 +85,7 @@ class PartyController extends Controller
     }
 
     /**
+     * 指定のもくもく会に参加しているか取得
      * @param int $party_id
      *
      * @return array
@@ -91,6 +97,7 @@ class PartyController extends Controller
     }
 
     /**
+     * 指定のもくもく会が編集可能かどうかの判定取得
      * @param int $party_id
      *
      * @return array
@@ -104,6 +111,7 @@ class PartyController extends Controller
     }
 
     /**
+     * もくもく会に参加
      * @param Request $request
      *
      * @return JsonResponse
@@ -116,6 +124,7 @@ class PartyController extends Controller
     }
 
     /**
+     * もくもく会検索
      * @param SearchPartyRequest $request
      *
      * @return ResourceCollection
@@ -129,6 +138,7 @@ class PartyController extends Controller
     }
 
     /**
+     * もくもく会編集
      * @param int $party_id
      *
      * @return JsonResource|JsonResponse
@@ -148,6 +158,7 @@ class PartyController extends Controller
     }
 
     /**
+     * もくもく会情報更新
      * @param UpdateRequest $request
      * @param int $party_id
      *
@@ -174,6 +185,7 @@ class PartyController extends Controller
     }
 
     /**
+     * もくもく会キャンセル
      * @param int $party_id
      *
      * @return JsonResponse
