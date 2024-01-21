@@ -53,7 +53,7 @@ export default {
     strategies: {
       laravelApi: {
         provider: 'laravel/sanctum',
-        url: 'http://localhost:8000',
+        url: process.env.API_URL,
         endpoints: {
           login: { url: '/api/login', method: 'post' },
           logout: { url: '/api/logout', method: 'post' },
@@ -65,14 +65,14 @@ export default {
 
   router: {
     mode: "history",
-    base: process.env.BASE_URL,
+    base: "/",
     middleware: ['auth']
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://localhost:8000',
+    baseURL: process.env.API_URL,
     credentials: true
   },
 
