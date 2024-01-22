@@ -15,7 +15,6 @@ use Password;
 
 class ResetPasswordController extends Controller
 {
-    //todo: テスト作成
     /**
      * @param SendEmailRequest $request
      *
