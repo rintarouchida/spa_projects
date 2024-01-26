@@ -28,6 +28,9 @@
         methods: {
             async login() {
                 try {
+                     // CSRFトークンを取得する
+                    this.$axios.defaults.withCredentials = true;
+                    await this.$axios.get(process.env.API_URL+'/sanctum/csrf-cookie');
                     // ログインする
                     const response = await this.$auth
                         .loginWith("laravelApi", {
