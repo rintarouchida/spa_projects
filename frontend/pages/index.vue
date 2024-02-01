@@ -93,8 +93,6 @@ export default {
     }
   },
   async created() {
-    setTimeout(() => this.$nuxt.$loading.start(), 500)
-    console.log(this.$PREF[0].name)
 
     this.parties = await this.$axios.get('/api/party/index').then((res) => {
       return res.data
@@ -112,7 +110,6 @@ export default {
   },
   methods: {
     async searchParty() {
-      this.$nuxt.$loading.start()
       this.parties = await this.$axios
         .get('/api/party/search', {
           params: {
@@ -122,14 +119,12 @@ export default {
           },
         })
         .then((res) => {
-          this.$nuxt.$loading.finish()
           return res.data
         })
         .catch((err) => {
           if (err.response.status === 500) {
             this.$router.push('/errors/error_500')
           }
-          this.$nuxt.$loading.finish()
         })
     },
   },
