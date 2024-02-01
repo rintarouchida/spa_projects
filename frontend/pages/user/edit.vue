@@ -174,7 +174,7 @@ export default {
     }
   },
   async created() {
-    setTimeout(() => this.$nuxt.$loading.start(), 500)
+   //setTimeout(() => this.$nuxt.$loading.start(), 500)
     this.prefs = this.$PREF
     this.old_data = await this.$axios.get(`api/get_auth`).then((res) => {
       return res.data
@@ -184,7 +184,7 @@ export default {
       }
     })
     this.getPrefName(this.old_data.pref_id)
-    this.$nuxt.$loading.finish()
+    //this.$nuxt.$loading.finish()
   },
   methods: {
     selectedFile(e) {

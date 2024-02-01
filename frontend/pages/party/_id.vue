@@ -36,7 +36,7 @@ export default {
     }
   },
   async mounted() {
-    setTimeout(() => this.$nuxt.$loading.start(), 500);
+    //setTimeout(() => this.$nuxt.$loading.start(), 500);
     this.party = await this.$axios.get(`api/party/get/${this.$route.params.id}`).then(res => {
       return res.data;
     }).catch((err) => {
@@ -48,7 +48,7 @@ export default {
       return !res.data.result;
     });
     this.show = true
-    this.$nuxt.$loading.finish();
+    //this.$nuxt.$loading.finish();
   },
   methods:{
     async join(){

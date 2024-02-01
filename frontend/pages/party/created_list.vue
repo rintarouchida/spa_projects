@@ -52,7 +52,7 @@ export default {
     }
   },
   async created() {
-    setTimeout(() => this.$nuxt.$loading.start(), 500)
+    //setTimeout(() => this.$nuxt.$loading.start(), 500)
 
     this.parties = await this.$axios
       .get('/api/party/index_created')
@@ -64,7 +64,7 @@ export default {
       }
     })
     this.show = true
-    this.$nuxt.$loading.finish()
+   //this.$nuxt.$loading.finish()
   },
 }
 </script>

@@ -204,7 +204,7 @@ export default {
   },
 
   async created() {
-      setTimeout(() => this.$nuxt.$loading.start(), 500);
+      //setTimeout(() => this.$nuxt.$loading.start(), 500);
       this.prefs = this.$PREF
       this.tags = this.$TAG
       this.old_data = await this.$axios.get(`api/party/get/${this.$route.params.id}`).then(res => {
@@ -216,7 +216,7 @@ export default {
       }
     });
       this.show = true
-      this.$nuxt.$loading.finish();
+      //this.$nuxt.$loading.finish();
   },
   methods: {
     selectedFile(e) {

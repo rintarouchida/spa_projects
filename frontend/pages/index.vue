@@ -106,7 +106,7 @@ export default {
 
     this.tags = this.$TAG
     this.show = true
-    this.$nuxt.$loading.finish()
+    //this.$nuxt.$loading.finish()
   },
   methods: {
     async searchParty() {
