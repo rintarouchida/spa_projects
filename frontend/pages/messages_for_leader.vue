@@ -32,7 +32,7 @@ export default {
     }
   },
   async created() {
-    setTimeout(() => this.$nuxt.$loading.start(), 500)
+    //setTimeout(() => this.$nuxt.$loading.start(), 500)
     this.message_lists = await this.$axios
       .get('/api/message/index_for_leader')
       .then((res) => {
@@ -43,7 +43,7 @@ export default {
       }
     })
     this.show = true
-    this.$nuxt.$loading.finish()
+    //this.$nuxt.$loading.finish()
   },
 }
 </script>

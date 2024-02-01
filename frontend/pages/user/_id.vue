@@ -28,7 +28,7 @@ export default {
     }
   },
   async created() {
-    setTimeout(() => this.$nuxt.$loading.start(), 500)
+    //setTimeout(() => this.$nuxt.$loading.start(), 500)
 
     this.user = await this.$axios
       .get(`api/user/get/${this.$route.params.id}`)
@@ -40,7 +40,7 @@ export default {
       }
     })
     this.show = true
-    this.$nuxt.$loading.finish()
+    //this.$nuxt.$loading.finish()
   },
 }
 </script>

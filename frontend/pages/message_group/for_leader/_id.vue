@@ -62,7 +62,7 @@ export default {
     }
   },
   async created() {
-    setTimeout(() => this.$nuxt.$loading.start(), 500)
+    //setTimeout(() => this.$nuxt.$loading.start(), 500)
     this.data = await this.$axios
       .get(`api/message/get/${this.$route.params.id}`)
       .then((res) => {
@@ -75,7 +75,7 @@ export default {
       this.getMessages()
       console.log('メッセージを更新')
     }, 10000)
-    this.$nuxt.$loading.finish()
+    //this.$nuxt.$loading.finish()
   },
   beforeDestroy() {
     // コンポーネントが破棄される前にintervalをクリアする
