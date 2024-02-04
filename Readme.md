@@ -9,6 +9,7 @@
 - PHPUnit
 - Nuxt2
 - Docker
+- AWS
 
 バックエンド(API)はLaravelを使用し、フロントエンドはNuxt.jsのSPA開発で作成を行っています。
 
