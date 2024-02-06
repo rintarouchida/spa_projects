@@ -34,7 +34,7 @@
 ## 使用画面のイメージ
 
 ### TOP画面
-<img width="1629" alt="" src="">
+img width="1318" alt="redme_top_page" src="https://github.com/rintarouchida/spa_projects/assets/102397462/372a0d5a-33a9-428c-a36f-683f6743ca85"
 
 ### もくもく会検索画面
 <img width="1595" alt="" src="">
