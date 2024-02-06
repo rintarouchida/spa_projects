@@ -37,10 +37,10 @@
 <img width="1318" alt="redme_top_page" src="https://github.com/rintarouchida/spa_projects/assets/102397462/372a0d5a-33a9-428c-a36f-683f6743ca85">
 
 ### もくもく会検索画面
-<img width="1595" alt="" src="">
+<img width="1346" alt="readme_search" src="https://github.com/rintarouchida/spa_projects/assets/102397462/c7cd3a26-b0f1-4941-99de-e26a156f1ef6">
 
 ### メッセージ画面
-<img width="1569" alt="" src="">
+<img width="1330" alt="readme_message" src="https://github.com/rintarouchida/spa_projects/assets/102397462/c5aacf6d-daf0-428c-adb7-aab60e6b33bb">
 
 
 
