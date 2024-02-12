@@ -4,8 +4,8 @@
 アプリURL
 **[https://service.mokumoku-map.com/](https://service.mokumoku-map.com/)**
 
-以下のアドレス、パスワードを用いてテストアカウントとしてログインできます。
-(メールアドレス)test@gmail.com
+以下のアドレス、パスワードを用いてテストアカウントとしてログインできます。<br>
+(メールアドレス)test@gmail.com<br>
 (パスワード)password
 
 
