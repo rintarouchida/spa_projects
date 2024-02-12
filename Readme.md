@@ -5,7 +5,7 @@
 **[https://service.mokumoku-map.com/](https://service.mokumoku-map.com/)**
 
 以下のアドレス、パスワードを用いてテストアカウントとしてログインできます。<br>
-(メールアドレス)test@gmail.com<br>
+(メールアドレス)test@example.com<br>
 (パスワード)password
 
 
