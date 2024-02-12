@@ -169,5 +169,9 @@
 ### FatController対策
 - コードの整理と保守性の向上を目指し、LaravelのコントローラーがFatControllerにならないようにすることに重点を置いた。具体的には、CRUD系の処理はServiceクラスに、レスポンスデータの形成はResourceクラスに分けるようにした。これにより、単一のクラスが複数の責任を持つことを避け、各クラスの役割を明確にした。
 
+### API設計書
+開発者がAPIの詳細を理解しやすくなるように、Swaggerを導入しAPIの設計書を作成した
+https://rintarouchida.github.io/spa_projects/swagger/
+
 ### レスポンシブ対応
 - スマホでアプリケーションを開いた際のUIを考慮し、フロント側でレスポンシブ対応を行なった。
