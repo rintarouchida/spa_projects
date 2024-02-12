@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Rules\AgeCheck;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
@@ -27,7 +28,7 @@ class RegisterRequest extends FormRequest
             'name'         => 'required|string|max:255',
             'email'        => 'required|unique:users|email|max:255',
             'password'     => 'required|string|max:255|min:8',
-            'birthday'     => 'nullable|date',
+            'birthday'     => ['nullable', 'date', new AgeCheck],
             'pref_id'      => 'required|exists:prefs,id',
             'introduction' => 'nullable|string|max:1000',
             'twitter_url'  => 'nullable|url|max:255',
