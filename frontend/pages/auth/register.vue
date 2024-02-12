@@ -57,7 +57,7 @@
         ・{{ password }}
       </p>
 
-      <h3 class="register_items">生年月日</h3>
+      <h3 class="register_items">生年月日<span class="alert">※18歳未満の方は登録できません</span></h3>
       <input
         v-model="birthday"
         class="input_form"
@@ -314,6 +314,12 @@ export default {
   color: white;
   background-color: red;
   padding: 2px;
+}
+
+.alert{
+  font-size: 12px;
+  margin-left: 5px;
+  color: red;
 }
 
 .validation_error {
