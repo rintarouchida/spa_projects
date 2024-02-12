@@ -30,7 +30,7 @@ services:
   swagger:
     image: swaggerapi/swagger-ui
     volumes:
-      - ./openapi/openapi.yml:/usr/share/nginx/html/openapi.yml
+      - ../docs/openapi.yml:/usr/share/nginx/html/openapi.yml
     environment:
       API_URL: openapi.yml
     ports:
