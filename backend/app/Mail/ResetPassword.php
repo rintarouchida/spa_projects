@@ -32,7 +32,7 @@ class ResetPassword extends Mailable
             'name'  => $this->name,
         ])
         ->to($this->email)
-        ->from('mokumoku_map@gmail.com', 'もくもくMAP')
+        ->from('mail@mokumoku-map.com', 'もくもくMAP')
         ->subject('パスワード再設定をお願いします。');
     }
 }
